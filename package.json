@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "apparebit.com",
+  "description": "Sources for Robert Grimm’s https://apparebit.com",
+  "browserslist": [
+    "> 1%",
+    "not dead"
+  ],
+  "dependencies": {
+    "chalk": "2.4.2",
+    "serve": "11.1.0"
+  },
+  "scripts": {
+    "start": "serve"
+  }
+}
