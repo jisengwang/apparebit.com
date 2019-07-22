@@ -1,0 +1,955 @@
+/* ========================================================================== *
+ * (C) Copyright 2019 Robert Grimm
+ * ========================================================================== */
+
+@font-face {
+  font-family: 'Bely';
+  src: url(fonts/bely-regular.woff2),
+    url(fonts/bely-regular.woff);
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bely';
+  src: url(fonts/bely-italic.woff2),
+    url(fonts/bely-italic.woff);
+  font-style: italic;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bely Display';
+  src: url(fonts/bely-display.woff2),
+    url(fonts/bely-display.woff);
+  font-style: normal;
+  font-weight: bold;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Bluu Suuperstar';
+  src: url(fonts/bluu-suuperstar-medium.woff2),
+    url(fonts/bluu-suuperstar-medium.woff);
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+}
+
+@font-feature-values Bluu Suuperstar {
+  @styleset {
+    bluu: 1 3;
+  }
+}
+
+@font-face {
+  font-family: 'Reforma 2018';
+  src: url(fonts/reforma-2018-gris.woff2),
+    url(fonts/reforma-2018-gris.woff);
+  font-style: normal;
+  font-weight: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Reforma 2018';
+  src: url(fonts/reforma-2018-gris-italica.woff2),
+    url(fonts/reforma-2018-gris-italica.woff);
+  font-style: italic;
+  font-weight: normal;
+  font-display: fallback;
+}
+
+/* -------------------------------------------------------------------------- *
+ * Sane Sizing
+ * -------------------------------------------------------------------------- */
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*:before, *, *:after {
+  box-sizing: inherit;
+}
+
+:root {
+  box-sizing: border-box;
+
+  /* ------------------------------------------------------------------------ *
+   * Modular Scale
+   * ------------------------------------------------------------------------ */
+
+  --r-minor: 1.2;
+  --r-major: 1.5;
+
+  --t05: calc(1em / var(--r-minor));
+  --s05: calc(var(--r-minor) * 1em);
+  --s10: calc(var(--r-major) * 1em);
+  --s15: calc(var(--r-minor) * var(--s10));
+  --s20: calc(var(--r-major) * var(--s10));
+  --s30: calc(var(--r-major) * var(--s20));
+  --s40: calc(var(--r-major) * var(--s30));
+  --s50: calc(var(--r-major) * var(--s40));
+
+  --min-margin: 0.5em;
+  --max-measure: 29em;
+  --scale-to-reforma: 0.8281;
+  --scale-to-bluu: 0.826.2;
+
+  --margin-text-top: 1em;
+
+  /* ------------------------------------------------------------------------ *
+   * Colors
+   * ------------------------------------------------------------------------ */
+
+  --color-white: #f8f6f6;
+  --color-dirty-white: #ececec;
+  --color-black: #201d1d;
+  --color-deep-black: #0c0a0a;
+  --color-fg: var(--color-black);
+  --color-bg: var(--color-white);
+  --color-bg-dark: var(--color-dirty-white);
+  --color-accent1: #2bfff4;
+  --color-accent2: #35ff61;
+  --color-accent3: #ff82e8;
+  --color-accent4: #ffb74a;
+  --color-accent5: #fff143;
+}
+
+/* Don't even think to print dark color scheme! */
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --color-fg: var(--color-white);
+    --color-bg: var(--color-black);
+    --color-bg-dark: var(--color-deep-black);
+    --color-accent1: #970202;
+    --color-accent2: #830183;
+    --color-accent3: #8039c9;
+    --color-accent4: #4739c9;
+    --color-accent5: #2c8672;
+  }
+}
+
+@media print {
+  :root {
+    --color-fg: #000;
+    --color-bg: transparent;
+  }
+}
+
+:root {
+  --color-link-fg: var(--color-fg);
+  --color-link-bg: transparent;
+  --color-link-focus-fg: var(--color-bg);
+  --color-link-focus-bg: var(--color-fg);
+  --color-link-active-fg: var(--color-fg);
+  --color-link-active-bg: var(--color-fg);
+}
+
+.gradient1 {
+  background-color: var(--color-accent1);
+  background-image: linear-gradient(to right,
+    var(--color-accent1) 10%, var(--color-accent2) 90%);
+  background-attachment: fixed;
+}
+
+.gradient2 {
+  background-color: var(--color-accent3);
+  background-image: linear-gradient(to right,
+    var(--color-accent3) 10%, var(--color-accent4) 90%);
+  background-attachment: fixed;
+}
+
+/* ========================================================================== *
+ * Proper Typography
+ * ========================================================================== */
+
+:root {
+  --system-fontstack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+
+  /* Bely and Bluu only have Times as understudy. It's bruutal. */
+  --bely-fontstack: 'Bely', 'Times New Roman', serif;
+  --bluu-fontstack: 'Bluu Suuperstar', 'Times New Roman', serif;
+
+  /* Luckily, both Bely and Reforma support kerning, default ligatures, lining
+     as well as old-style numerals, and case-sensitive alternates. */
+  --font-features-core: 'kern', 'liga', 'case';
+  --font-features-text: 'onum', var(--font-features-core);
+  --font-features-standout: 'lnum', var(--font-features-core);
+  --font-features-bluu: 'ss01', 'ss03', var(--font-features-standout);
+
+  /* ------------------------------------------------------------------------ */
+
+  font-family: var(--bely-fontstack);
+  font-size-adjust: 0.453;
+  font-synthesis: none;
+
+  font-size: 118.75%;
+  -webkit-text-size-adjust: 100%;
+  line-height: var(--r-major);
+}
+
+/* calc((var(--max-measure) + 2 * var(--min-margin)) * 118.75%) */
+@media (min-width: 35.625em) {
+  :root {
+    font-size: 131.25%;
+  }
+}
+
+@media print {
+  :root {
+    font-size: 100%;
+  }
+}
+
+li, p {
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+li {
+  hanging-punctuation: last allow-end;
+}
+
+p {
+  hanging-punctuation: first allow-end last;
+}
+
+/* -------------------------------------------------------------------------- */
+
+@supports not (font-variant: oldstyle-nums common-ligatures) {
+  body {
+    -webkit-font-feature-settings: var(--font-features-text);
+    font-feature-settings: var(--font-features-text);
+  }
+}
+
+@supports (font-variant: oldstyle-nums common-ligatures) {
+  body {
+    font-variant: oldstyle-nums common-ligatures;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+
+@supports not (font-variant-caps: all-small-caps) {
+  abbr, .byline, .capped span:first-child, .roman {
+    -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
+    font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
+  }
+
+  .capped::first-letter {
+    -webkit-font-feature-settings: var(--font-features-standout);
+    font-feature-settings: var(--font-features-standout);
+  }
+}
+
+@supports (font-variant-caps: all-small-caps) {
+  abbr, .byline, .capped span:first-child, .roman {
+    font-variant-caps: all-small-caps;
+  }
+
+  .capped::first-letter {
+    font-variant-caps: normal;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+
+h1, h2, h3, .pullquote {
+  font-family: 'Reforma 2018', var(--system-fontstack);
+}
+
+@supports not (font-variant: lining-nums common-ligatures) {
+  h1, h2, h3 {
+    -webkit-font-feature-settings: var(--font-features-standout);
+    font-feature-settings: var(--font-features-standout);
+  }
+}
+
+@supports (font-variant: lining-nums common-ligatures) {
+  h1, h2, h3 {
+    font-variant: lining-nums common-ligatures;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* 13<sup>th</sup> if font supports superscript */
+sup {
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+@supports not (font-variant-position: super) {
+  sup {
+    -webkit-font-feature-settings: 'sups', var(--font-features-text);
+    font-feature-settings: 'sups', var(--font-features-text);
+  }
+}
+
+@supports (font-variant-position: super) {
+  sup {
+    font-variant-position: super;
+  }
+}
+
+/*
+ * 13<sup class=ordinal>th</sup> if font supports ordinals,
+ * notably English ones. Bely does.
+ */
+@supports not (font-variant-numeric: ordinal) {
+  .ordinal {
+    -webkit-font-feature-settings: 'ordn', var(--font-features-text);
+    font-feature-settings: 'ordn', var(--font-features-text);
+  }
+}
+
+@supports (font-variant-numeric: ordinal) {
+  .ordinal {
+    font-variant-position: normal;
+    font-variant-numeric: ordinal;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+
+.bruutal {
+  font-family: var(--bluu-fontstack);
+  font-weight: 500;
+}
+
+@supports not (font-variant-alternates: styleset(bluu)) {
+  .bruutal {
+    -webkit-font-feature-settings: var(--font-features-bluu);
+    font-feature-settings: var(--font-features-bluu);
+  }
+}
+
+@supports (font-variant-alternates: styleset(bluu)) {
+  .bruutal {
+    font-variant-alternates: styleset(bluu);
+  }
+}
+
+/* ========================================================================== *
+ * Keeping Up Appearances
+ * ========================================================================== */
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: none;
+}
+
+.appendix > p, main section > p {
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: 1em auto 0 auto;
+  padding: 0 var(--min-margin);
+}
+
+body {
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+}
+
+dfn {
+  font-style: italic;
+}
+
+main {
+  display: block;
+}
+
+::-moz-selection { background-color: var(--color-accent5); }
+::selection { background-color: var(--color-accent5); }
+
+/* ========================================================================== *
+ * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
+ * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
+ * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
+ * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
+ * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
+ * ========================================================================== */
+
+/* -------------------------------------------------------------------------- *
+ * a
+ * -------------------------------------------------------------------------- */
+
+a {
+  transition: all 0.1s ease-out;
+  text-decoration: underline;
+  text-decoration-color:  var(--color-fg);
+  background-color: transparent;
+}
+
+a:link, a:visited {
+  color: var(--color-link-fg);
+  fill: var(--color-link-fg);
+  background-color: var(--color-link-bg);
+}
+
+a:focus, a:hover {
+  color: var(--color-link-focus-fg);
+  fill: var(--color-link-focus-fg);
+  text-decoration-color: transparent;
+  background-color: var(--color-link-focus-bg);
+  outline: none;
+}
+
+a:focus:not(:focus-visible) {
+  color: var(--color-fg);
+  fill: var(--color-fg);
+  text-decoration-color: var(--color-fg);
+  background-color: transparent;
+}
+
+a:active {
+  color: var(--color-link-active-fg);
+  fill: var(--color-link-active-fg);
+  background-color: var(--color-link-active-bg);
+}
+
+/* -------------------------------------------------------------------------- *
+ * .as-paragraph (flow <p> and <li> into one paragraph with Oxford comma)
+ * -------------------------------------------------------------------------- */
+
+.as-paragraph {
+  hanging-punctuation: first allow-end last;
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: 1em auto 0 auto;
+  padding: 0 var(--min-margin);
+}
+
+.as-paragraph p, .as-paragraph ul, .as-paragraph li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.conjunctive li::after {
+  content: ',';
+}
+
+.conjunctive li:nth-last-child(2)::after {
+  content: ', and ';
+}
+
+.conjunctive li:last-child::after {
+  content: '.';
+}
+
+/* -------------------------------------------------------------------------- *
+ * .byline
+ * -------------------------------------------------------------------------- */
+
+.byline {
+  display: flex;
+  justify-content: space-between;
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: var(--s20) auto var(--s10) auto;
+  padding: 0 var(--min-margin);
+  line-height: var(--r-major);
+}
+
+address {
+  font-style: normal;
+}
+
+/* -------------------------------------------------------------------------- *
+ * .banner
+ * -------------------------------------------------------------------------- */
+
+.banner > * {
+  padding: 0 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* -------------------------------------------------------------------------- *
+ * .capped
+ * -------------------------------------------------------------------------- */
+
+@supports not (initial-letter: 2) {
+  .capped::first-letter {
+    float: left;
+    font-size: 3.3em;
+    line-height: 0.82;
+    font-weight: normal;
+    padding-right: 0.06em;
+  }
+}
+
+@supports (not (initial-letter: 2)) and (-moz-appearance: none) {
+  .capped::first-letter {
+    margin-top: 0.10em;
+  }
+}
+
+@supports (initial-letter: 2) {
+  .capped::first-letter {
+    initial-letter: 2;
+  }
+}
+
+/* -------------------------------------------------------------------------- *
+ * .cover
+ * -------------------------------------------------------------------------- */
+
+.cover {
+  line-height: 0;
+}
+
+.cover img, .cover svg {
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* To make <header><h1><img></header> work, i.e., <h1> first. */
+}
+
+.cover img {
+  object-fit: cover;
+}
+
+.cover h1, .cover p {
+  line-height: var(--r-minor);
+}
+
+/* -------------------------------------------------------------------------- *
+ * figcaption
+ * -------------------------------------------------------------------------- */
+
+figcaption::before {
+  content: '—';
+}
+
+figcaption {
+  font-size: var(--t05);
+  height: calc(var(--r-minor) * var(--s10));
+  text-align: right;
+  font-style: italic;
+  padding-top: 0.3em;
+}
+
+@supports (-moz-appearance: none) {
+  /* Firefox is more precise. */
+  figcaption {
+    padding-top: 0.25em;
+  }
+}
+
+/* -------------------------------------------------------------------------- *
+ * .heading with nested h1.plain, h2, or h3
+ * -------------------------------------------------------------------------- */
+
+.heading {
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: 0 auto;
+  padding: 0 var(--min-margin);
+  line-height: var(--r-minor);
+}
+
+h1.plain, h2, h3 {
+  font-style: normal;
+  font-weight: normal;
+}
+
+h1.plain {
+  font-size: calc(var(--scale-to-reforma) * var(--s20));
+  /* Use padding because margin breaks out of container. */
+  padding-top: calc(var(--r-major) * var(--r-minor) * 1rem);
+  margin-bottom: calc(var(--r-major) * 1rem);
+}
+
+h2, h3 {
+  margin-top: calc(var(--r-major) * 1rem);
+}
+
+h2 {
+  font-size: calc(var(--scale-to-reforma) * var(--s10));
+}
+
+h3 {
+  font-size: calc(var(--scale-to-reforma) * var(--s05));
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------- *
+ * [hidden], .visually-hidden
+ * -------------------------------------------------------------------------- */
+
+[hidden] {
+  display: none;
+}
+
+/* See https://zellwk.com/blog/hide-content-accessibly/ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------- *
+ * hr
+ * -------------------------------------------------------------------------- */
+
+hr {
+  color: var(--color-fg);
+  border: none;
+  height: var(--s10); /* Prevent Safari off-by-1px bug */
+  text-align: center;
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: 1em auto 0 auto;
+  padding: 0 var(--min-margin);
+
+}
+
+hr::after {
+  font-size: var(--s05);
+  line-height: var(--r-minor);
+  display: inline-block;
+  content: '⁂';
+  animation: spin 20s ease-in-out 0s infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(  0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hr::after {
+    animation: none;
+  }
+}
+
+/* -------------------------------------------------------------------------- *
+ * .inset-left
+ * -------------------------------------------------------------------------- */
+
+img {
+  display: block;
+  max-width: 100%;
+  border-style: none;
+}
+
+/* The surrounding <div class=with-inset>. */
+.with-inset {
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: 1em auto 0 auto;
+  padding: 0 var(--min-margin);
+}
+
+.with-inset::after {
+  content: '';
+  clear: both;
+}
+
+/*
+ * For this class to work, <header>, <section>, and <footer> elements
+ * containing such an inset-image must have their max-width and margin
+ * set by the container.
+ */
+
+.inset-left {
+  margin-right: var(--min-margin);
+  float: left;
+  width: calc(7 * var(--s10));
+}
+
+@supports not (-moz-appearance: none) {
+  .inset-left {
+    width: calc(7 * var(--s10) - 5px); /* Counteract rounding errors. */
+  }
+}
+
+/* calc((var(--max-measure) + 2 * 10.5em + 4 * 1.5em) * 131.25%) */
+@media (min-width: 73.5em) {
+  .inset-left {
+    margin-left: calc(-8 * var(--s10));
+  }
+}
+
+/* -------------------------------------------------------------------------- *
+ * .large-image
+ * -------------------------------------------------------------------------- */
+
+.large-image {
+  max-width: calc(var(--max-measure) + 2 * var(--s30));
+  margin: var(--s10) auto;
+}
+
+.large-image figcaption { padding-right: var(--min-margin); }
+@media (min-width: 49.22em) {
+  .large-image figcaption { padding-right: 0; }
+}
+
+/* -------------------------------------------------------------------------- *
+ * nav
+ * -------------------------------------------------------------------------- */
+
+nav {
+  line-height: 0;
+}
+
+nav a {
+  display: block;
+  padding: calc((var(--s20) - var(--s05)) / 2);
+}
+
+nav .logo {
+  height: var(--s05);
+  width: var(--s05);
+}
+
+nav.barred {
+  height: var(--s20);
+  width: 100%;
+  background-color: var(--color-bg-dark);
+  --color-link-bg: var(--color-bg);
+}
+
+nav.barred > div {
+  height: 100%;
+  width: 100%;
+  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
+  margin: 0 auto;
+  padding: 0 var(--min-margin);
+  display: flex;
+  justify-content: left;
+}
+
+nav.cornered {
+  position: absolute;
+  top: 2vmin;
+  left: 2vmin;
+}
+
+nav.cornered a {
+  border: solid 0.2em var(--color-fg);
+}
+
+/* -------------------------------------------------------------------------- *
+ * ol, ul
+ * -------------------------------------------------------------------------- */
+
+main ol, main ul {
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  padding: 0 var(--min-margin);
+  margin: 0 auto;
+}
+
+main ol {
+  list-style: none;
+  counter-reset: ol;
+}
+
+main ul {
+  margin-top: 1em;
+}
+
+main ol > li {
+  counter-increment: ol;
+  margin-top: 1em;
+}
+
+main ol > li::before {
+  content: '(' counter(ol) ') ';
+  font-feature-settings: var(--font-features-standout);
+}
+
+main ul > li {
+  margin-left: 1em;
+}
+
+/*
+ * calc((
+ *     var(--max-measure)
+ *     + 2 * var(--min-margin)
+ *     + 2 * var(--s10)
+ * ) * 131.25%)
+ */
+@media (min-width: 43.3125em) {
+  main ol > li {
+    position: relative;
+  }
+
+  main ol > li::before {
+    position: absolute;
+    left: calc(-1 * var(--s10));
+  }
+
+  main ul > li {
+    margin-left: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------- *
+ * .page-footer
+ * -------------------------------------------------------------------------- */
+
+.page-footer {
+  margin: var(--s10) auto 0 auto;
+  padding: 1em var(--min-margin);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: var(--color-bg-dark);
+}
+
+.in-here, .out-there {
+  width: 50%;
+}
+
+@media (pointer: fine) {
+  .in-here, .out-there {
+    font-size: var(--t05);
+  }
+}
+
+.page-footer h2 {
+  font-size: calc(var(--scale-to-reforma) * var(--s05));
+  margin: 0;
+}
+
+.page-footer ul {
+  list-style: none;
+}
+
+.in-here {
+  padding-right: 0.44em;
+  border-right: solid 0.082em var(--color-fg);
+  text-align: right;
+}
+
+.out-there {
+  padding-left: 0.44em;
+  border-left: solid 0.082em var(--color-fg);
+  text-align: left;
+}
+
+.copyright {
+  margin-top: 1em;
+  font-size: var(--t05);
+}
+
+/* -------------------------------------------------------------------------- *
+ * .pullquote
+ * -------------------------------------------------------------------------- */
+
+.pullquote {
+  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
+  margin: var(--s10) auto;
+  padding: 0 var(--min-margin);
+}
+
+@supports not (-moz-appearance: none) {
+  .pullquote p {
+    /*
+     * Safari doesn't account for inline padding when breaking lines. To
+     * prevent overflow, we reduce the max-width by an upper bound. Sadly,
+     * there seems to be no feature query to select only Safari. Chrome is
+     * thus impacted as well.
+     */
+    max-width: calc(100% - 0.5em);
+  }
+}
+
+.pullquote strong {
+  font-size: calc(var(--scale-to-reforma) * var(--s20));
+  font-weight: normal;
+}
+
+/* -------------------------------------------------------------------------- *
+ * .quote
+ * -------------------------------------------------------------------------- */
+
+.quote {
+  max-width: calc(var(--max-measure) - 2 * var(--s20) + 2 * var(--min-margin));
+  margin: 0 auto;
+  padding: 0 var(--min-margin);
+}
+
+.quote p::before, .quote p::after {
+  font-size: var(--s10);
+  line-height: 0;
+  position: relative;
+}
+
+/*
+ * U+275d and U+275e are heavy double turned comma quotes.
+ * U+200a is hair space.
+ */
+.quote p::before { content: '\275d\200a'; }
+.quote p::after  { content: '\200a\275e'; }
+
+/* -------------------------------------------------------------------------- *
+ * .section-count
+ * -------------------------------------------------------------------------- */
+
+.section-count.start-at-0 {
+  counter-reset: h2 -1;
+}
+
+.section-count.start-at-1 {
+  counter-reset: h2 0;
+}
+
+.section-count section {
+  counter-increment: h2;
+  counter-reset: h3;
+}
+
+.section-count h2::before {
+  content: counter(h2) '\2002';
+}
+
+.section-count h3 {
+  counter-increment: h3;
+}
+
+.section-count h3::before {
+  content: counter(h2) '.' counter(h3) '\2002';
+}
+
+footer h2::before, footer h3::before {
+  content: none;
+}
+
+/* -------------------------------------------------------------------------- *
+ * @media print
+ * -------------------------------------------------------------------------- */
+
+@media print {
+  @page {
+    margin-top: var(---s30);
+    margin-bottom: var(--s30);
+  }
+
+  h1 {
+    page-break-after: always;
+    break-after: always;
+  }
+
+  h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
