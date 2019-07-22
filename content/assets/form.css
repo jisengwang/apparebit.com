@@ -120,7 +120,8 @@
    * ------------------------------------------------------------------------ */
 
   --color-white: #f8f6f6;
-  --color-dirty-white: #ececec;
+  --color-dirty-white: #e0e0e0;
+  --color-grey: #a0a0a0;
   --color-black: #201d1d;
   --color-deep-black: #0c0a0a;
   --color-fg: var(--color-black);
@@ -370,7 +371,7 @@ abbr[title] {
 
 .appendix > p, main section > p {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: 1em auto 0 auto;
+  margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
 }
 
@@ -443,7 +444,7 @@ a:active {
 .as-paragraph {
   hanging-punctuation: first allow-end last;
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: 1em auto 0 auto;
+  margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
 }
 
@@ -467,6 +468,16 @@ a:active {
 }
 
 /* -------------------------------------------------------------------------- *
+ * .banner: the art of making banners out of text
+ * -------------------------------------------------------------------------- */
+
+ .banner {
+  padding: 0 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* -------------------------------------------------------------------------- *
  * .byline
  * -------------------------------------------------------------------------- */
 
@@ -481,16 +492,6 @@ a:active {
 
 address {
   font-style: normal;
-}
-
-/* -------------------------------------------------------------------------- *
- * .banner
- * -------------------------------------------------------------------------- */
-
-.banner > * {
-  padding: 0 0.2em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -663,7 +664,7 @@ hr {
   height: var(--s10);
   text-align: center;
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: 1em auto 0 auto;
+  margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
 
 }
@@ -701,7 +702,7 @@ img {
 /* The surrounding <div class=with-inset>. */
 .with-inset {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: 1em auto 0 auto;
+  margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
 }
 
@@ -731,6 +732,8 @@ img {
 /* calc((var(--max-measure) + 2 * 10.5em + 4 * 1.5em) * 131.25%) */
 @media (min-width: 73.5em) {
   .inset-left {
+    /* Not strictly necessary but eliminates weird dev tools appearance. */
+    margin-right: 0;
     /* Consider reducing to -7 * s10 - 1em, requires change to .byline. */
     margin-left: calc(-8 * var(--s10));
   }
@@ -763,7 +766,7 @@ nav a {
   padding: calc((var(--s20) - var(--s05)) / 2);
 }
 
-nav .logo {
+nav svg {
   height: var(--s05);
   width: var(--s05);
 }
@@ -811,12 +814,12 @@ main ol {
 }
 
 main ul {
-  margin-top: 1em;
+  margin-top: var(--margin-text-top);
 }
 
 main ol > li {
   counter-increment: ol;
-  margin-top: 1em;
+  margin-top: var(--margin-text-top);
 }
 
 main ol > li::before {
@@ -825,7 +828,7 @@ main ol > li::before {
 }
 
 main ul > li {
-  margin-left: 1em;
+  margin-left: var(--margin-text-top);
 }
 
 /*
@@ -856,7 +859,7 @@ main ul > li {
 
 .page-footer {
   margin: var(--s10) auto 0 auto;
-  padding: 1em var(--min-margin);
+  padding: var(--margin-text-top) var(--min-margin);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -884,18 +887,20 @@ main ul > li {
 
 .in-here {
   padding-right: 0.44em;
-  border-right: solid 0.082em var(--color-fg);
+   /* Formerly, only 0.082em at text color. */
+  border-right: solid 0.5em var(--color-grey);
   text-align: right;
 }
 
 .out-there {
   padding-left: 0.44em;
-  border-left: solid 0.082em var(--color-fg);
+   /* Formerly, only 0.082em at text color. */
+   border-left: solid 0.5em var(--color-grey);
   text-align: left;
 }
 
 .copyright {
-  margin-top: 1em;
+  margin-top: var(--margin-text-top);
   font-size: var(--t05);
 }
 
@@ -931,8 +936,8 @@ main ul > li {
  * -------------------------------------------------------------------------- */
 
 .quote {
-  max-width: calc(var(--max-measure) - 2 * var(--s20) + 2 * var(--min-margin));
-  margin: 0 auto;
+  max-width: calc(var(--max-measure) - 2 * var(--s10) + 2 * var(--min-margin));
+  margin: var(--s10) auto;
   padding: 0 var(--min-margin);
 }
 
@@ -946,8 +951,8 @@ main ul > li {
  * U+275d and U+275e are heavy double turned comma quotes.
  * U+200a is hair space.
  */
-.quote p::before { content: '\275d\200a'; }
-.quote p::after  { content: '\200a\275e'; }
+.quote p::before { content: '\275d'; padding-right: 0.024em; }
+.quote p::after  { content: '\275e'; padding-left:  0.024em; }
 
 /* -------------------------------------------------------------------------- *
  * .section-count
