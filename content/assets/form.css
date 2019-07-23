@@ -888,14 +888,14 @@ main ul > li {
 .in-here {
   padding-right: 0.44em;
    /* Formerly, only 0.082em at text color. */
-  border-right: solid 0.5em var(--color-grey);
+  border-right: solid calc(var(--t05) / 2) var(--color-grey);
   text-align: right;
 }
 
 .out-there {
   padding-left: 0.44em;
    /* Formerly, only 0.082em at text color. */
-   border-left: solid 0.5em var(--color-grey);
+   border-left: solid calc(var(--t05) / 2) var(--color-grey);
   text-align: left;
 }
 
