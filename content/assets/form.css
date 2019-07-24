@@ -706,6 +706,7 @@ img {
   padding: 0 var(--min-margin);
 }
 
+/* The surrounding <div class=with-inset> also contains the floats. */
 .with-inset::after {
   content: '';
   clear: both;
@@ -743,6 +744,7 @@ img {
  * .large-image
  * -------------------------------------------------------------------------- */
 
+ /* No --min-margin for images! */
 .large-image {
   max-width: calc(var(--max-measure) + 2 * var(--s30));
   margin: var(--s10) auto;
