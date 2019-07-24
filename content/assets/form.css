@@ -21,6 +21,15 @@
 }
 
 @font-face {
+  font-family: 'Bely';
+  src: url(fonts/bely-bold.woff2),
+    url(fonts/bely-bold.woff);
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Bely Display';
   src: url(fonts/bely-display.woff2),
     url(fonts/bely-display.woff);
@@ -189,7 +198,8 @@
 
   /* Bely and Bluu only have Times as understudy. It's bruutal. */
   --bely-fontstack: 'Bely', 'Times New Roman', serif;
-  --belyssimo-fontstack: 'Bely Display', 'Abril Fatface', 'Playfair Display', serif;
+  --bely-display-fontstack:
+      'Bely Display', 'Abril Fatface', 'Playfair Display', serif;
   --bluu-fontstack: 'Bluu Suuperstar', 'Times New Roman', serif;
 
   /* Luckily, both Bely and Reforma support kerning, default ligatures, lining
@@ -355,9 +365,24 @@ sup {
   }
 }
 
+.bely {
+  font-family: var(--bely-fontstack);
+}
+
 .belyssimo {
-  font-family: var(--belyssimo-fontstack);
+  font-family: var(--bely-display-fontstack);
   font-weight: 400;
+}
+
+/*
+ * No fallback font on purpose! Bely Display uses a styleset for its symbols,
+ * which are encoded as Latin characters. So if no Bely Display, it's best not
+ * to display anything.
+ */
+.bely-symbol {
+  font-family: 'Bely Display';
+  font-feature-settings: 'ss02';
+  font-style: normal;
 }
 
 /* ========================================================================== *
@@ -610,15 +635,15 @@ h3 {
  * undo the Reforma's scaling as well.
  */
 
-h1.bruutal, h1.belyssimo {
+h1.bruutal, h1.bely, h1.belyssimo {
   font-size: var(--s20);
 }
 
-h2.bruutal, h2.belyssimo {
+h2.bruutal, h2.bely, h2.belyssimo {
   font-size: var(--s10);
 }
 
-h3.bruutal, h3.belyssimo {
+h3.bruutal, h3.bely h3.belyssimo {
   font-size: var(--s05);
 }
 
