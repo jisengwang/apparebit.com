@@ -369,7 +369,10 @@ abbr[title] {
   text-decoration: none;
 }
 
-.appendix > p, main section > p {
+main > p,
+main .heading,
+main section > *,
+main footer > * {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
   margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
@@ -443,9 +446,6 @@ a:active {
 
 .as-paragraph {
   hanging-punctuation: first allow-end last;
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--margin-text-top) auto 0 auto;
-  padding: 0 var(--min-margin);
 }
 
 .as-paragraph p, .as-paragraph ul, .as-paragraph li {
@@ -571,9 +571,6 @@ figcaption {
  * -------------------------------------------------------------------------- */
 
 .heading {
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: 0 auto;
-  padding: 0 var(--min-margin);
   line-height: var(--r-minor);
 }
 
@@ -663,10 +660,6 @@ hr {
   /* Prevent Safari from making <hr> one 1px too large. */
   height: var(--s10);
   text-align: center;
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--margin-text-top) auto 0 auto;
-  padding: 0 var(--min-margin);
-
 }
 
 hr::after {
@@ -697,13 +690,6 @@ img {
   display: block;
   max-width: 100%;
   border-style: none;
-}
-
-/* The surrounding <div class=with-inset>. */
-.with-inset {
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--margin-text-top) auto 0 auto;
-  padding: 0 var(--min-margin);
 }
 
 /* The surrounding <div class=with-inset> also contains the floats. */
@@ -803,12 +789,6 @@ nav.cornered a {
 /* -------------------------------------------------------------------------- *
  * ol, ul
  * -------------------------------------------------------------------------- */
-
-main ol, main ul {
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  padding: 0 var(--min-margin);
-  margin: 0 auto;
-}
 
 main ol {
   list-style: none;
@@ -913,7 +893,6 @@ main ul > li {
 .pullquote {
   max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
   margin: var(--s10) auto;
-  padding: 0 var(--min-margin);
 }
 
 @supports not (-moz-appearance: none) {
@@ -940,7 +919,6 @@ main ul > li {
 .quote {
   max-width: calc(var(--max-measure) - 2 * var(--s10) + 2 * var(--min-margin));
   margin: var(--s10) auto;
-  padding: 0 var(--min-margin);
 }
 
 .quote p::before, .quote p::after {
