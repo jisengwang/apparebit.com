@@ -567,16 +567,13 @@ figcaption {
 }
 
 /* -------------------------------------------------------------------------- *
- * .heading with nested h1.plain, h2, or h3
+ * h1, h2, and h3
  * -------------------------------------------------------------------------- */
-
-.heading {
-  line-height: var(--r-minor);
-}
 
 h1, h2, h3 {
   font-style: normal;
   font-weight: normal;
+  line-height: var(--r-minor);
 }
 
 h1 {
