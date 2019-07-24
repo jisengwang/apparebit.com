@@ -566,6 +566,9 @@ address {
 
 .cover h1, .cover p {
   line-height: var(--r-minor);
+  /* Reset margin and padding to simplify per-page styling. */
+  margin: 0;
+  padding: 0;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -606,12 +609,6 @@ h1 {
   /* Use padding, since margin breaks out of container. */
   padding-top: calc(var(--r-major) * var(--r-minor) * 1rem);
   margin-bottom: calc(var(--r-major) * 1rem);
-}
-
-.cover h1 {
-  /* Make per-page styling easy breezy. */
-  padding: 0;
-  margin: 0;
 }
 
 h2, h3 {
