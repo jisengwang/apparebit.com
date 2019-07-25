@@ -700,7 +700,7 @@ hr::after {
 }
 
 /* -------------------------------------------------------------------------- *
- * .inset-left
+ * .inset-left, .inset-right
  * -------------------------------------------------------------------------- */
 
 img {
@@ -727,9 +727,16 @@ img {
   width: calc(7 * var(--s10));
 }
 
+.inset-right {
+  margin-left: var(--min-margin);
+  float: right;
+  width: calc(7 * var(--s10));
+}
+
 @supports not (-moz-appearance: none) {
-  .inset-left {
-    width: calc(7 * var(--s10) - 5px); /* Counteract rounding errors. */
+   /* Counteract rounding errors in Safari and Chrome. */
+  .inset-left, .inset-right {
+    width: calc(7 * var(--s10) - 5px);
   }
 }
 
@@ -740,6 +747,10 @@ img {
     margin-right: 0;
     /* Consider reducing to -7 * s10 - 1em, requires change to .byline. */
     margin-left: calc(-8 * var(--s10));
+  }
+  .inset-right {
+    margin-left: 0;
+    margin-right: calc(-8 * var(--s10));
   }
 }
 
