@@ -701,6 +701,15 @@ hr {
   /* Prevent Safari from making <hr> one 1px too large. */
   height: var(--s10);
   text-align: center;
+  margin-top: var(--s20);
+  margin-bottom: var(--s20);
+
+  --amp: 0.5em;
+  --rot: 6deg;
+  -webkit-transform: translateY(0.5em);
+  transform: translateY(0.5em);
+  -webkit-animation: ups-and-downs 10s ease-in-out 0s infinite;
+  animation: ups-and-downs 10s ease-in-out 0s infinite;
 }
 
 hr::after {
@@ -708,23 +717,54 @@ hr::after {
   line-height: var(--r-minor);
   display: inline-block;
   content: '⁂';
-  animation: spin 20s ease-in-out 0s infinite;
-/* And action! */
-@-webkit-keyframes spin {
-  from { -webkit-transform: rotate(  0deg); transform: rotate(  0deg); }
-    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation: nodd-along 10s ease-in-out 0s infinite;
+  animation: nodd-along 10s ease-in-out 0s infinite;
 }
 
 /* And action! */
-@keyframes spin {
-  from { -webkit-transform: rotate(  0deg); transform: rotate(  0deg); }
-    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-}
+@-webkit-keyframes ups-and-downs {
+  0% {   -webkit-transform: translateY(          var(--amp));
+                 transform: translateY(          var(--amp));  }
+  50% {  -webkit-transform: translateY(calc(-1 * var(--amp)));
+                 transform: translateY(calc(-1 * var(--amp))); }
+  100% { -webkit-transform: translateY(          var(--amp));
+                 transform: translateY(          var(--amp));  } }
+@keyframes ups-and-downs {
+  0% {   -webkit-transform: translateY(          var(--amp));
+                 transform: translateY(          var(--amp));  }
+  50% {  -webkit-transform: translateY(calc(-1 * var(--amp)));
+                 transform: translateY(calc(-1 * var(--amp))); }
+  100% { -webkit-transform: translateY(          var(--amp));
+                 transform: translateY(          var(--amp));  } }
+@-webkit-keyframes nodd-along {
+  0% {   -webkit-transform: rotate(                0deg  );
+                 transform: rotate(                0deg  ); }
+  25% {  -webkit-transform: rotate(calc(-1 * var(--rot)));
+                 transform: rotate(calc(-1 * var(--rot))); }
+  50% {  -webkit-transform: rotate(                0deg );
+                 transform: rotate(                0deg ); }
+  75% {  -webkit-transform: rotate(          var(--rot) );
+                 transform: rotate(          var(--rot) ); }
+  100% { -webkit-transform: rotate(               0deg  );
+                 transform: rotate(               0deg  ); } }
+@keyframes nodd-along {
+  0% {   -webkit-transform: rotate(                0deg  );
+                 transform: rotate(                0deg  ); }
+  25% {  -webkit-transform: rotate(calc(-1 * var(--rot)));
+                 transform: rotate(calc(-1 * var(--rot))); }
+  50% {  -webkit-transform: rotate(                0deg );
+                 transform: rotate(                0deg ); }
+  75% {  -webkit-transform: rotate(          var(--rot) );
+                 transform: rotate(          var(--rot) ); }
+  100% { -webkit-transform: rotate(               0deg  );
+                 transform: rotate(               0deg  ); } }
 
+/* Respect the user's wishes! */
 @media (prefers-reduced-motion: reduce) {
-  hr::after {
-    animation: none;
-  }
+  hr, hr::after { animation: none; }
 }
 
 /* -------------------------------------------------------------------------- *
