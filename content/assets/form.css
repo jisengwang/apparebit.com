@@ -510,7 +510,8 @@ a:active {
   display: flex;
   justify-content: space-between;
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--s20) auto var(--s10) auto;
+  /* Top margin is logical equivalent of (nav.barred + main)'s top margin. */
+  margin: var(--s30) auto var(--s10) auto;
   padding: 0 var(--min-margin);
   line-height: var(--r-major);
 }
@@ -604,22 +605,19 @@ h1, h2, h3 {
   line-height: var(--r-minor);
 }
 
-h1 {
+.heading h1 {
   font-size: calc(var(--scale-to-reforma) * var(--s20));
-  /* Use padding, since margin breaks out of container. */
-  padding-top: calc(var(--r-major) * var(--r-minor) * 1rem);
+  /* See nav.barred + main for top margin. */
   margin-bottom: calc(var(--r-major) * 1rem);
 }
 
-h2, h3 {
-  margin-top: calc(var(--r-major) * 1rem);
-}
-
-h2 {
+.heading h2 {
+  margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
   font-size: calc(var(--scale-to-reforma) * var(--s10));
 }
 
-h3 {
+.heading h3 {
+  margin-top: calc(var(--r-major) * 1rem);
   font-size: calc(var(--scale-to-reforma) * var(--s05));
   font-style: italic;
 }
@@ -632,19 +630,19 @@ h3 {
  * undo the Reforma's scaling as well.
  */
 
-h1.bruutal, h1.bely, h1.belyssimo {
+.heading h1.bruutal, .heading h1.bely, .heading h1.belyssimo {
   font-size: var(--s20);
 }
 
-h2.bruutal, h2.bely, h2.belyssimo {
+.heading h2.bruutal, .heading h2.bely, .heading h2.belyssimo {
   font-size: var(--s10);
 }
 
-h3.bruutal, h3.bely h3.belyssimo {
+.heading h3.bruutal, .heading h3.bely, .heading h3.belyssimo {
   font-size: var(--s05);
 }
 
-h3.belyssimo {
+.heading h3.belyssimo, .heading h3.belyssimo {
   font-style: normal;
 }
 
@@ -795,6 +793,14 @@ nav.barred > div {
   justify-content: left;
 }
 
+/*
+ * Leave a large space between navigation bar and main content.
+ * For nav.cornered, .byline declares the logical equivalent.
+ */
+nav.barred + main {
+  margin-top: var(--s30);
+}
+
 nav.cornered {
   position: absolute;
   top: 2vmin;
@@ -859,7 +865,7 @@ main ul > li {
  * -------------------------------------------------------------------------- */
 
 .page-footer {
-  margin: var(--s10) auto 0 auto;
+  margin: var(--s30) auto 0 auto;
   padding: var(--margin-text-top) var(--min-margin);
   display: flex;
   flex-wrap: wrap;
