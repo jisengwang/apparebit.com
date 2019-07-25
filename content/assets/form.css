@@ -2,6 +2,26 @@
  * (C) Copyright 2019 Robert Grimm
  * ========================================================================== */
 
+/*
+ * CSS CUSTOM PROPERTIES
+ * ---------------------
+ *
+ * Edge >= 16; Firefox >= 31; Google Chrome >= 49; Safari >= 9.1;
+ * iOS Safari >= 9.3; Google Chrome for Android >= 49; UC Browser Android 11.8;
+ * Samsung Internet >= 5;
+ *
+ * PREFIXES
+ * --------
+ *
+ * @-webkit-keyframes
+ * -webkit-animation
+ * -webkit-filter
+ * -moz-font-feature-settings, -webkit-font-feature-settings
+ * -ms-hyphens, -moz-hyphens, -webkit-hyphens
+ * -o-object-fit
+ * -webkit-transform
+ */
+
 @font-face {
   font-family: 'Bely';
   src: url(fonts/bely-regular.woff2),
@@ -103,14 +123,14 @@
   --r-minor: 1.2;
   --r-major: 1.5;
 
-  --t05: calc(1em / var(--r-minor));
-  --s05: calc(var(--r-minor) * 1em);
-  --s10: calc(var(--r-major) * 1em);
-  --s15: calc(var(--r-minor) * var(--s10));
-  --s20: calc(var(--r-major) * var(--s10));
-  --s30: calc(var(--r-major) * var(--s20));
-  --s40: calc(var(--r-major) * var(--s30));
-  --s50: calc(var(--r-major) * var(--s40));
+  --t05: calc(1em / var(--r-minor));         /*  0.8333  */
+  --s05: calc(var(--r-minor) * 1em);         /*  1.2     */
+  --s10: calc(var(--r-major) * 1em);         /*  1.5     */
+  --s15: calc(var(--r-minor) * var(--s10));  /*  1.8     */
+  --s20: calc(var(--r-major) * var(--s10));  /*  2.25    */
+  --s30: calc(var(--r-major) * var(--s20));  /*  3.375   */
+  --s40: calc(var(--r-major) * var(--s30));  /*  5.0625  */
+  --s50: calc(var(--r-major) * var(--s40));  /*  7.59375 */
 
   --min-margin: 0.5em;
   --max-measure: 29em;
@@ -234,6 +254,7 @@ li, p {
 }
 
 li {
+  /* Hanging punctuation at start of first line interferes with marker. */
   hanging-punctuation: last allow-end;
 }
 
@@ -564,6 +585,7 @@ address {
 }
 
 .cover img {
+  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -687,12 +709,16 @@ hr::after {
   display: inline-block;
   content: '⁂';
   animation: spin 20s ease-in-out 0s infinite;
+/* And action! */
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(  0deg); transform: rotate(  0deg); }
+    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
 /* And action! */
 @keyframes spin {
-  from { transform: rotate(  0deg); }
-    to { transform: rotate(360deg); }
+  from { -webkit-transform: rotate(  0deg); transform: rotate(  0deg); }
+    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
