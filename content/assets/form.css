@@ -132,7 +132,8 @@
   --color-dirty-white: #e0e0e0;
   --color-grey: #a0a0a0;
   --color-black: #201d1d;
-  --color-deep-black: #0c0a0a;
+  --color-deep-black: #000;
+  --color-yellow: #fff143;
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-dark: var(--color-dirty-white);
@@ -140,7 +141,7 @@
   --color-accent2: #35ff61;
   --color-accent3: #ff82e8;
   --color-accent4: #ffb74a;
-  --color-accent5: #fff143;
+  --color-accent5: var(--color-yellow);
 }
 
 /* Don't even think to print dark color scheme! */
@@ -164,14 +165,6 @@
   }
 }
 
-:root {
-  --color-link-fg: var(--color-fg);
-  --color-link-bg: transparent;
-  --color-link-focus-fg: var(--color-bg);
-  --color-link-focus-bg: var(--color-fg);
-  --color-link-active-fg: var(--color-fg);
-  --color-link-active-bg: var(--color-fg);
-}
 
 .gradient1 {
   background-color: var(--color-accent1);
@@ -432,37 +425,46 @@ main {
  * -------------------------------------------------------------------------- */
 
 a {
-  transition: all 0.1s ease-out;
+  /* Safari shows links in blue if color isn't set here as well. */
+  /*color: var(--color-fg);*/
   text-decoration: underline;
-  text-decoration-color:  var(--color-fg);
-  background-color: transparent;
+  transition: all 0.1s ease-out;
 }
 
 a:link, a:visited {
-  color: var(--color-link-fg);
-  fill: var(--color-link-fg);
-  background-color: var(--color-link-bg);
+  color: var(--link-fg, var(--color-fg));
+  fill: var(--link-fg, var(--color-fg));
+  -webkit-text-decoration-color:  var(--link-underline, var(--color-fg));
+  text-decoration-color:  var(--link-underline, var(--color-fg));
+  background-color: var(--link-bg, transparent);
 }
 
 a:focus, a:hover {
-  color: var(--color-link-focus-fg);
-  fill: var(--color-link-focus-fg);
-  text-decoration-color: transparent;
-  background-color: var(--color-link-focus-bg);
-  outline: none;
+  color: var(--link-focus-fg, var(--link-bg, var(--color-bg)));
+  fill: var(--link-focus-fg, var(--link-bg, var(--color-bg)));
+  -webkit-text-decoration-color:  var(--link-focus-underline, transparent);
+  text-decoration-color: var(--link-focus-underline, transparent);
+  background-color: var(--link-focus-bg, var(--link-fg, var(--color-fg)));
+  outline: solid 0.13em transparent;
 }
 
 a:focus:not(:focus-visible) {
-  color: var(--color-fg);
-  fill: var(--color-fg);
-  text-decoration-color: var(--color-fg);
-  background-color: transparent;
+  color: var(--link-fg, var(--color-fg));
+  fill: var(--link-fg, var(--color-fg));
+  -webkit-text-decoration-color:  var(--link-underline, var(--color-fg));
+  text-decoration-color:  var(--link-underline, var(--color-fg));
+  background-color: var(--link-bg, transparent);
 }
 
 a:active {
-  color: var(--color-link-active-fg);
-  fill: var(--color-link-active-fg);
-  background-color: var(--color-link-active-bg);
+  color: var(--link-active-fg, var(--color-fg));
+  fill: var(--link-active-fg, var(--color-fg));
+  -webkit-text-decoration-color:
+    var(--link-active-underline, var(--link-focus-underline, transparent));
+  text-decoration-color:
+    var(--link-active-underline, var(--link-focus-underline, transparent));
+  background-color:
+    var(--link-active-bg, var(--link-focus-bg, var(--color-fg)));
 }
 
 /* -------------------------------------------------------------------------- *
@@ -791,7 +793,7 @@ nav.barred {
   height: var(--s20);
   width: 100%;
   background-color: var(--color-bg-dark);
-  --color-link-bg: var(--color-bg);
+  --link-bg: var(--color-bg);
 }
 
 nav.barred > div {
