@@ -19,6 +19,7 @@
  * -moz-font-feature-settings, -webkit-font-feature-settings
  * -ms-hyphens, -moz-hyphens, -webkit-hyphens
  * -o-object-fit
+ * -webkit-text-decoration-color
  * -webkit-transform
  */
 
@@ -298,7 +299,10 @@ p {
 /* -------------------------------------------------------------------------- */
 
 @supports not (font-variant-caps: all-small-caps) {
-  abbr, .byline, .capped span:first-child, .roman {
+  abbr,
+  .byline,
+  .capped span:first-child,
+  .roman {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
   }
@@ -310,7 +314,10 @@ p {
 }
 
 @supports (font-variant-caps: all-small-caps) {
-  abbr, .byline, .capped span:first-child, .roman {
+  abbr,
+  .byline,
+  .capped span:first-child,
+  .roman {
     font-variant-caps: all-small-caps;
   }
 
@@ -426,17 +433,10 @@ abbr[title] {
   text-decoration: none;
 }
 
-main > p,
-main .heading,
-main section > *,
-main footer > * {
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--margin-text-top) auto 0 auto;
-  padding: 0 var(--min-margin);
-}
-
 body {
+  color: #201d1d;
   color: var(--color-fg);
+  background-color: #f6f6f8;
   background-color: var(--color-bg);
 }
 
@@ -446,10 +446,37 @@ dfn {
 
 main {
   display: block;
+  margin-bottom: var(--s03);
 }
 
-::-moz-selection { background-color: var(--color-accent5); }
-::selection { background-color: var(--color-accent5); }
+main > p,
+main .heading,
+main section > *,
+main footer > * {
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
+  margin: var(--margin-text-top) auto 0 auto;
+  padding: 0 var(--min-margin);
+}
+
+::-moz-selection {
+  background-color: #fff143;
+  background-color: var(--color-accent5);
+}
+
+::selection {
+  background-color: #fff143;
+  background-color: var(--color-accent5);
+}
+
+.signature {
+  text-align: right;
+  font-style: italic;
+}
+
+.signature::before {
+  content: '—';
+}
+
 
 /* ========================================================================== *
  * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
@@ -537,7 +564,7 @@ a:active {
  * .banner: the art of making banners out of text
  * -------------------------------------------------------------------------- */
 
- .banner {
+.banner {
   padding: 0 0.2em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
