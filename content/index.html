@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Apparebit</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19270995-2"></script>
-<script>(function(w,d){(w[d]=w[d]||[]).push('js',new Date(),'config','UA-19270995-2')})(window,'dataLayer')</script>
+<link rel="preload" href="/assets/fonts/bely-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
 <link rel="stylesheet" href="/assets/form.css">
 <link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
@@ -16,7 +16,7 @@
 <meta name="keywords" content="Robert Grimm, photography, writing, software engineer">
 <link rel="canonical" href="https://apparebit.com">
 <meta property="og:url" content="https://apparebit.com">
-<meta property="og:image" content="/assets/apparebit-1200x630.jpg">
+<meta property="og:image" content="/assets/images/apparebit-1200x630.jpg">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -31,28 +31,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#fff143">
 <style>
+main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello, .hello2 { font-family: var(--bely-display-fontstack); }
-.hello { font-size: var(--s15); }
+.hello { font-size: var(--s20); line-height: 1; }
 .hello2 { font-size: var(--s05); line-height: calc(var(--r-minor)  * 1rem); }
-.page-footer h2 { font-size: var(--s05); }
-main section:first {
-  padding-top: calc(var(--r-major) * var(--r-minor) * 1rem);
+.card > h3 > a > span {
+  transform: rotate(-12deg) translateY(-0.4em) translateX(-0.6em);
 }
-.yellow {
-  background-color: var(--color-accent5);
-}
-
-.white {
-  background-color: var(--color-bg);
-}
+.card:nth-child(1) > .image > img { object-position: 50% 100%; }
+.card:nth-child(2) > .image > img { object-position: 75% 0%; }
+.card > .image > img { filter: grayscale(0.6); }
 </style>
 </head>
 <body class=h-card>
 
-<nav class=barred>
+<nav class="page-header barred">
 <div>
 <a rel=home href="/">
-  <svg role=img aria-labelledby=logo-label viewBox="18 22 60 57"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
+  <svg role=img aria-labelledby=logo-label viewBox="18 22 60 57" width="25.2" height="25.2"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
 </a>
 </div>
 </nav>
@@ -65,7 +61,7 @@ main section:first {
 
 <div class=with-inset>
 <figure class=inset-right>
-<img class=u-photo src="/assets/robert.png" alt="Robert Grimm with his cat Esteban resting on his chest">
+<img class=u-photo src="/assets/images/robert-and-esteban-666x666.jpg" alt="Robert Grimm with his cat Esteban resting on his chest">
 <figcaption>Your host.</figcaption>
 </figure>
 
@@ -87,33 +83,29 @@ websites and Facebook—thus consolidating my online presence here. I am also
 working on new material. If you have a question or comment, please do reach out
 and say <a class=u-email href="mailto:apparebit@gmail.com"><span
 class=hello2>Hello</span></a>, too!</p>
+
+<p class=signature>Robert Grimm</p>
 </section>
 
 <section aria-labelledby=featured>
 <h2 id=featured hidden>Featured</h2>
-
-<ul class=card-deck>
+<ul class=carddeck>
 
 <li class=card>
-<div>
-<h3><a class="banner belyssimo" href="/features/do-you-be">Do You Be?</a></h3>
-<p class=description>
-<span class=banner>The vocal silence of Meredith Monk</span><br>
-<span class=banner>An appraisal of a singular artist</span>
-</p>
+<h3><a href="/features/do-you-be">&nbsp;<span>Do You Be?</span></a></h3>
+<div class=image>
 <img src="/features/do-you-be/auspicious-stillness.png" alt="The open stage at the Brooklyn Academy of Music right before the world premiere of Meredith Monk’s Cellular Songs, empty but for four stools and a piano in the corners">
 </div>
+<p class=description>The dancing voice of Meredith Monk</p>
 </li>
 
 <li class=card>
-<div>
-<h3><a class="banner bruutal" href="/features/ubu-trump">Ubu Trump? Trump Roi!</a></h3>
-<p class=description>
-<span class=banner>The nihilism of Donald Trump</span><br>
-<span class=banner>Analysis of an election</span>
-</p>
+<h3><a href="/features/ubu-trump">&nbsp;<span>Ubu Trump?<br>
+  Trump Roi!</span></a></h3>
+<div class=image>
 <img src="/features/ubu-trump/the-dark-tower.jpg" alt="The zig-zag of Trump Tower in Manhattan on a grey and rainy day">
 </div>
+<p class=description>The nihilism of Donald Trump</p>
 </li>
 
 </ul>
@@ -125,7 +117,7 @@ class=hello2>Hello</span></a>, too!</p>
 <h2 id=in-here>In Here</h2>
 <ul>
   <li><a href="/about/apparebit">Imprint</a></li>
-  <li><a rel=privacy href="/about/privacy/">Privacy</a></li>
+  <li><a href="/about/privacy/">Privacy</a></li>
 </ul>
 </section>
 
@@ -144,5 +136,10 @@ class=hello2>Hello</span></a>, too!</p>
 Grimm</a>. All rights reserved.</p>
 </footer>
 
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-19270995-2', 'auto');
+ga('send', 'pageview');
+</script>
 </body>
 </html>

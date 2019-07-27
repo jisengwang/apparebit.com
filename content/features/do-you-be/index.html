@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>Apparebit • Do You Be?</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19270995-2"></script>
-<script>(function(w,d){(w[d]=w[d]||[]).push('js',new Date(),'config','UA-19270995-2')})(window,'dataLayer')</script>
 <link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
 <link rel="stylesheet" href="/assets/form.css">
 <link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
@@ -34,12 +33,13 @@
 <meta name="theme-color" content="#fff143">
 <style>
 nav {
+  --link-fg: var(--color-black);
   --link-bg: #fdbafd;
   --link-underline: transparent;
 }
 
 .cover img {
-  object-position: 50% 100%
+  object-position: 50% 100%;
 }
 
 .cover .title {
@@ -100,10 +100,10 @@ nav {
 </head>
 <body>
 
-<nav class=cornered>
+<nav class="page-header cornered">
 <div>
 <a rel=home href="/">
-<svg role=img aria-labelledby=logo-label viewBox="18 22 60 57"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
+<svg role=img aria-labelledby=logo-label viewBox="18 22 60 57" width="25.2" height="25.2"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
 </a>
 </div>
 </nav>
@@ -474,7 +474,7 @@ there to cheer for Meredith as well.</p>
 <h2 id=in-here>In Here</h2>
 <ul>
   <li><a href="/about/apparebit">Imprint</a></li>
-  <li><a rel=privacy href="/about/privacy/">Privacy</a></li>
+  <li><a href="/about/privacy/">Privacy</a></li>
 </ul>
 </section>
 
@@ -493,5 +493,10 @@ there to cheer for Meredith as well.</p>
 Grimm</a>. All rights reserved.</p>
 </footer>
 
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-19270995-2', 'auto');
+ga('send', 'pageview');
+</script>
 </body>
 </html>
