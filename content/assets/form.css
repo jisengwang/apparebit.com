@@ -124,6 +124,13 @@
   --r-major: 1.5;
 
   --t05: calc(1em / var(--r-minor));         /*  0.8333  */
+  --t10: calc(1em / var(--r-major));         /*  0.66667 */
+  --t15: calc(var(--t10) / var(--r-minor));  /*  0.55556 */
+  --t20: calc(var(--t10) / var(--r-major));  /*  0.44444 */
+  --t30: calc(var(--t20) / var(--r-major));  /*  0.29630 */
+  --t40: calc(var(--t30) / var(--r-major));  /*  0.19753 */
+  --t50: calc(var(--t40) / var(--r-major));  /*  0.13169 */
+
   --s05: calc(var(--r-minor) * 1em);         /*  1.2     */
   --s10: calc(var(--r-major) * 1em);         /*  1.5     */
   --s15: calc(var(--r-minor) * var(--s10));  /*  1.8     */
@@ -131,6 +138,9 @@
   --s30: calc(var(--r-major) * var(--s20));  /*  3.375   */
   --s40: calc(var(--r-major) * var(--s30));  /*  5.0625  */
   --s50: calc(var(--r-major) * var(--s40));  /*  7.59375 */
+  --s60: calc(var(--r-major) * var(--s50));  /* 11.39063 */
+  --s70: calc(var(--r-major) * var(--s60));  /* 17.08594 */
+  --s80: calc(var(--r-major) * var(--s70));  /* 25.62891 */
 
   --min-margin: 0.5em;
   --max-measure: 29em;
