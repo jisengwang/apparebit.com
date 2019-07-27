@@ -148,15 +148,21 @@
    * Colors
    * ------------------------------------------------------------------------ */
 
-  --color-white: #f8f6f6;
-  --color-dirty-white: #e0e0e0;
-  --color-grey: #a0a0a0;
-  --color-black: #201d1d;
-  --color-deep-black: #000;
+  --color-white: #f6f6f8;
+  --color-grey1: #e3e7ed;
+  --color-grey2: #e0e0e0;
+  --color-grey3: #a0a0a0;
+  --color-grey4: #404040;
+  --color-blackish: #222225;
+  --color-black: #1d1d20;
+  --color-none: #000;
   --color-yellow: #fff143;
+
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
-  --color-bg-dark: var(--color-dirty-white);
+  --color-bg-offset: var(--color-grey1);
+  --color-bg-hdr-ftr: var(--color-grey2);
+  --color-separator: var(--color-grey3);
   --color-accent1: #2bfff4;
   --color-accent2: #35ff61;
   --color-accent3: #ff82e8;
@@ -167,9 +173,11 @@
 /* Don't even think to print dark color scheme! */
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --color-fg: var(--color-white);
-    --color-bg: var(--color-black);
-    --color-bg-dark: var(--color-deep-black);
+    --color-fg: var(--color-grey1);
+    --color-bg: var(--color-blackish);
+    --color-bg-offset: var(--color-grey4);
+    --color-bg-hdr-ftr: var(--color-none);
+    /* --color-separator stays as var(--color-grey3). */
     --color-accent1: #970202;
     --color-accent2: #830183;
     --color-accent3: #8039c9;
@@ -922,7 +930,7 @@ main ul > li {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: var(--color-bg-dark);
+  background-color: var(--color-bg-hdr-ftr);
 }
 
 .in-here, .out-there {
@@ -947,14 +955,14 @@ main ul > li {
 .in-here {
   padding-right: 0.44em;
    /* Formerly, only 0.082em at text color. */
-  border-right: solid calc(var(--t05) / 2) var(--color-grey);
+  border-right: solid calc(var(--t05) / 2) var(--color-separator);
   text-align: right;
 }
 
 .out-there {
   padding-left: 0.44em;
    /* Formerly, only 0.082em at text color. */
-   border-left: solid calc(var(--t05) / 2) var(--color-grey);
+   border-left: solid calc(var(--t05) / 2) var(--color-separator);
   text-align: left;
 }
 
