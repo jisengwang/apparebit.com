@@ -618,6 +618,141 @@ address {
 }
 
 /* -------------------------------------------------------------------------- *
+ * .card, .deck
+ * -------------------------------------------------------------------------- */
+
+/*
+ * The non-breaking space in "<h3><a>&nbsp;<span>..." is strictly necessary.
+ * Otherwise, Safari treats <a> as empty, doesn’t activate the link, and skips
+ * it during keyboard navigation. The non-breaking space works because it can’t
+ * be removed and it doesn’t obstruct anything. While it does break layout if
+ * left in flow, we position link absolute so that it covers the entire card.
+ * Once <a> is card-sized, we also position nested <span> absolute for headline.
+ */
+
+.carddeck {
+  --card-mx: calc(var(--r-minor) * var(--s70));
+
+  margin: var(--s30) 0 0 0;
+  padding: 0 calc(50vw - var(--max-measure) / 2) 0 0;
+  width: 100%;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  max-width: var(--card-mx);
+  width: 100%;
+  height: 100%;
+  margin: var(--s10) 0 0 0;
+  list-style: none;
+}
+
+/*
+
+  max-width: calc(50vw + var(--max-measure) / 2);
+  margin: var(--s30) 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  max-width: var(--mx);
+  margin: 0 auto var(--s10) auto;
+  position: relative;
+  line-height: 0;
+}*/
+
+/* var(--80) + 2 * var(--min-margin) */
+@media (min-width: 34.951em) {
+  .carddeck {
+    width: calc(50vw + var(--max-measure) / 2 + var(--min-margin));
+    margin: var(--s20) 0 calc(-1 * var(--s10)) 0;
+    padding: 0 0 0 var(--min-margin);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .card {
+    width: var(--mx);
+    margin: 0 0 var(--s10) var(--s10);
+  }
+}
+
+.card > h3 {
+  font-family: var(--bely-fontstack);
+  font-size: var(--s05);
+  line-height: var(--r-minor);
+}
+
+.card > h3 > a, .card > h3 > a::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.card > h3 > a {
+  --link-fg: transparent;
+  --link-bg: transparent;
+  --link-active-bg: transparent;
+  z-index: 665;
+}
+
+.card > h3 > a::before {
+  content: '';
+  border: solid var(--t20) var(--color-accent2);
+  opacity: 0;
+}
+
+.card > h3 > a:focus::before, .card > h3 > a:hover::before {
+  opacity: 1;
+}
+
+.card > h3 > a > span {
+  position: absolute;
+  top: var(--t15);
+  left: var(--t15);
+  padding: var(--t50);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .card > h3 > a > span {
+    background-color: var(--color-bg-offset);
+  }
+}
+
+/* Force a 4:3 aspect ratio. */
+.card > .image {
+  position: relative;
+  padding-top: calc(100% / var(--r-major));
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Cover with image. */
+.card > .image > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.card > .description {
+  padding: var(--t05);
+  background-color: var(--color-bg-offset);
+  text-align: right;
+  line-height: 1;
+}
+
+/* -------------------------------------------------------------------------- *
  * .cover
  * -------------------------------------------------------------------------- */
 
