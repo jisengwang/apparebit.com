@@ -41,6 +41,7 @@
   font-display: swap;
 }
 
+/*
 @font-face {
   font-family: 'Bely';
   src: url(fonts/bely-bold.woff2),
@@ -49,6 +50,15 @@
   font-weight: bold;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Bely';
+  src: url(fonts/bely-bold-italic.woff2),
+    url(fonts/bely-bold-italic.woff);
+  font-style: italic;
+  font-weight: bold;
+  font-display: swap;
+}*/
 
 @font-face {
   font-family: 'Bely Display';
@@ -413,17 +423,6 @@ sup {
   font-weight: 400;
 }
 
-/*
- * No fallback font on purpose! Bely Display uses a styleset for its symbols,
- * which are encoded as Latin characters. So if no Bely Display, it's best not
- * to display anything.
- */
-.bely-symbol {
-  font-family: 'Bely Display';
-  font-feature-settings: 'ss02';
-  font-style: normal;
-}
-
 /* ========================================================================== *
  * Keeping Up Appearances
  * ========================================================================== */
@@ -477,6 +476,10 @@ main footer > * {
   content: '—';
 }
 
+.standout {
+  -webkit-font-feature-settings: var(--font-features-standout);
+  font-feature-settings: var(--font-features-standout);
+}
 
 /* ========================================================================== *
  * COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS COMPONENTS
@@ -834,7 +837,7 @@ hr::after {
 
 /* Respect the user's wishes! */
 @media (prefers-reduced-motion: reduce) {
-  hr, hr::after { animation: none; }
+  hr, hr::after { -webkit-animation: none; animation: none; }
 }
 
 /* -------------------------------------------------------------------------- *
@@ -863,12 +866,14 @@ img {
   margin-right: var(--min-margin);
   float: left;
   width: calc(7 * var(--s10));
+  max-height: calc(8 * var(--s10));
 }
 
 .inset-right {
   margin-left: var(--min-margin);
   float: right;
   width: calc(7 * var(--s10));
+  max-height: calc(8 * var(--s10));
 }
 
 @supports not (-moz-appearance: none) {
@@ -927,6 +932,7 @@ main ol > li {
 
 main ol > li::before {
   content: '(' counter(ol) ') ';
+  -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
 }
 
