@@ -838,59 +838,6 @@ img {
 }
 
 /* -------------------------------------------------------------------------- *
- * nav
- * -------------------------------------------------------------------------- */
-
-nav {
-  line-height: 0;
-}
-
-nav a {
-  display: block;
-  padding: calc((var(--s20) - var(--s05)) / 2);
-}
-
-nav svg {
-  height: var(--s05);
-  width: var(--s05);
-}
-
-nav.barred {
-  height: var(--s20);
-  width: 100%;
-  background-color: var(--color-bg-dark);
-  --link-bg: var(--color-bg);
-}
-
-nav.barred > div {
-  height: 100%;
-  width: 100%;
-  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
-  margin: 0 auto;
-  padding: 0 var(--min-margin);
-  display: flex;
-  justify-content: left;
-}
-
-/*
- * Leave a large space between navigation bar and main content.
- * For nav.cornered, .byline declares the logical equivalent.
- */
-nav.barred + main {
-  margin-top: var(--s30);
-}
-
-nav.cornered {
-  position: absolute;
-  top: 2vmin;
-  left: 2vmin;
-}
-
-nav.cornered a {
-  border: solid 0.2em var(--color-fg);
-}
-
-/* -------------------------------------------------------------------------- *
  * ol, ul
  * -------------------------------------------------------------------------- */
 
@@ -944,8 +891,9 @@ main ul > li {
  * -------------------------------------------------------------------------- */
 
 .page-footer {
-  margin: var(--s30) auto 0 auto;
+  margin: var(--s30) 0 0 0;
   padding: var(--margin-text-top) var(--min-margin);
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -988,6 +936,67 @@ main ul > li {
 .copyright {
   margin-top: var(--margin-text-top);
   font-size: var(--t05);
+}
+
+/* Make the page footer sticky on short pages, including error pages. */
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* -------------------------------------------------------------------------- *
+ * .page-header
+ * -------------------------------------------------------------------------- */
+
+.page-header {
+  line-height: 0;
+}
+
+.page-header a {
+  display: block;
+  padding: calc((var(--s20) - var(--s05)) / 2);
+}
+
+.page-header svg {
+  height: var(--s05);
+  width: var(--s05);
+}
+
+.page-header.barred {
+  height: var(--s20);
+  width: 100%;
+  background-color: var(--color-bg-hdr-ftr);
+  --link-bg: var(--color-bg);
+}
+
+.page-header.barred > div {
+  height: 100%;
+  width: 100%;
+  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
+  margin: 0 auto;
+  padding: 0 var(--min-margin);
+  display: flex;
+  justify-content: left;
+}
+
+/*
+ * Leave a large space between navigation bar and main content.
+ * For nav.cornered, .byline declares the logical equivalent.
+ */
+.page-header.barred + main {
+  margin-top: calc(var(--s30) - var(--margin-text-top));
+}
+
+.page-header.cornered {
+  position: absolute;
+  top: 2vmin;
+  left: 2vmin;
 }
 
 /* -------------------------------------------------------------------------- *
