@@ -33,9 +33,11 @@
 <meta name="theme-color" content="#fff143">
 <style>
 nav {
+  --link-fg: var(--color-grey1);
   --link-underline: transparent;
-  --link-fg: var(--color-black);
-  --link-bg: var(--color-yellow);
+  --link-bg: var(--color-grey4);
+  --link-active-fg: var(--color-grey1);
+  --link-active-bg: var(--color-grey1);
 }
 
 .cover img {
@@ -44,24 +46,38 @@ nav {
 
 .cover h1 {
   position: absolute;
-  bottom: 1.5vmin;
-  left: 1.5vmin;
-  right: 1.5vmin;
+  top: 30vh;
+  left: 35vw;
   font-size: calc(1em + 3vmin);
-  line-height: var(--r-major);
+  line-height: var(--s15);
+  perspective: 80em;
+  transform-style: preserve-3d;
 }
 
-.banner {
-  background-color: var(--color-accent5);
+.cover h1 span {
+  display: inline-block;
+  color: var(--color-black);
+  padding: 0 0.2em;
 }
+
+.cover h1 span:nth-of-type(1) {
+  transform: translateZ(10em) rotateX(37deg) rotateY(36deg) rotateZ(-33deg);
+  background-color: #f4e73a;
+}
+
+.cover > h1 > span:nth-of-type(2) {
+  transform: translateZ(30em) rotateZ(-27deg)  rotateX(15deg) rotateY(33deg) rotateZ(29deg);
+  background-color: var(--color-yellow);
+}
+
 </style>
 </head>
 <body>
 
-<nav class=cornered>
+<nav class="page-header cornered">
 <div>
 <a rel=home href="/">
-<svg role=img aria-labelledby=logo-label viewBox="18 22 60 57"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
+<svg role=img aria-labelledby=logo-label viewBox="18 22 60 57" width="25.2" height="25.2"><title id=logo-label>Home</title><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
 </a>
 </div>
 </nav>
@@ -69,7 +85,7 @@ nav {
 <main>
 <article class="h-entry e-content">
 <header class=cover>
-<h1 class="bruutal p-name"><span class=banner>Ubu Trump?</span><br><span>Trump
+<h1 class="bruutal p-name"><span>Ubu Trump?</span><br><span>Trump
 Roi!</span></h1>
 <img src=/features/ubu-trump/the-dark-tower.jpg alt="The zig-zag of Trump Tower in Manhattan on a grey and rainy day">
 <div class=byline>
@@ -686,7 +702,7 @@ president of the United States. Or rather: <em>To hell with him!</em></p>
 <h2 id=in-here class=bruutal>In Here</h2>
 <ul>
   <li><a href="/about/apparebit">Imprint</a></li>
-  <li><a rel=privacy href="/about/privacy/">Privacy</a></li>
+  <li><a href="/about/privacy/">Privacy</a></li>
 </ul>
 </section>
 
@@ -704,5 +720,11 @@ president of the United States. Or rather: <em>To hell with him!</em></p>
 <p class=copyright>© 2019 <a rel=author href="https://apparebit.com">Robert
 Grimm</a>. All rights reserved.</p>
 </footer>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-19270995-2', 'auto');
+ga('send', 'pageview');
+</script>
 </body>
 </html>
