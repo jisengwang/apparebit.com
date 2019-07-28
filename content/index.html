@@ -35,12 +35,12 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello, .hello2 { font-family: var(--bely-display-fontstack); }
 .hello { font-size: var(--s20); line-height: 1; }
 .hello2 { font-size: var(--s05); line-height: calc(var(--r-minor)  * 1rem); }
-.card > h3 > a > span {
-  transform: rotate(-12deg) translateY(-0.4em) translateX(-0.6em);
+.card:nth-child(2n) > h3 > a > span {
+  transform: rotate(-14deg) translateY(-0.4em) translateX(-0.6em);
 }
 .card:nth-child(1) > .image > img { object-position: 50% 100%; }
 .card:nth-child(2) > .image > img { object-position: 75% 0%; }
-.card > .image > img { filter: grayscale(0.6); }
+.card > .image > img { filter: grayscale(0.5); }
 </style>
 </head>
 <body class=h-card>
@@ -84,13 +84,14 @@ working on new material. If you have a question or comment, please do reach out
 and say <a class=u-email href="mailto:apparebit@gmail.com"><span
 class=hello2>Hello</span></a>, too!</p>
 
-<p class=signature>Robert Grimm</p>
+<p class=signature><span>Robert Grimm</span></p>
 </section>
 
 <section aria-labelledby=featured>
 <h2 id=featured hidden>Featured</h2>
 <ul class=carddeck>
 
+<!-- *********************************************************************** -->
 <li class=card>
 <h3><a href="/features/do-you-be">&nbsp;<span>Do You Be?</span></a></h3>
 <div class=image>
@@ -99,6 +100,7 @@ class=hello2>Hello</span></a>, too!</p>
 <p class=description>The dancing voice of Meredith Monk</p>
 </li>
 
+<!-- *********************************************************************** -->
 <li class=card>
 <h3><a href="/features/ubu-trump">&nbsp;<span>Ubu Trump?<br>
   Trump Roi!</span></a></h3>
