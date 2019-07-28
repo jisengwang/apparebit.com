@@ -476,6 +476,10 @@ main footer > * {
   content: '—';
 }
 
+.signature > * {
+  font-size: var(--s05);
+}
+
 .standout {
   -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
@@ -630,55 +634,35 @@ address {
  * Once <a> is card-sized, we also position nested <span> absolute for headline.
  */
 
+/* Do the layout. */
+
 .carddeck {
-  --card-mx: calc(var(--r-minor) * var(--s70));
+  --card-max: calc(var(--r-minor) * var(--s70));
 
+  max-width: unset;
   margin: var(--s30) 0 0 0;
-  padding: 0 calc(50vw - var(--max-measure) / 2) 0 0;
+  padding: 0 calc(50vw - var(--max-measure) / 2) 0 var(--min-margin);
   width: 100%;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .card {
+  max-width: calc(var(--r-minor) * var(--s70));
   position: relative;
-  max-width: var(--card-mx);
   width: 100%;
-  height: 100%;
-  margin: var(--s10) 0 0 0;
-  list-style: none;
+  margin: var(--s10) auto 0 auto;
 }
 
-/*
-
-  max-width: calc(50vw + var(--max-measure) / 2);
-  margin: var(--s30) 0 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.card {
-  max-width: var(--mx);
-  margin: 0 auto var(--s10) auto;
-  position: relative;
-  line-height: 0;
-}*/
-
-/* var(--80) + 2 * var(--min-margin) */
-@media (min-width: 34.951em) {
-  .carddeck {
-    width: calc(50vw + var(--max-measure) / 2 + var(--min-margin));
-    margin: var(--s20) 0 calc(-1 * var(--s10)) 0;
-    padding: 0 0 0 var(--min-margin);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
+@media (min-width: 35.625em) {
   .card {
-    width: var(--mx);
-    margin: 0 0 var(--s10) var(--s10);
+    margin: var(--s10) 0 0 var(--s10);
   }
 }
+
+/* Link covers entire card. */
 
 .card > h3 {
   font-family: var(--bely-fontstack);
@@ -694,9 +678,10 @@ address {
   left: 0;
 }
 
+/* Its focus and hover effect is special. */
+
 .card > h3 > a {
   --link-fg: transparent;
-  --link-bg: transparent;
   --link-active-bg: transparent;
   z-index: 665;
 }
@@ -710,6 +695,8 @@ address {
 .card > h3 > a:focus::before, .card > h3 > a:hover::before {
   opacity: 1;
 }
+
+/* The headline too is special. */
 
 .card > h3 > a > span {
   position: absolute;
@@ -726,7 +713,8 @@ address {
   }
 }
 
-/* Force a 4:3 aspect ratio. */
+/* Images are forced to adhere to modular rhythm for aspect ratio. */
+
 .card > .image {
   position: relative;
   padding-top: calc(100% / var(--r-major));
@@ -734,7 +722,6 @@ address {
   overflow: hidden;
 }
 
-/* Cover with image. */
 .card > .image > img {
   position: absolute;
   top: 0;
@@ -744,6 +731,8 @@ address {
   -o-object-fit: cover;
   object-fit: cover;
 }
+
+/* Finally, there stil is a tagline or secondary headline. */
 
 .card > .description {
   padding: var(--t05);
