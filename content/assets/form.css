@@ -78,6 +78,7 @@
   font-display: fallback;
 }
 
+/*
 @font-face {
   font-family: 'Bluu Suuperstar';
   src: url(fonts/bluu-suuperstar-bold.woff2),
@@ -85,7 +86,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: fallback;
-}
+}*/
 
 @font-feature-values Bluu Suuperstar {
   @styleset {
@@ -102,6 +103,7 @@
   font-display: fallback;
 }
 
+/*
 @font-face {
   font-family: 'Reforma 2018';
   src: url(fonts/reforma-2018-gris-italica.woff2),
@@ -109,7 +111,7 @@
   font-style: italic;
   font-weight: normal;
   font-display: fallback;
-}
+}*/
 
 /* -------------------------------------------------------------------------- *
  * Sane Sizing
@@ -498,8 +500,6 @@ main footer > * {
  * -------------------------------------------------------------------------- */
 
 a {
-  /* Safari shows links in blue if color isn't set here as well. */
-  /*color: var(--color-fg);*/
   text-decoration: underline;
   transition: all 0.1s ease-out;
 }
@@ -628,13 +628,12 @@ address {
 /*
  * The non-breaking space in "<h3><a>&nbsp;<span>..." is strictly necessary.
  * Otherwise, Safari treats <a> as empty, doesn’t activate the link, and skips
- * it during keyboard navigation. The non-breaking space works because it can’t
- * be removed and it doesn’t obstruct anything. While it does break layout if
- * left in flow, we position link absolute so that it covers the entire card.
- * Once <a> is card-sized, we also position nested <span> absolute for headline.
+ * it during keyboard navigation. The non-breaking space is enough of a
+ * character to convince Safari of link-worthiness. But it also is easy enough
+ * to hide.
  */
 
-/* Do the layout. */
+/* >>>>>>>>>> The Layout is Flex, but right-aligned and wrapping. <<<<<<<<<< */
 
 .carddeck {
   --card-max: calc(var(--r-minor) * var(--s70));
@@ -646,6 +645,7 @@ address {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  /* Safari and Chrome pretend to acceept end, but don't act on it. */
   justify-content: flex-end;
 }
 
@@ -662,7 +662,7 @@ address {
   }
 }
 
-/* Link covers entire card. */
+/* >>>>>>>>>> The link & hover effect cover entire card. <<<<<<<<<< */
 
 .card > h3 {
   font-family: var(--bely-fontstack);
@@ -678,7 +678,7 @@ address {
   left: 0;
 }
 
-/* Its focus and hover effect is special. */
+/* >>>>>>>>>> The hover effect is opacity only. <<<<<<<<<< */
 
 .card > h3 > a {
   --link-fg: transparent;
@@ -696,7 +696,7 @@ address {
   opacity: 1;
 }
 
-/* The headline too is special. */
+/* >>>>>>>>>> The nested headline is presented on top of image. <<<<<<<<<< */
 
 .card > h3 > a > span {
   position: absolute;
@@ -713,7 +713,7 @@ address {
   }
 }
 
-/* Images are forced to adhere to modular rhythm for aspect ratio. */
+/* >>>>>>>>>> Image aspect ratio is normalized to modular rhythm. <<<<<<<<<< */
 
 .card > .image {
   position: relative;
@@ -722,6 +722,12 @@ address {
   overflow: hidden;
 }
 
+/*
+ * When absolutely positioning images on an aspect ratio frame,
+ * the how matters. object-fit and object-position will not work
+ * if top/right/bottom/left was used. Thankfully, top/left/width/height
+ * do work.
+ */
 .card > .image > img {
   position: absolute;
   top: 0;
@@ -732,7 +738,7 @@ address {
   object-fit: cover;
 }
 
-/* Finally, there stil is a tagline or secondary headline. */
+/* >>>>>>>>>> There even is a space for a tagline below the image. <<<<<<<<<< */
 
 .card > .description {
   padding: var(--t05);
@@ -1187,7 +1193,7 @@ main {
 
 /*
  * Leave a large space between navigation bar and main content.
- * For nav.cornered, .byline declares the logical equivalent.
+ * For .page-header.cornered, .byline declares the logical equivalent.
  */
 .page-header.barred + main {
   margin-top: calc(var(--s30) - var(--margin-text-top));
@@ -1288,6 +1294,10 @@ footer h2::before, footer h3::before {
   @page {
     margin-top: var(---s30);
     margin-bottom: var(--s30);
+  }
+
+  .page-header, .page-footer {
+    display: none;
   }
 
   h1 {
