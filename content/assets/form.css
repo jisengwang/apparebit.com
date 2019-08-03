@@ -1163,10 +1163,14 @@ main ul > li {
   font-size: var(--t05);
 }
 
-/* Make the page footer sticky on short pages, including error pages. */
+/* Make the page footer sticky on short pages, i.e., error pages. */
+
+html {
+  height: 100%;
+}
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
