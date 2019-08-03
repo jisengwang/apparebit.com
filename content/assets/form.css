@@ -637,16 +637,11 @@ address {
 
 .carddeck {
   --card-max: calc(var(--r-minor) * var(--s70));
-
   max-width: unset;
   margin: var(--s30) 0 0 0;
-  padding: 0 calc(50vw - var(--max-measure) / 2) 0 var(--min-margin);
+  padding: 0 var(--min-margin);
   width: 100%;
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  /* Safari and Chrome pretend to acceept end, but don't act on it. */
-  justify-content: flex-end;
 }
 
 .card {
@@ -656,7 +651,31 @@ address {
   margin: var(--s10) auto 0 auto;
 }
 
-@media (min-width: 35.625em) {
+/*
+ * Break iff: x/2 - MaxMeasure/2 = x - 2 CardMax - 2 S[10]
+ *     2 CardMax + 2 S[10] - MaxMeasure/2 = x - x/2
+ *     x = 4 CardMax + 4 S[10] - MaxMeasure
+ *     x = 4 * 1.2 * 17.0859 + 4 * 1.5 - 29   [em]
+ *     x = 82.01232 + 6 - 29   [em]
+ *     x = 59.01232   [em]
+ *     x = 77.45367 browser root em
+ *
+ * Setting the padding on the right does not work here because of the
+ * vertical scroll bar. Thankfully, setting the width is all that's
+ * required, since the box model keeps the box left-aligned by default.
+ */
+@media (min-width: 77.45em) {
+  .carddeck {
+    width: calc(50vw + var(--max-measure) / 2);
+    margin: calc(var(--s30) - var(--s10)) 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    /* Safari and Chrome pretend to accept end, but don't act on it. */
+    justify-content: flex-end;
+    overflow-y: hidden;
+  }
+
   .card {
     margin: var(--s10) 0 0 var(--s10);
   }
