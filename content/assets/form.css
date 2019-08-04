@@ -901,17 +901,16 @@ hr {
   margin-top: var(--s20);
   margin-bottom: var(--s20);
 
-  --sine-in: cubic-bezier(0.47, 0, 0.745, 0.715);
-  --sine-out: cubic-bezier(0.39, 0.575, 0.565, 1);
-  --amp: 0.4em;
-  --rot: 6deg;
+  --sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --amp: calc(var(--s10) / 4);
+  --rot: 10deg;
 
   -webkit-transform: translateY(0.5em);
   transform: translateY(0.5em);
   -webkit-animation:
-    10s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite up-down;
+    10s var(--sine) infinite up-down;
   animation:
-    10s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite up-down;
+    10s var(--sine) infinite up-down;
 }
 
 hr::after {
@@ -920,69 +919,28 @@ hr::after {
   display: inline-block;
   content: '⁂';
 
-  -webkit-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-animation-duration: 10s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-name: back-forth;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  animation-name: back-forth;
+  -webkit-transform: rotate(calc(-1 * var(--rot)));
+  transform: rotate(calc(-1 * var(--rot)));
+  -webkit-animation:
+    10s var(--sine) -6.25s infinite back-forth;
+  animation:
+    10s var(--sine) -6.25s infinite back-forth;
 }
 
 /* And action! */
 @-webkit-keyframes up-down {
-  0%, 100% { -webkit-transform: translateY(          var(--amp));
-                     transform: translateY(          var(--amp));  }
-  50% {      -webkit-transform: translateY(calc(-1 * var(--amp)));
-                     transform: translateY(calc(-1 * var(--amp))); } }
+  50% { -webkit-transform: translateY(calc(-1 * var(--amp)));
+                transform: translateY(calc(-1 * var(--amp))); } }
 @keyframes up-down {
-  0%, 100% { -webkit-transform: translateY(          var(--amp));
-                     transform: translateY(          var(--amp));  }
-  50% {      -webkit-transform: translateY(calc(-1 * var(--amp)));
-                     transform: translateY(calc(-1 * var(--amp))); } }
+  50% { -webkit-transform: translateY(calc(-1 * var(--amp)));
+                transform: translateY(calc(-1 * var(--amp))); } }
 
 @-webkit-keyframes back-forth {
-  0%, 50%, 100% {
-    -webkit-transform: rotate(                0deg );
-            transform: rotate(                0deg );
-    -webkit-animation-timing-function: var(--sine-out);
-            animation-timing-function: var(--sine-out);
-  }
-  25% {
-    -webkit-transform: rotate(calc(-1 * var(--rot)));
-            transform: rotate(calc(-1 * var(--rot)));
-    -webkit-animation-timing-function: var(--sine-in);
-            animation-timing-function: var(--sine-in);
-  }
-  75% {
-    -webkit-transform: rotate(          var(--rot) );
-            transform: rotate(          var(--rot) );
-    -webkit-animation-timing-function: var(--sine-in);
-            animation-timing-function: var(--sine-in);
-  }
-}
-
+  50% { -webkit-transform: rotate(var(--rot));
+                transform: rotate(var(--rot)); } }
 @keyframes back-forth {
-  0%, 50%, 100% {
-    -webkit-transform: rotate(                0deg );
-            transform: rotate(                0deg );
-    -webkit-animation-timing-function: var(--sine-out);
-            animation-timing-function: var(--sine-out);
-  }
-  25% {
-    -webkit-transform: rotate(calc(-1 * var(--rot)));
-            transform: rotate(calc(-1 * var(--rot)));
-    -webkit-animation-timing-function: var(--sine-in);
-            animation-timing-function: var(--sine-in);
-  }
-  75% {
-    -webkit-transform: rotate(          var(--rot) );
-            transform: rotate(          var(--rot) );
-    -webkit-animation-timing-function: var(--sine-in);
-            animation-timing-function: var(--sine-in);
-  }
-}
+  50% { -webkit-transform: rotate(var(--rot));
+                transform: rotate(var(--rot)); } }
 
 /* Respect the user's wishes! */
 @media (prefers-reduced-motion: reduce) {
