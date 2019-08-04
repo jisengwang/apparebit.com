@@ -180,14 +180,16 @@
   --color-black: #1d1d20;
   --color-none: #000;
   --color-yellow: #fff143;
+  --color-cyan: #2bfff4;
+  --color-green: #35ff61;
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-offset: var(--color-grey1);
   --color-bg-hdr-ftr: var(--color-grey2);
   --color-separator: var(--color-grey3);
-  --color-accent1: #2bfff4;
-  --color-accent2: #35ff61;
+  --color-accent1: var(--color-cyan);
+  --color-accent2: var(--color-green);
   --color-accent3: #ff82e8;
   --color-accent4: #ffb74a;
   --color-accent5: var(--color-yellow);
@@ -496,46 +498,32 @@ main footer > * {
  * ========================================================================== */
 
 /* -------------------------------------------------------------------------- *
- * a
+ * a:not(.stylish)
  * -------------------------------------------------------------------------- */
 
-a {
+a:not(.stylish) {
+  transition: all 0.1s ease-in;
   text-decoration: underline;
-  transition: all 0.1s ease-out;
 }
 
-a:link, a:visited {
-  color: var(--link-fg, var(--color-fg));
-  fill: var(--link-fg, var(--color-fg));
-  -webkit-text-decoration-color:  var(--link-underline, var(--color-fg));
-  text-decoration-color:  var(--link-underline, var(--color-fg));
-  background-color: var(--link-bg, transparent);
+a:not(.stylish):link, a:not(.stylish):visited {
+  color: var(--color-fg);
+  -webkit-text-decoration-color: var(--color-fg);
+  text-decoration-color: var(--color-fg);
+  background-color: transparent;
 }
 
-a:focus, a:hover {
-  color: var(--link-focus-fg, var(--link-bg, var(--color-bg)));
-  fill: var(--link-focus-fg, var(--link-bg, var(--color-bg)));
-  -webkit-text-decoration-color:  var(--link-focus-underline, transparent);
-  text-decoration-color: var(--link-focus-underline, transparent);
-  background-color: var(--link-focus-bg, var(--link-fg, var(--color-fg)));
-  outline: solid 0.13em transparent;
+a:not(.stylish):focus, a:not(.stylish):hover {
+  outline: none;
+  color: var(--link-focus-fg, var(--color-bg));
+  -webkit-text-decoration-color: transparent;
+  text-decoration-color: transparent;
+  background-color: var(--link-focus-bg, var(--color-fg));
 }
 
-a:focus:not(:focus-visible) {
-  color: var(--link-fg, var(--color-fg));
-  fill: var(--link-fg, var(--color-fg));
-  -webkit-text-decoration-color:  var(--link-underline, var(--color-fg));
-  text-decoration-color:  var(--link-underline, var(--color-fg));
-  background-color: var(--link-bg, transparent);
-}
-
-a:active {
-  color: var(--link-active-fg, var(--color-fg));
-  fill: var(--link-active-fg, var(--color-fg));
-  -webkit-text-decoration-color:
-    var(--link-active-underline, var(--link-focus-underline, transparent));
-  text-decoration-color:
-    var(--link-active-underline, var(--link-focus-underline, transparent));
+a:not(.stylish):active {
+  color:
+    var(--link-active-fg, var(--link-focus-fg, var(--color-fg)));
   background-color:
     var(--link-active-bg, var(--link-focus-bg, var(--color-fg)));
 }
@@ -700,18 +688,29 @@ address {
 /* >>>>>>>>>> The hover effect is opacity only. <<<<<<<<<< */
 
 .card > h3 > a {
-  --link-fg: transparent;
-  --link-active-bg: transparent;
+  text-decoration: none;
   z-index: 665;
+}
+
+.card > h3 > a:focus,
+.card > h3 > a:hover {
+  outline: none;
 }
 
 .card > h3 > a::before {
   content: '';
-  border: solid var(--t20) var(--color-accent2);
+  border: solid var(--t10) var(--color-green);
   opacity: 0;
 }
 
-.card > h3 > a:focus::before, .card > h3 > a:hover::before {
+@media screen and (prefers-color-scheme: dark) {
+  .card > h3 > a::before {
+    border: solid var(--t10) var(--color-accent1);
+  }
+}
+
+.card > h3 > a:focus::before,
+.card > h3 > a:hover::before {
   opacity: 1;
 }
 
@@ -739,6 +738,7 @@ address {
   padding-top: calc(100% / var(--r-major));
   width: 100%;
   overflow: hidden;
+  filter: grayscale(0.5);
 }
 
 /*
@@ -747,7 +747,7 @@ address {
  * if top/right/bottom/left was used. Thankfully, top/left/width/height
  * do work.
  */
-.card > .image > img {
+.card > .image > img, .card > .image > svg {
   position: absolute;
   top: 0;
   left: 0;
@@ -1190,6 +1190,8 @@ main {
 .page-header a {
   display: block;
   padding: calc((var(--s20) - var(--s05)) / 2);
+  text-decoration: none;
+  outline: none;
 }
 
 .page-header svg {
@@ -1201,7 +1203,6 @@ main {
   height: var(--s20);
   width: 100%;
   background-color: var(--color-bg-hdr-ftr);
-  --link-bg: var(--color-bg);
 }
 
 .page-header.barred > div {
@@ -1212,6 +1213,23 @@ main {
   padding: 0 var(--min-margin);
   display: flex;
   justify-content: left;
+}
+
+.page-header.barred a:link, .page-header.barred a:visited {
+  color: var(--color-fg);
+  fill: var(--color-fg);
+  background-color: var(--color-bg);
+}
+
+.page-header.barred a:focus, .page-header.barred a:hover {
+  color: var(--color-bg);
+  fill: var(--color-bg);
+  background-color: var(--color-fg);
+}
+
+.page-header.barred a:active {
+  color: var(--color-fg);
+  fill: var(--color-fg);
 }
 
 /*
@@ -1226,6 +1244,38 @@ main {
   position: absolute;
   top: 2vmin;
   left: 2vmin;
+}
+
+.page-header.cornered a:link,
+.page-header.cornered a:visited {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+.page-header.cornered a:focus,
+.page-header.cornered a:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.page-header.cornered a:active {
+  color: var(--color-black);
+}
+
+.page-header.cornered [rel="home"]:link,
+.page-header.cornered [rel="home"]:visited {
+  fill: var(--color-black);
+  background-color: var(--nav-hilite, var(--color-white));
+}
+
+.page-header.cornered [rel="home"]:focus,
+.page-header.cornered [rel="home"]:hover {
+  fill: var(--nav-hilite, var(--color-white));
+  background-color: var(--color-black);
+}
+
+.page-header.cornered [rel="home"]:active {
+  fill: var(--color-black);
 }
 
 /* -------------------------------------------------------------------------- *
