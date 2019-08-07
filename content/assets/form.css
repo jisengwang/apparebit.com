@@ -837,6 +837,13 @@ h1, h2, h3 {
   font-size: calc(var(--scale-to-reforma) * var(--s10));
 }
 
+.heading h2 + p {
+  /* A subheading, which doesn't really make sense in Reforma. */
+  margin-top: 0;
+  font-size: var(--s10);
+  font-style: italic;
+}
+
 .heading h3 {
   margin-top: calc(var(--r-major) * 1rem);
   font-size: calc(var(--scale-to-reforma) * var(--s05));
