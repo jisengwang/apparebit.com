@@ -279,7 +279,7 @@
   }
 }
 
-li, p {
+li, :not(.pullquote) > p {
   -moz-hyphens: auto;
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
