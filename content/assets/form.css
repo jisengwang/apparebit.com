@@ -70,6 +70,16 @@
 }
 
 @font-face {
+  font-family: 'Bild';
+  src: url(fonts/bild-variable.woff2),
+    url(fonts/bild-variable.woff);
+  font-style: normal;
+  font-weight: bold;
+  font-stretch: 60% 100%;
+  font-display: fallback;
+}
+
+@font-face {
   font-family: 'Bluu Suuperstar';
   src: url(fonts/bluu-suuperstar-medium.woff2),
     url(fonts/bluu-suuperstar-medium.woff);
@@ -246,6 +256,7 @@
   --bely-fontstack: 'Bely', 'Times New Roman', serif;
   --bely-display-fontstack:
       'Bely Display', 'Abril Fatface', 'Playfair Display', serif;
+  --bild-fontstack: 'Bild', system-ui, sans-serif;
   --bluu-fontstack: 'Bluu Suuperstar', 'Times New Roman', serif;
 
   /* Luckily, both Bely and Reforma support kerning, default ligatures, lining
