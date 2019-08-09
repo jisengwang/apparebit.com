@@ -153,6 +153,7 @@
   --t30: calc(var(--t20) / var(--r-major));  /*  0.29630 */
   --t40: calc(var(--t30) / var(--r-major));  /*  0.19753 */
   --t50: calc(var(--t40) / var(--r-major));  /*  0.13169 */
+  --t60: calc(var(--t50) / var(--r-major));  /*  0.10974 */
 
   --s05: calc(var(--r-minor) * 1em);         /*  1.2     */
   --s10: calc(var(--r-major) * 1em);         /*  1.5     */
@@ -621,7 +622,7 @@ address {
 }
 
 /* -------------------------------------------------------------------------- *
- * .card, .deck
+ * .card, .carddeck
  * -------------------------------------------------------------------------- */
 
 /*
@@ -736,6 +737,10 @@ address {
   background-color: var(--color-bg);
 }
 
+.card > h3 > a > span:nth-child(2) {
+  top: calc(var(--t15) + var(--s15));
+}
+
 @media screen and (prefers-color-scheme: dark) {
   .card > h3 > a > span {
     background-color: var(--color-bg-offset);
@@ -795,6 +800,12 @@ address {
 .cover img {
   -o-object-fit: cover;
   object-fit: cover;
+}
+
+.cover .title {
+  position: absolute;
+  /* Navigation and headline may compete for pointer. */
+  pointer-events: none;
 }
 
 .cover h1, .cover p {
@@ -1340,6 +1351,9 @@ footer h2::before, footer h3::before {
 @media print {
   @page {
     margin-top: var(---s30);
+  }
+
+  main {
     margin-bottom: var(--s30);
   }
 
