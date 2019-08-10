@@ -8,6 +8,9 @@
   ],
   "dependencies": {
     "chalk": "2.4.2",
+    "cssnano": "4.1.10",
+    "postcss": "7.0.17",
+    "rimraf": "2.6.3",
     "serve": "11.1.0"
   },
   "scripts": {
