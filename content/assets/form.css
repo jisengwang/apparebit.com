@@ -1164,6 +1164,18 @@ main {
   flex: 1;
 }
 
+/*
+ * Firefox hates flexbox when it comes to printing,
+ * only printing the first page. Nuts!
+ */
+@media print {
+  @supports (-moz-appearance: none) {
+    body {
+      display: block;
+    }
+  }
+}
+
 /* -------------------------------------------------------------------------- *
  * .page-header
  * -------------------------------------------------------------------------- */
