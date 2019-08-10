@@ -2,6 +2,8 @@
  * (C) Copyright 2019 Robert Grimm
  * ========================================================================== */
 
+var options = document.currentScript.dataset;
+
 function addReferencesFooter() {
   var article = document.querySelector('main > article');
   if (!article || article.querySelector('footer.references')) return;
@@ -11,6 +13,7 @@ function addReferencesFooter() {
 
   var h2 = document.createElement('h2');
   h2.innerText = 'References';
+  if (options.h2) h2.className = options.h2;
   var div = document.createElement('div');
   div.classList.add('heading');
   div.appendChild(h2);
