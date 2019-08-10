@@ -1,0 +1,8 @@
+[build]
+  command = "scripts/build.js"
+  publish = "build"
+
+[[redirects]]
+  from = "/Writing/UbuTrump/"
+  to = "/features/ubu-trump/"
+  status = 301
