@@ -20,6 +20,7 @@ const CONTENT_PATH = 'content';
 const BUILD_PATH = 'build';
 
 const DIRECTORIES_TO_COPY = [
+  'about',
   'assets/fonts',
   'assets/icons',
   'assets/images',
