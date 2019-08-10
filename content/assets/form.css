@@ -1348,6 +1348,10 @@ footer h2::before, footer h3::before {
  * @media print
  * -------------------------------------------------------------------------- */
 
+.references {
+  display: none;
+}
+
 @media print {
   @page {
     margin-top: var(---s30);
@@ -1374,5 +1378,67 @@ footer h2::before, footer h3::before {
   figure {
     page-break-inside: avoid;
     break-inside: avoid;
+  }
+
+  /* Add compact, human-readable references for hyperlinks. */
+  main {
+    counter-reset: href;
+  }
+
+  main a {
+    text-decoration: none !important;
+    counter-increment: href;
+  }
+
+  main a::after {
+    content: ' [' counter(href) ']';
+    /* Lining figures look a tad awkward. Omit. */
+  }
+
+  /* Disable references for website-internal hyperlinks and references. */
+  main a[href^="https://apparebit.com"], .references a {
+    counter-increment: none;
+  }
+
+  main a[href^="https://apparebit.com"]::after, .references a::after {
+    content: none;
+  }
+
+  .references {
+    display: block;
+  }
+
+  .references ol > li {
+    margin-top: 0;
+    overflow-wrap: break-word;
+  }
+
+  .references ol > li::before {
+    content: '[' counter(ol) '] ';
+    -webkit-font-feature-settings: var(--font-features-standout);
+    font-feature-settings: var(--font-features-standout);
+  }
+
+  /*
+  * calc((
+  *     var(--max-measure)
+  *     + 2 * var(--min-margin)
+  *     + 2 * var(--s20)
+  * ) * 131.25%)
+  */
+  @media (min-width: 45.28125em) {
+    .references ol > li {
+      position: relative;
+    }
+
+    .references ol > li::before {
+      position: absolute;
+      left: calc(-1 * (var(--s20) + var(--t50)));
+      text-align: right;
+    }
+
+    .references ul > li {
+      margin-left: 0;
+    }
   }
 }
