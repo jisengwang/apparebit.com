@@ -1,4 +1,5 @@
 .DS_Store
+.firebase
 build
 node_modules
 _stuff
