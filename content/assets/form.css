@@ -1245,6 +1245,7 @@ main {
   position: absolute;
   top: 2vmin;
   left: 2vmin;
+  left: max(env(safe-area-inset-left), var(--min-margin));
 }
 
 .page-header.cornered a:link,
