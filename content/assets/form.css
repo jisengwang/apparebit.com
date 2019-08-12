@@ -1207,7 +1207,11 @@ main {
   width: 100%;
   max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
   margin: 0 auto;
-  padding: 0 var(--min-margin);
+  padding:
+    0 var(--min-margin);
+  padding:
+    0 max(env(safe-area-inset-left), var(--min-margin))
+    0 max(env(safe-area-inset-right), var(--min-margin));
   display: flex;
   justify-content: left;
 }
