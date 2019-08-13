@@ -636,19 +636,18 @@ address {
 /* >>>>>>>>>> The Layout is Flex, but right-aligned and wrapping. <<<<<<<<<< */
 
 .carddeck {
-  --card-max: calc(var(--r-minor) * var(--s70));
   max-width: unset;
   margin: var(--s30) 0 0 0;
-  padding: 0 var(--min-margin);
+  padding: 0;
   width: 100%;
   list-style: none;
 }
 
 .card {
-  max-width: calc(var(--r-minor) * var(--s70));
+  max-width: calc(var(--r-minor) * var(--s70)); /* CardMax */
   position: relative;
   width: 100%;
-  margin: var(--s10) auto 0 auto;
+  margin: var(--s20) auto 0 auto;
 }
 
 /*
