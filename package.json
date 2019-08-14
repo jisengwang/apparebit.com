@@ -12,7 +12,8 @@
     "firebase-tools": "7.2.2",
     "postcss": "7.0.17",
     "rimraf": "2.6.3",
-    "serve": "11.1.0"
+    "serve": "11.1.0",
+    "vnu-jar": "19.6.7"
   },
   "scripts": {
     "build": "node scripts/build.js",
