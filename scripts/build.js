@@ -18,31 +18,15 @@ const postcss = require('postcss')([
   }),
 ]);
 
-const SOURCE_ROOT = 'content';
-const TARGET_ROOT = 'build';
-
-const DIRECTORIES_TO_COPY = [
-  'about',
-  'assets/fonts',
-  'assets/icons',
-  'assets/images',
-  'features/do-you-be',
-  'features/ubu-trump',
-];
-
-const FILES_TO_COPY = [
-  '403.html',
-  '404.html',
-  'index.html',
-];
-
-const STYLES = [
-  'assets/form.css',
-];
-
-const SCRIPTS = [
-  'assets/function.js',
-]
+const {
+  SOURCE_ROOT,
+  TARGET_ROOT,
+  DIRECTORIES_TO_COPY,
+  FILES_TO_COPY,
+  MARKUP,
+  STYLES,
+  SCRIPTS
+} = require('./config.js');
 
 const TOOL  = chalk.grey('[build]');
 const COPY  = Symbol(' copy');
