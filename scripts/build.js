@@ -6,7 +6,7 @@ const {
 } = require('fs').promises;
 
 const chalk = require('chalk');
-const { extname, join, resolve } = require('path');
+const { join, resolve } = require('path');
 const { promisify } = require('util');
 const rimraf = promisify(require('rimraf'));
 
@@ -23,44 +23,39 @@ const {
   TARGET_ROOT,
   DIRECTORIES_TO_COPY,
   FILES_TO_COPY,
-  MARKUP,
   STYLES,
   SCRIPTS
 } = require('./config.js');
+
 
 const TOOL  = chalk.grey('[build]');
 const COPY  = Symbol(' copy');
 const MKDIR = Symbol('mkdir');
 const STYLE = Symbol('style');
 
-function logFileOp(operation, ...files) {
-  const names = files.map(name => {
-    const quoted = `"${name}"`;
-    switch (extname(name)) {
-      case '.html':
-        return chalk.blue(quoted);
-      case '.jpg':
-      case '.png':
-      case '.svg':
-        return chalk.cyan(quoted);
-      case '.woff':
-      case '.woff2':
-        return chalk.green(quoted);
-      default:
-        return chalk.gray(quoted);
-    }
-  });
+const IS_VERBOSE = process.argv.includes('--verbose');
+
+let directories = 0;
+let files = 0;
+
+function announce(operation, ...args) {
+  if (operation === MKDIR) {
+    directories++;
+  } else {
+    files++;
+  }
+
+  if (!IS_VERBOSE) return;
 
   const op = operation.description;
-  if (op === 'mkdir') console.error(TOOL);
-  console.error(TOOL, op, names[names.length - 1]);
+  console.error(TOOL, op, chalk.blue(args[args.length - 1]));
 }
 
 async function build() {
   const source = resolve(SOURCE_ROOT);
   const target = resolve(TARGET_ROOT);
 
-  logFileOp(MKDIR, target);
+  announce(MKDIR, target);
   await rimraf(target);
   await mkdir(target);
 
@@ -71,7 +66,7 @@ async function build() {
     const to = join(target, dir);
     const entries = await readdir(from, { withFileTypes: true });
 
-    logFileOp(MKDIR, to);
+    announce(MKDIR, to);
     await mkdir(to, { recursive: true });
 
     for (const entry of entries) {
@@ -80,7 +75,7 @@ async function build() {
       const from2 = resolve(from, entry.name);
       const to2 = resolve(to, entry.name);
 
-      logFileOp(COPY, from2, to2);
+      announce(COPY, from2, to2);
       await copyFile(from2, to2);
     }
   }
@@ -89,23 +84,22 @@ async function build() {
     const from = join(source, file);
     const to = join(target, file);
 
-    logFileOp(COPY, from, to);
+    announce(COPY, from, to);
     await copyFile(from, to);
   }
 
   // ===== Styles =====
 
-  console.error(TOOL);
   for (const file of STYLES) {
     const from = join(source, file);
     const to = join(target, file);
 
-    logFileOp(STYLE, from, to);
+    announce(STYLE, from, to);
     const input = await readFile(from);
     const output = await postcss.process(input, { from, to });
     output.warnings().forEach(warn => {
       process.stderr.write(warn.toString())
-    })
+    });
 
     await writeFile(to, output.css);
   }
@@ -116,9 +110,16 @@ async function build() {
     const from = join(source, file);
     const to = join(target, file);
 
-    logFileOp(COPY, from, to);
+    announce(COPY, from, to);
     await copyFile(from, to);
   }
+
+  // ===== Scripts =====
+  if (IS_VERBOSE) console.error();
+  console.error(TOOL,
+    chalk.green(`Created ${directories} directories with ${files} files.`));
+  console.error(TOOL,
+    chalk.green('Happy, happy, joy, joy!'));
 }
 
 process.chdir(resolve(__dirname, '..'));
