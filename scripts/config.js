@@ -15,6 +15,7 @@ module.exports = {
     '.htaccess',
     '403.html',
     '404.html',
+    'googlee753ef1b651640a9.html',
     'index.html',
     'robots.txt',
   ],
