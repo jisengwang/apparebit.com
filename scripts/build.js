@@ -156,7 +156,7 @@ async function build() {
     await copyFile(from, to);
   }
 
-  // ===== Scripts =====
+  // ===== Done =====
   announce(DONE, `Created ${directories} directories with ${files} files`);
   announce(DONE, 'Happy, happy, joy, joy!');
 }
