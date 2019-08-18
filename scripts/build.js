@@ -90,7 +90,7 @@ async function build() {
 
   if (status) {
     process.exitCode = status;
-    retur;
+    return;
   }
 
   announce(BUILD);
