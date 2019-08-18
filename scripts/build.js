@@ -27,13 +27,15 @@ const {
   SCRIPTS
 } = require('./config.js');
 
+const { validate } = require('./validate.js');
 
-const TOOL  = chalk.grey('[build]');
-const COPY  = Symbol(' copy');
+const BUILD = Symbol('build');
+const COPY = Symbol('copy');
+const DONE = Symbol('done');
+const IS_VERBOSE = process.argv.includes('--verbose');
 const MKDIR = Symbol('mkdir');
 const STYLE = Symbol('style');
-
-const IS_VERBOSE = process.argv.includes('--verbose');
+const VALIDATE = Symbol('validate');
 
 let directories = 0;
 let files = 0;
@@ -41,17 +43,57 @@ let files = 0;
 function announce(operation, ...args) {
   if (operation === MKDIR) {
     directories++;
-  } else {
+  } else if (operation === COPY || operation === STYLE) {
     files++;
   }
 
-  if (!IS_VERBOSE) return;
-
-  const op = operation.description;
-  console.error(TOOL, op, chalk.blue(args[args.length - 1]));
+  let detail = args[args.length - 1];
+  switch (operation) {
+    case VALIDATE:
+      detail = chalk.magenta(`Validate ${detail}`);
+      break;
+    case BUILD:
+      detail = chalk.magenta(`Build`);
+      break;
+    case MKDIR:
+      if (!IS_VERBOSE) return;
+      detail = `${operation.description} ${chalk.blue(detail)}`;
+      break;;
+    case COPY:
+      if (!IS_VERBOSE) return;
+      detail = ` ${operation.description} ${chalk.blue(detail)}`;
+      break;
+     case STYLE:
+      if (!IS_VERBOSE) return;
+      detail = `${operation.description} ${chalk.blue(detail)}`;
+      break;
+    case DONE:
+      detail = chalk.green(detail);
+      break;
+    default:
+      // Nothing to do.
+  }
+  console.error(chalk.grey('[build]'), detail);
 }
 
 async function build() {
+  announce(VALIDATE, 'HTML');
+
+  let status;
+  try {
+    status = await validate();
+  } catch (x) {
+    console.error(x.stack);
+    process.exitCode = 1;
+    return;
+  }
+
+  if (status) {
+    process.exitCode = status;
+    retur;
+  }
+
+  announce(BUILD);
   const source = resolve(SOURCE_ROOT);
   const target = resolve(TARGET_ROOT);
 
@@ -115,11 +157,8 @@ async function build() {
   }
 
   // ===== Scripts =====
-  if (IS_VERBOSE) console.error();
-  console.error(TOOL,
-    chalk.green(`Created ${directories} directories with ${files} files.`));
-  console.error(TOOL,
-    chalk.green('Happy, happy, joy, joy!'));
+  announce(DONE, `Created ${directories} directories with ${files} files`);
+  announce(DONE, 'Happy, happy, joy, joy!');
 }
 
 process.chdir(resolve(__dirname, '..'));
