@@ -1,37 +1,40 @@
 #!/usr/bin/env node
 'use strict';
 
-const { join } = require('path');
-const { SOURCE_ROOT, MARKUP } = require('./config.js');
+const IS_VERBOSE = process.argv.includes('--verbose');
+const { resolve: resolvePath } = require('path');
+const { SOURCE_ROOT } = require('./config.js');
 const { spawn } = require('child_process');
 const vnuPath = require('vnu-jar');
 
-async function checkHTML() {
-  let erroneous = false;
+const PATTERNS = [
+  'CSS: “background-image”: “0%” is not a “color” value.',
+  'File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.',
+];
 
-  for (const relname of MARKUP) {
-    const file = join(SOURCE_ROOT, relname);
-    const checker = spawn('java', [
-      '-jar', vnuPath,
-      '--verbose',
-      file,
-    ],{
-      stdio: 'inherit',
-    });
+async function validate() {
+  let resolve, reject, promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
 
-    let resolve, promise = new Promise(res => {
-      resolve = res;
-    });
+  spawn('java', [
+    '-jar', vnuPath,
+    '--skip-non-html',
+    '--filterpattern', PATTERNS.join('|'),
+    ...(IS_VERBOSE ? ['--verbose'] : []),
+    resolvePath(__dirname, '..', SOURCE_ROOT),
+  ], {
+    stdio: ['ignore', 'inherit', 'inherit'],
+  })
+  .on('error', reject)
+  .on('exit', resolve);
 
-    checker.on('close', status => {
-      if (status) erroneous = true;
-      resolve(status);
-    });
-
-    await promise;
-  }
-
-  process.exitCode = erroneous ? 665 : 0;
+  return promise;
 }
 
-checkHTML();
+if (require.main === module) {
+  validate();
+} else {
+  module.exports.validate = validate;
+}
