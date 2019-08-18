@@ -12,6 +12,7 @@ module.exports = {
     'features/ubu-trump',
   ],
   FILES_TO_COPY: [
+    '.htaccess',
     '403.html',
     '404.html',
     'index.html',
