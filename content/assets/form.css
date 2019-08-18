@@ -1208,11 +1208,16 @@ main {
   margin: 0 auto;
   padding:
     0 var(--min-margin);
-  padding:
-    0 max(env(safe-area-inset-left), var(--min-margin))
-    0 max(env(safe-area-inset-right), var(--min-margin));
   display: flex;
   justify-content: left;
+}
+
+@supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
+  .page-header.barred > div {
+    padding:
+      0 max(env(safe-area-inset-left), var(--min-margin))
+      0 max(env(safe-area-inset-right), var(--min-margin));
+  }
 }
 
 .page-header.barred a:link, .page-header.barred a:visited {
@@ -1244,7 +1249,12 @@ main {
   position: absolute;
   top: 2vmin;
   left: 2vmin;
-  left: max(env(safe-area-inset-left), var(--min-margin));
+}
+
+@supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
+  .page-header.cornered {
+    left: max(env(safe-area-inset-left), var(--min-margin));
+  }
 }
 
 .page-header.cornered a:link,
