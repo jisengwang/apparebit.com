@@ -298,6 +298,8 @@ AddDefaultCharset utf-8
 # (6) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
 #     appropriate schema automatically (http or https).
 
+DirectorySlash Off
+
 <IfModule mod_rewrite.c>
 
     # (1)
@@ -313,7 +315,7 @@ AddDefaultCharset utf-8
     # RewriteBase /
 
     # (5)
-    # RewriteOptions <options>
+    RewriteOptions AllowNoSlash
 
     # (6)
     RewriteCond %{HTTPS} =on
@@ -412,27 +414,31 @@ AddDefaultCharset utf-8
 #     RewriteRule ^ %{ENV:PROTO}://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 # </IfModule>
 
+# ----------------------------------------------------------------------
+# | Cool URLs                                                          |
+# ----------------------------------------------------------------------
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Given some PATH/FILE, transparently serve "FILE.html" if it exists.
+    # (1) Take care of resources that have actually moved, permanently.
+    RewriteRule ^Writing/UbuTrump/?$ /features/ubu-trump [L,R=301]
+
+    # (2) Given some PATH, transparently serve "PATH.html" if it is a file.
     RewriteCond %{REQUEST_FILENAME}.html -f
     RewriteRule ^(.*)$ $1.html [L]
 
-    # Given some PATH, transparently serve "PATH/index.html" if it exists.
+    # (3) Given some PATH, transparently serve "PATH/index.html" if PATH
+    # is a directory and "PATH/index.html" is a file.
+    RewriteCond %{REQUEST_FILENAME}/ -d
     RewriteCond %{REQUEST_FILENAME}/index.html -f
     RewriteRule ^(.*)$ $1/index.html [L]
 
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)/index(?:.html)?$ $1 [R=301,L]
-
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)(?:.html|/)$ $1 [R=301,L]
-
-    RewriteRule ^/Writing/UbuTrump/?$ /features/ubu-trump [R=301,L]
+    # (4) If the PATH ends in slashes but is not the root, redirect to the
+    # path without the slashes.
+    RewriteCond %{REQUEST_FILENAME} !^/$
+    RewriteRule ^(.*[^/])/+$ $1 [L,R=301]
 </IfModule>
-
-DirectorySlash Off
 
 # ######################################################################
 # # SECURITY                                                           #
