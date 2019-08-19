@@ -5,6 +5,7 @@ const {
   copyFile, mkdir, readdir, readFile, writeFile
 } = require('fs').promises;
 
+const babel = require('@babel/core');
 const chalk = require('chalk');
 const { join, resolve } = require('path');
 const { promisify } = require('util');
@@ -35,6 +36,7 @@ const COPY = Symbol('copy');
 const DONE = Symbol('done');
 const IS_VERBOSE = process.argv.includes('--verbose');
 const MKDIR = Symbol('mkdir');
+const SCRIPT = Symbol('script');
 const STYLE = Symbol('style');
 const VALIDATE = Symbol('validate');
 
@@ -58,15 +60,19 @@ function announce(operation, ...args) {
       break;
     case MKDIR:
       if (!IS_VERBOSE) return;
-      detail = `${operation.description} ${chalk.blue(detail)}`;
+      detail = ` ${operation.description} ${chalk.blue(detail)}`;
       break;;
     case COPY:
       if (!IS_VERBOSE) return;
-      detail = ` ${operation.description} ${chalk.blue(detail)}`;
+      detail = `  ${operation.description} ${chalk.blue(detail)}`;
       break;
-     case STYLE:
+    case SCRIPT:
       if (!IS_VERBOSE) return;
       detail = `${operation.description} ${chalk.blue(detail)}`;
+      break;
+    case STYLE:
+      if (!IS_VERBOSE) return;
+      detail = ` ${operation.description} ${chalk.blue(detail)}`;
       break;
     case DONE:
       detail = chalk.green(detail);
@@ -155,8 +161,16 @@ async function build() {
     const from = join(source, file);
     const to = join(target, file);
 
-    announce(COPY, from, to);
-    await copyFile(from, to);
+    announce(SCRIPT, from, to);
+    const input = await readFile(from);
+    const output = await babel.transformAsync(input, {
+      filename: from,
+      presets: ["minify"],
+      comments: false,
+    });
+
+    await writeFile(to, withCopyright(output.code));
+  }
 
   const tokens = join(root, 'tokens');
   for (const file of TOKENS) {
