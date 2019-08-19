@@ -24,7 +24,8 @@ const {
   DIRECTORIES_TO_COPY,
   FILES_TO_COPY,
   STYLES,
-  SCRIPTS
+  SCRIPTS,
+  TOKENS,
 } = require('./config.js');
 
 const { validate } = require('./validate.js');
@@ -76,9 +77,20 @@ function announce(operation, ...args) {
   console.error(chalk.grey('[build]'), detail);
 }
 
-async function build() {
-  announce(VALIDATE, 'HTML');
+function withCopyright(text) {
+  return '/* (C) Copyright 2019 Robert Grimm */ ' + text;
+}
 
+async function copy(file, source, target) {
+  const from = join(source, file);
+  const to = join(target, file);
+  announce(COPY, from, to);
+  return copyFile(from, to);
+}
+
+async function build() {
+  // =================================== Validate ==============================
+  announce(VALIDATE, 'HTML');
   let status;
   try {
     status = await validate();
@@ -93,16 +105,17 @@ async function build() {
     return;
   }
 
+  // =================================== Build ==============================
   announce(BUILD);
-  const source = resolve(SOURCE_ROOT);
-  const target = resolve(TARGET_ROOT);
+  const root = resolve(__dirname, '..');
+  const source = join(root, SOURCE_ROOT);
+  const target = join(root, TARGET_ROOT);
 
   announce(MKDIR, target);
   await rimraf(target);
   await mkdir(target);
 
-  // ===== Copies =====
-
+  // Copy entire directories.
   for (const dir of DIRECTORIES_TO_COPY) {
     const from = join(source, dir);
     const to = join(target, dir);
@@ -113,25 +126,16 @@ async function build() {
 
     for (const entry of entries) {
       if (!entry.isFile()) continue;
-
-      const from2 = resolve(from, entry.name);
-      const to2 = resolve(to, entry.name);
-
-      announce(COPY, from2, to2);
-      await copyFile(from2, to2);
+      await copy(entry.name, from , to);
     }
   }
 
+  // Copy select files.
   for (const file of FILES_TO_COPY) {
-    const from = join(source, file);
-    const to = join(target, file);
-
-    announce(COPY, from, to);
-    await copyFile(from, to);
+    await copy(file, source, target);
   }
 
-  // ===== Styles =====
-
+  // Process styles.
   for (const file of STYLES) {
     const from = join(source, file);
     const to = join(target, file);
@@ -143,20 +147,23 @@ async function build() {
       process.stderr.write(warn.toString())
     });
 
-    await writeFile(to, output.css);
+    await writeFile(to, withCopyright(output.css));
   }
 
-  // ===== Scripts =====
-
+  // Process scripts.
   for (const file of SCRIPTS) {
     const from = join(source, file);
     const to = join(target, file);
 
     announce(COPY, from, to);
     await copyFile(from, to);
+
+  const tokens = join(root, 'tokens');
+  for (const file of TOKENS) {
+    await copy(file, tokens, target);
   }
 
-  // ===== Done =====
+  // =================================== Done ==============================
   announce(DONE, `Created ${directories} directories with ${files} files`);
   announce(DONE, 'Happy, happy, joy, joy!');
 }

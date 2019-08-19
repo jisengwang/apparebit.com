@@ -15,7 +15,6 @@ module.exports = {
     '.htaccess',
     '403.html',
     '404.html',
-    'googlee753ef1b651640a9.html',
     'index.html',
     'robots.txt',
   ],
@@ -34,4 +33,7 @@ module.exports = {
   SCRIPTS: [
     'assets/function.js',
   ],
+  TOKENS: [
+    'googlee753ef1b651640a9.html',
+  ]
 };
