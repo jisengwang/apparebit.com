@@ -12,20 +12,6 @@
 # ######################################################################
 
 # ----------------------------------------------------------------------
-# | Cross-origin requests                                              |
-# ----------------------------------------------------------------------
-
-# Allow cross-origin requests.
-#
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
-# https://enable-cors.org/
-# https://www.w3.org/TR/cors/
-
-# <IfModule mod_headers.c>
-#     Header set Access-Control-Allow-Origin "*"
-# </IfModule>
-
-# ----------------------------------------------------------------------
 # | Cross-origin images                                                |
 # ----------------------------------------------------------------------
 
@@ -36,7 +22,7 @@
 
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
-        <FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp)$">
+        <FilesMatch "1200x630.jpg$">
             SetEnvIf Origin ":" IS_CORS
             Header set Access-Control-Allow-Origin "*" env=IS_CORS
         </FilesMatch>
@@ -53,28 +39,9 @@
 
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
-        Header set Access-Control-Allow-Origin https://apparebit.com
+        Header set Access-Control-Allow-Origin "https://apparebit.com"
     </FilesMatch>
 </IfModule>
-
-# ----------------------------------------------------------------------
-# | Cross-origin resource timing                                       |
-# ----------------------------------------------------------------------
-
-# Allow cross-origin access to the timing information for all resources.
-#
-# If a resource isn't served with a `Timing-Allow-Origin` header that
-# would allow its timing information to be shared with the document,
-# some of the attributes of the `PerformanceResourceTiming` object will
-# be set to zero.
-#
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Timing-Allow-Origin
-# https://www.w3.org/TR/resource-timing/
-# https://www.stevesouders.com/blog/2014/08/21/resource-timing-practical-tips/
-
-# <IfModule mod_headers.c>
-#     Header set Timing-Allow-Origin: "*"
-# </IfModule>
 
 # ######################################################################
 # # ERRORS                                                             #
@@ -298,8 +265,6 @@ AddDefaultCharset utf-8
 # (6) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
 #     appropriate schema automatically (http or https).
 
-DirectorySlash Off
-
 <IfModule mod_rewrite.c>
 
     # (1)
@@ -312,7 +277,7 @@ DirectorySlash Off
     # Options +SymLinksIfOwnerMatch
 
     # (4)
-    # RewriteBase /
+    RewriteBase /
 
     # (5)
     RewriteOptions AllowNoSlash
@@ -342,13 +307,13 @@ DirectorySlash Off
 #     https://tools.ietf.org/html/draft-ietf-acme-acme-12
 
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{HTTPS} !=on
-    # (1)
-    RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
-    RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[\w-]+$
-    RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+   RewriteEngine On
+   RewriteCond %{HTTPS} !=on
+   # (1)
+   # RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+   # RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[\w-]+$
+   # RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -381,63 +346,34 @@ DirectorySlash Off
 </IfModule>
 
 # ----------------------------------------------------------------------
-# | Forcing the `www.` at the beginning of URLs                        |
+# | Website-Specific Rewrites                                          |
 # ----------------------------------------------------------------------
 
-# Rewrite example.com → www.example.com
-
-# The same content should never be available under two different
-# URLs, especially not with and without `www.` at the beginning.
-# This can cause SEO problems (duplicate content), and therefore,
-# you should choose one of the alternatives and redirect the other
-# one.
-#
-# (!) NEVER USE BOTH WWW-RELATED RULES AT THE SAME TIME!
-
-# (1) The rule assumes by default that both HTTP and HTTPS
-#     environments are available for redirection.
-#     If your SSL certificate could not handle one of the domains
-#     used during redirection, you should turn the condition on.
-#
-#     https://github.com/h5bp/server-configs-apache/issues/52
-
-# Be aware that the following might not be a good idea if you use "real"
-# subdomains for certain parts of your website.
-
-# <IfModule mod_rewrite.c>
-#     RewriteEngine On
-#     # (1)
-#     # RewriteCond %{HTTPS} !=on
-#     RewriteCond %{HTTP_HOST} !^www\. [NC]
-#     RewriteCond %{SERVER_ADDR} !=127.0.0.1
-#     RewriteCond %{SERVER_ADDR} !=::1
-#     RewriteRule ^ %{ENV:PROTO}://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-# </IfModule>
-
-# ----------------------------------------------------------------------
-# | Cool URLs                                                          |
-# ----------------------------------------------------------------------
+# Disable directory slash redirect by mod_dir.c
+DirectorySlash Off
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # (1) Take care of resources that have actually moved, permanently.
-    RewriteRule ^Writing/UbuTrump/?$ /features/ubu-trump [L,R=301]
+    # Take care of Ubu Trump.
+    RewriteRule ^Writing/UbuTrump/?$ features/ubu-trump [R=301,NC,L]
 
-    # (2) Given some PATH, transparently serve "PATH.html" if it is a file.
+    # Chop off any trailing slash.
+    RewriteCond %{REQUEST_URI} /$
+    RewriteRule (.*)/ $1 [R=301,L]
+
+    # Rewrite "/" to index.html. That terminates processing of root.
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^ index.html [L]
+
+    # Add ".html" to path naming a file with that extension.
     RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^(.*)$ $1.html [L]
+    RewriteRule (.*) $1.html [L]
 
-    # (3) Given some PATH, transparently serve "PATH/index.html" if PATH
-    # is a directory and "PATH/index.html" is a file.
+    # Add "/index.html" to path naming a directory.
     RewriteCond %{REQUEST_FILENAME}/ -d
     RewriteCond %{REQUEST_FILENAME}/index.html -f
-    RewriteRule ^(.*)$ $1/index.html [L]
-
-    # (4) If the PATH ends in slashes but is not the root, redirect to the
-    # path without the slashes.
-    RewriteCond %{REQUEST_FILENAME} !^/$
-    RewriteRule ^(.*[^/])/+$ $1 [L,R=301]
+    RewriteRule (.*) $1/index.html [L]
 </IfModule>
 
 # ######################################################################
@@ -482,80 +418,6 @@ DirectorySlash Off
 <IfModule mod_headers.c>
     Header set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
-
-# ----------------------------------------------------------------------
-# | Content Security Policy (CSP)                                      |
-# ----------------------------------------------------------------------
-
-# Mitigate the risk of cross-site scripting and other content-injection
-# attacks.
-#
-# This can be done by setting a `Content Security Policy` which
-# whitelists trusted sources of content for your website.
-#
-# There is no policy that fits all websites, you will have to modify
-# the `Content-Security-Policy` directives in the example below depending
-# on your needs.
-#
-# The example policy below aims to:
-#
-#  (1) Restrict all fetches by default to the origin of the current website
-#      by setting the `default-src` directive to `'self'` - which acts as a
-#      fallback to all "Fetch directives" (https://developer.mozilla.org/en-US/docs/Glossary/Fetch_directive).
-#
-#      This is convenient as you do not have to specify all Fetch directives
-#      that apply to your site, for example:
-#      `connect-src 'self'; font-src 'self'; script-src 'self'; style-src 'self'`, etc.
-#
-#      This restriction also means that you must explicitly define from
-#      which site(s) your website is allowed to load resources from.
-#
-#  (2) The `<base>` element is not allowed on the website. This is to
-#      prevent attackers from changing the locations of resources loaded
-#      from relative URLs.
-#
-#      If you want to use the `<base>` element, then `base-uri 'self'`
-#      can be used instead.
-#
-#  (3) Form submissions are only allowed from the current website by
-#      setting: `form-action 'self'`.
-#
-#  (4) Prevents all websites (including your own) from embedding your
-#      webpages within e.g. the `<iframe>` or `<object>` element by
-#      setting `frame-ancestors 'none'`.
-#
-#	   The `frame-ancestors` directive helps avoid "Clickjacking" attacks
-#      and is similar to the `X-Frame-Options` header.
-#
-#      Browsers that support the CSP header will ignore `X-Frame-Options`
-#      if `frame-ancestors` is also specified.
-#
-#  (5) Forces the browser to treat all the resources that are served over
-#      HTTP as if they were loaded securely over HTTPS by setting the
-#      `upgrade-insecure-requests` directive.
-#
-#      Please note that `upgrade-insecure-requests` does not ensure
-#      HTTPS for the top-level navigation. If you want to force the
-#      website itself to be loaded over HTTPS you must include the
-#      `Strict-Transport-Security` header.
-#
-# To make your CSP implementation easier, you can use an online CSP header
-# generator such as:
-# https://report-uri.com/home/generate/
-#
-# It is encouraged that you validate your CSP header using a CSP validator
-# such as:
-# https://csp-evaluator.withgoogle.com
-#
-# https://csp.withgoogle.com/docs/
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
-# https://www.html5rocks.com/en/tutorials/security/content-security-policy/
-# https://www.w3.org/TR/CSP/
-
-# <IfModule mod_headers.c>
-#     #                                   (1)                 (2)              (3)                 (4)                     (5)
-#     Header set Content-Security-Policy "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
-# </IfModule>
 
 # ----------------------------------------------------------------------
 # | File access                                                        |
@@ -622,49 +484,40 @@ DirectorySlash Off
 # | HTTP Strict Transport Security (HSTS)                              |
 # ----------------------------------------------------------------------
 
-# Force client-side SSL redirection.
+# Force client-side TLS (Transport Layer Security) redirection.
 #
 # If a user types `example.com` in their browser, even if the server
 # redirects them to the secure version of the website, that still leaves
 # a window of opportunity (the initial HTTP connection) for an attacker
 # to downgrade or redirect the request.
 #
-# The following header ensures that browser will ONLY connect to your
+# The following header ensures that browser only connects to your
 # server via HTTPS, regardless of what the users type in the browser's
 # address bar.
 #
-# (!) Be aware that this, once published, is not revokable and you must ensure
-# being able to serve the site via SSL for the duration you've specified
-# in max-age. When you don't have a valid SSL connection (anymore) your
-# visitors will see a nasty error message even when attempting to connect
-# via simple HTTP.
+# (!) Be aware that Strict Transport Security is not revokable and you
+#     must ensure being able to serve the site over HTTPS for the duration
+#     you've specified in the `max-age` directive. When you don't have a
+#     valid TLS connection anymore (e.g. due to an expired TLS cerfiticate)
+#     your visitors will see a nasty error message even when attempting to
+#     connect over HTTP.
 #
-# (!) Remove the `includeSubDomains` optional directive if the website's
-# subdomains are not using HTTPS.
+# (1) Preloading Strict Transport Security.
+#     To submit your site for HSTS preloading, it is required that:
+#     * the `includeSubDomains` directive is specified
+#     * the `preload` directive is specified
+#     * the `max-age` is specified with a value of at least 31536000 seconds (1 year).
+#     See deployment recommendations: https://hstspreload.org/#deployment-recommendations
 #
-# (1) If you want to submit your site for HSTS preload (2) you must
-#     * ensure the `includeSubDomains` directive to be present
-#     * the `preload` directive to be specified
-#     * the `max-age` to be at least 31536000 seconds (1 year) according to the current status.
-#
-#     It is also advised (3) to only serve the HSTS header via a secure connection
-#     which can be done with either `env=https` or `"expr=%{HTTPS} == 'on'"` (4). The
-#     exact way depends on your environment and might just be tried.
-#
-# (2) https://hstspreload.org/
-# (3) https://tools.ietf.org/html/rfc6797#section-7.2
-# (4) https://stackoverflow.com/questions/24144552/how-to-set-hsts-header-from-htaccess-only-on-https/24145033#comment81632711_24145033
-#
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
 # https://tools.ietf.org/html/rfc6797#section-6.1
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
 # https://www.html5rocks.com/en/tutorials/security/transport-layer-security/
 # https://blogs.msdn.microsoft.com/ieinternals/2014/08/18/strict-transport-security/
+# https://hstspreload.org/
 
 # <IfModule mod_headers.c>
-#     Header always set Strict-Transport-Security "max-age=16070400; includeSubDomains"
-#     # (1) or if HSTS preloading is desired (respect (2) for current requirements):
-#     # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
-#     # (4) respectively… (respect (2) for current requirements):
+#     Header always set Strict-Transport-Security "max-age=16070400; includeSubDomains" "expr=%{HTTPS} == 'on'"
+#     # (1) Enable your site for HSTS preload inclusion.
 #     # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
 # </IfModule>
 
@@ -756,29 +609,6 @@ DirectorySlash Off
 </IfModule>
 
 # ----------------------------------------------------------------------
-# | Disable TRACE HTTP Method                                          |
-# ----------------------------------------------------------------------
-
-# Prevent Apache from responding to `TRACE` HTTP request.
-#
-# The TRACE method, while apparently harmless, can be successfully
-# leveraged in some scenarios to steal legitimate users' credentials
-#
-# Modern browsers now prevent TRACE requests being made via JavaScript,
-# however, other ways of sending TRACE requests with browsers have been
-# discovered, such as using Java.
-#
-# (!) The `TraceEnable` directive will only work in the main server
-# configuration file, so don't try to enable it in the `.htaccess` file!
-#
-# https://tools.ietf.org/html/rfc7231#section-4.3.8
-# https://www.owasp.org/index.php/Cross_Site_Tracing
-# https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)
-# https://httpd.apache.org/docs/current/mod/core.html#traceenable
-
-# TraceEnable Off
-
-# ----------------------------------------------------------------------
 # | Server-side technology information                                 |
 # ----------------------------------------------------------------------
 
@@ -799,7 +629,7 @@ DirectorySlash Off
 # https://php.net/manual/en/ini.core.php#ini.expose-php
 
 <IfModule mod_headers.c>
-    Header set X-Powered-by "George Soros"
+    Header set X-Powered-By "George Soros"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -917,144 +747,6 @@ ServerSignature Off
 </IfModule>
 
 # ----------------------------------------------------------------------
-# | Brotli pre-compressed content                                      |
-# ----------------------------------------------------------------------
-
-# Serve brotli compressed CSS, JS, HTML, SVG, ICS and JSON files
-# if they exist and if the client accepts br encoding.
-#
-# (!) To make this part relevant, you need to generate encoded
-# files by your own. Enabling this part will not auto-generate
-# brotlied files.
-#
-# Note that some clients (eg. browsers) require a secure connection
-# to request brotli-compressed resources.
-# https://www.chromestatus.com/feature/5420797577396224
-#
-# https://httpd.apache.org/docs/current/mod/mod_brotli.html#precompressed
-
-# <IfModule mod_headers.c>
-
-#     RewriteCond %{HTTP:Accept-Encoding} br
-#     RewriteCond %{REQUEST_FILENAME}\.br -f
-#     RewriteRule \.(css|ics|js|json|html|svg)$ %{REQUEST_URI}.br [L]
-
-#     # Prevent mod_deflate double gzip
-#     RewriteRule \.br$ - [E=no-gzip:1]
-
-#     <FilesMatch "\.br$">
-
-#         <IfModule mod_mime.c>
-#             # Serve correct content types
-#             AddType text/css              css.br
-#             AddType text/calendar         ics.br
-#             AddType text/javascript       js.br
-#             AddType application/json      json.br
-#             AddType text/html             html.br
-#             AddType image/svg+xml         svg.br
-
-#             # Serve correct content charset
-#             AddCharset utf-8 .css.br \
-#                              .ics.br \
-#                              .js.br \
-#                              .json.br
-#         </IfModule>
-
-#         # Force proxies to cache brotlied and non-brotlied files separately
-#         Header append Vary Accept-Encoding
-
-#     </FilesMatch>
-
-#     # Serve correct encoding type
-#     AddEncoding br .br
-
-# </IfModule>
-
-# ----------------------------------------------------------------------
-# | GZip pre-compressed content                                        |
-# ----------------------------------------------------------------------
-
-# Serve gzip compressed CSS, JS, HTML, SVG, ICS and JSON files
-# if they exist and if the client accepts gzip encoding.
-#
-# (!) To make this part relevant, you need to generate encoded
-# files by your own. Enabling this part will not auto-generate
-# gziped files.
-#
-# https://httpd.apache.org/docs/current/mod/mod_deflate.html#precompressed
-#
-# (1)
-# Removing default MIME Type for .gz files allowing to add custom
-# sub-types.
-# You may prefer using less generic extensions such as .html_gz in
-# order to keep default behavior regarding .gz files.
-# https://httpd.apache.org/docs/current/mod/mod_mime.html#removetype
-
-# <IfModule mod_headers.c>
-
-#     RewriteCond %{HTTP:Accept-Encoding} gzip
-#     RewriteCond %{REQUEST_FILENAME}\.gz -f
-#     RewriteRule \.(css|ics|js|json|html|svg)$ %{REQUEST_URI}.gz [L]
-
-#     # Prevent mod_deflate double gzip
-#     RewriteRule \.gz$ - [E=no-gzip:1]
-
-#     <FilesMatch "\.gz$">
-
-#         # Serve correct content types
-#         <IfModule mod_mime.c>
-#             # (1)
-#             RemoveType gz
-
-#             # Serve correct content types
-#             AddType text/css              css.gz
-#             AddType text/calendar         ics.gz
-#             AddType text/javascript       js.gz
-#             AddType application/json      json.gz
-#             AddType text/html             html.gz
-#             AddType image/svg+xml         svg.gz
-
-#             # Serve correct content charset
-#             AddCharset utf-8 .css.gz \
-#                              .ics.gz \
-#                              .js.gz \
-#                              .json.gz
-#         </IfModule>
-
-#         # Force proxies to cache gzipped and non-gzipped files separately
-#         Header append Vary Accept-Encoding
-
-#     </FilesMatch>
-
-#     # Serve correct encoding type
-#     AddEncoding gzip .gz
-
-# </IfModule>
-
-# ----------------------------------------------------------------------
-# | Content transformation                                             |
-# ----------------------------------------------------------------------
-
-# Prevent intermediate caches or proxies (e.g.: such as the ones
-# used by mobile network providers) from modifying the website's
-# content.
-#
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
-# https://tools.ietf.org/html/rfc2616#section-14.9.5
-#
-# (!) If you are using `mod_pagespeed`, please note that setting
-# the `Cache-Control: no-transform` response header will prevent
-# `PageSpeed` from rewriting `HTML` files, and, if the
-# `ModPagespeedDisableRewriteOnNoTransform` directive isn't set
-# to `off`, also from rewriting other resources.
-#
-# https://developers.google.com/speed/pagespeed/module/configuration#notransform
-
-# <IfModule mod_headers.c>
-#     Header merge Cache-Control "no-transform"
-# </IfModule>
-
-# ----------------------------------------------------------------------
 # | ETags                                                              |
 # ----------------------------------------------------------------------
 
@@ -1142,6 +834,7 @@ FileETag None
   # Media files
 
     ExpiresByType audio/ogg                             "access plus 1 month"
+    ExpiresByType image/apng                            "access plus 1 month"
     ExpiresByType image/bmp                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
@@ -1192,41 +885,6 @@ FileETag None
 </IfModule>
 
 # ----------------------------------------------------------------------
-# | File concatenation                                                 |
-# ----------------------------------------------------------------------
-
-# Allow concatenation from within specific files.
-#
-# e.g.:
-#
-#   If you have the following lines in a file called, for
-#   example, `main.combined.js`:
-#
-#       <!--#include file="js/jquery.js" -->
-#       <!--#include file="js/jquery.timer.js" -->
-#
-#   Apache will replace those lines with the content of the
-#   specified files.
-
-# <IfModule mod_include.c>
-
-#     <FilesMatch "\.combined\.js$">
-#         Options +Includes
-#         AddOutputFilterByType INCLUDES application/javascript \
-#                                        application/x-javascript \
-#                                        text/javascript
-#         SetOutputFilter INCLUDES
-#     </FilesMatch>
-
-#     <FilesMatch "\.combined\.css$">
-#         Options +Includes
-#         AddOutputFilterByType INCLUDES text/css
-#         SetOutputFilter INCLUDES
-#     </FilesMatch>
-
-# </IfModule>
-
-# ----------------------------------------------------------------------
 # | Filename-based cache busting                                       |
 # ----------------------------------------------------------------------
 
@@ -1241,5 +899,6 @@ FileETag None
 # <IfModule mod_rewrite.c>
 #     RewriteEngine On
 #     RewriteCond %{REQUEST_FILENAME} !-f
-#     RewriteRule ^(.+)\.(\w+)\.(bmp|css|cur|gif|ico|jpe?g|m?js|png|svgz?|webp|webmanifest)$ $1.$3 [L]
+#     RewriteRule ^(.+)\.(\w+)\.(bmp|css|cur|gif|ico|jpe?g|m?js|a?png|svgz?|webp|webmanifest)$ $1.$3 [L]
 # </IfModule>
+
