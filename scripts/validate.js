@@ -12,7 +12,7 @@ const PATTERNS = [
   'File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.',
 ];
 
-async function validate() {
+function validate() {
   let resolve, reject, promise = new Promise((res, rej) => {
     resolve = res;
     reject = rej;

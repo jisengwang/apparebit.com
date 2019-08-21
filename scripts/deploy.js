@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 
-const IS_VERBOSE = process.argv.includes('--verbose');
 const { resolve: resolvePath } = require('path');
 const { SOURCE_ROOT } = require('./config.js');
 const { spawn } = require('child_process');
 
-async function deploy() {
+function deploy() {
   let resolve, reject, promise = new Promise((res, rej) => {
     resolve = res;
     reject = rej;
