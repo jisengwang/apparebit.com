@@ -2,6 +2,16 @@
 'use strict';
 
 const {
+  CONFIG_FILES,
+  SOURCE_ROOT,
+  TARGET_ROOT,
+  DIRECTORIES_TO_COPY,
+  FILES_TO_COPY,
+  STYLES,
+  SCRIPTS,
+} = require('./config.js');
+
+const {
   copyFile, mkdir, readdir, readFile, writeFile
 } = require('fs').promises;
 
@@ -19,26 +29,20 @@ const postcss = require('postcss')([
   }),
 ]);
 
-const {
-  SOURCE_ROOT,
-  TARGET_ROOT,
-  DIRECTORIES_TO_COPY,
-  FILES_TO_COPY,
-  STYLES,
-  SCRIPTS,
-  TOKENS,
-} = require('./config.js');
-
 const { validate } = require('./validate.js');
 
-const BUILD = Symbol('build');
-const COPY = Symbol('copy');
-const DONE = Symbol('done');
+// Flags
 const IS_VERBOSE = process.argv.includes('--verbose');
-const MKDIR = Symbol('mkdir');
-const SCRIPT = Symbol('script');
-const STYLE = Symbol('style');
+
+// Processing phases
 const VALIDATE = Symbol('validate');
+const GENERATE = Symbol('generate');
+const DONE = Symbol('done');
+
+// Resource-specific operations
+const MKDIR = Symbol('mkdir');
+const COPY = Symbol('copy');
+const BUILD = Symbol('build');
 
 let directories = 0;
 let files = 0;
@@ -46,57 +50,55 @@ let files = 0;
 function announce(operation, ...args) {
   if (operation === MKDIR) {
     directories++;
-  } else if (operation === COPY || operation === STYLE) {
+  } else if (operation === COPY || operation === BUILD) {
     files++;
   }
 
   let detail = args[args.length - 1];
-  switch (operation) {
-    case VALIDATE:
-      detail = chalk.magenta(`Validate ${detail}`);
-      break;
-    case BUILD:
-      detail = chalk.magenta(`Build`);
-      break;
-    case MKDIR:
-      if (!IS_VERBOSE) return;
-      detail = ` ${operation.description} ${chalk.blue(detail)}`;
-      break;;
-    case COPY:
-      if (!IS_VERBOSE) return;
-      detail = `  ${operation.description} ${chalk.blue(detail)}`;
-      break;
-    case SCRIPT:
-      if (!IS_VERBOSE) return;
-      detail = `${operation.description} ${chalk.blue(detail)}`;
-      break;
-    case STYLE:
-      if (!IS_VERBOSE) return;
-      detail = ` ${operation.description} ${chalk.blue(detail)}`;
-      break;
-    case DONE:
-      detail = chalk.green(detail);
-      break;
-    default:
-      // Nothing to do.
+  if (operation === VALIDATE) {
+    detail = chalk.magenta(`Validate ${detail}`);
+  } else if (operation === GENERATE) {
+    detail = chalk.magenta(`Generate ${detail}`);
+  } else if (operation === DONE) {
+    detail = chalk.magenta(detail);
+  } else if (!IS_VERBOSE) {
+    return;
+  } else if (operation === MKDIR) {
+    detail = `${operation.description} ${chalk.blue(detail)}`;
+  } else if (operation === COPY) {
+    detail = ` ${operation.description} ${chalk.blue(detail)}`;
+  } else if (operation === BUILD) {
+    detail = `${operation.description} ${chalk.blue(detail)}`;
+  } else {
+    throw new Error(`unknown operation ${operation}`);
   }
-  console.error(chalk.grey('[build]'), detail);
+
+  console.error(chalk.grey('[build-apparebit]'), detail);
 }
 
 function withCopyright(text) {
   return '/* (C) Copyright 2019 Robert Grimm */ ' + text;
 }
 
-async function copy(file, source, target) {
+function copy(file, source, target) {
   const from = join(source, file);
   const to = join(target, file);
   announce(COPY, from, to);
   return copyFile(from, to);
 }
 
+async function copyDirectory(source, target) {
+  const entries = await readdir(source, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    await copy(entry.name, source, target);
+  }
+}
+
 async function build() {
-  // =================================== Validate ==============================
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
   announce(VALIDATE, 'HTML');
+
   let status;
   try {
     status = await validate();
@@ -111,42 +113,36 @@ async function build() {
     return;
   }
 
-  // =================================== Build ==============================
-  announce(BUILD);
-  const root = resolve(__dirname, '..');
-  const source = join(root, SOURCE_ROOT);
-  const target = join(root, TARGET_ROOT);
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
+  announce(GENERATE, 'content');
 
-  announce(MKDIR, target);
-  await rimraf(target);
-  await mkdir(target);
+  announce(MKDIR, TARGET_ROOT);
+  await rimraf(TARGET_ROOT);
+  await mkdir(TARGET_ROOT);
 
-  // Copy entire directories.
+  // ........................................ Copy entire directories
   for (const dir of DIRECTORIES_TO_COPY) {
-    const from = join(source, dir);
-    const to = join(target, dir);
-    const entries = await readdir(from, { withFileTypes: true });
+    const from = join(SOURCE_ROOT, dir);
+    const to = join(TARGET_ROOT, dir);
 
     announce(MKDIR, to);
     await mkdir(to, { recursive: true });
-
-    for (const entry of entries) {
-      if (!entry.isFile()) continue;
-      await copy(entry.name, from , to);
-    }
+    await copyDirectory(from, to);
   }
 
-  // Copy select files.
+  await copyDirectory(CONFIG_FILES, TARGET_ROOT);
+
+  // ........................................ Copy select files
   for (const file of FILES_TO_COPY) {
-    await copy(file, source, target);
+    await copy(file, SOURCE_ROOT, TARGET_ROOT);
   }
 
-  // Process styles.
+  // ........................................ Build styles
   for (const file of STYLES) {
-    const from = join(source, file);
-    const to = join(target, file);
+    const from = join(SOURCE_ROOT, file);
+    const to = join(TARGET_ROOT, file);
 
-    announce(STYLE, from, to);
+    announce(BUILD, from, to);
     const input = await readFile(from);
     const output = await postcss.process(input, { from, to });
     output.warnings().forEach(warn => {
@@ -156,12 +152,12 @@ async function build() {
     await writeFile(to, withCopyright(output.css));
   }
 
-  // Process scripts.
+  // ........................................ Build scripts
   for (const file of SCRIPTS) {
-    const from = join(source, file);
-    const to = join(target, file);
+    const from = join(SOURCE_ROOT, file);
+    const to = join(TARGET_ROOT, file);
 
-    announce(SCRIPT, from, to);
+    announce(BUILD, from, to);
     const input = await readFile(from);
     const output = await babel.transformAsync(input, {
       filename: from,
@@ -172,12 +168,7 @@ async function build() {
     await writeFile(to, withCopyright(output.code));
   }
 
-  const tokens = join(root, 'tokens');
-  for (const file of TOKENS) {
-    await copy(file, tokens, target);
-  }
-
-  // =================================== Done ==============================
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Done
   announce(DONE, `Created ${directories} directories with ${files} files`);
   announce(DONE, 'Happy, happy, joy, joy!');
 }
