@@ -1,8 +1,13 @@
 'use strict';
 
+const { join, resolve } = require('path');
+const ROOT = resolve(__dirname, '..');
+
 module.exports = {
-  SOURCE_ROOT: 'content',
-  TARGET_ROOT: 'build',
+  ROOT,
+  CONFIG_FILES: join(ROOT, 'config'),
+  SOURCE_ROOT: join(ROOT, 'content'),
+  TARGET_ROOT: join(ROOT, 'build'),
   DIRECTORIES_TO_COPY: [
     'about',
     'assets/fonts',
@@ -33,7 +38,4 @@ module.exports = {
   SCRIPTS: [
     'assets/function.js',
   ],
-  TOKENS: [
-    'googlee753ef1b651640a9.html',
-  ]
 };
