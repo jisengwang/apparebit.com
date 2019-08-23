@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-const { resolve: resolvePath } = require('path');
-const { SOURCE_ROOT } = require('./config.js');
+const { TARGET_ROOT } = require('./config.js');
 const { spawn } = require('child_process');
 
 function deploy() {
@@ -14,8 +13,9 @@ function deploy() {
   spawn('rsync', [
     '-ruv',
     '-e', 'ssh -p 2222',
+    '--exclude', 'cgi-bin *~ .DS_Store',
     '--delete',
-    resolvePath(__dirname, '..', SOURCE_ROOT),
+    TARGET_ROOT,
     'rgrimm@192.232.251.218:public_html/'
   ], {
     stdio: 'inherit',
