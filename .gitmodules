@@ -1,0 +1,3 @@
+[submodule "content/assets/fonts"]
+	path = content/assets/fonts
+	url = git@github.com:apparebit/webfonts.git
