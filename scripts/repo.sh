@@ -29,19 +29,23 @@ list_all_objects() {
 # ------------------------------------------------------------------------------
 # 2. Filter and Sort
 
+# Select blobs only, leaving out tree objects.
 only_blobs() {
   sed -n 's/^blob /&/p'
 }
 
+# Select objects with matching path: `matches <regex>`.
 matches() {
   [[ $# -eq 1 ]] || exit 2
   awk "\$4 ~ /$1/" -
 }
 
+# Sort by size.
 by_size() {
   sort --numeric-sort --key=3
 }
 
+# Sort by path.
 by_path() {
   sort --key=4
 }
@@ -49,25 +53,25 @@ by_path() {
 # ------------------------------------------------------------------------------
 # 3. Project
 
+# Keep only hash and path. For debugging.
 hash_and_path() {
   cut -f 2,4 -d ' '
 }
 
+# Keep only hash and size. For debugging.
 hash_and_size() {
   cut -f 2,3 -d ' '
 }
 
+# Keep only hash. To feed into bfg.
 hash() {
   cut -f 2 -d ' '
 }
 
 # ==============================================================================
 
-# bgf
-
+# Putting it all together.
 heavy_rule
 BLOBS="$(list_all_objects | only_blobs | by_path)"
 echo "$BLOBS" | matches 'woff2?$'
-
-# matches '(^prep)|(woff2?$)|(so-long\/index.html$)'
 heavy_rule
