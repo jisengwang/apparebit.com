@@ -31,24 +31,6 @@
 <meta name="twitter:site" content="@apparebit">
 <meta name="twitter:creator" content="@apparebit">
 <meta name="theme-color" content="#35ff61">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "url": "https://apparebit.com/features/ubu-trump"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "url": "https://apparebit.com/features/do-you-be"
-    }
-  ]
-}
-</script>
 <style>
 main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello, .hello2 { font-family: var(--bely-display-fontstack); }
@@ -72,7 +54,7 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 }
 </style>
 </head>
-<body class=h-card>
+<body>
 
 <nav class="page-header barred">
 <div>
@@ -85,12 +67,12 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 <main>
 <header class=visually-hidden><h1>Apparebit</h1></header>
 
-<section aria-labelledby=hello>
+<section aria-labelledby=hello class="h-card vcard">
 <div><h2 id=hello class=hello>Hello,</h2></div>
 
 <div class=with-inset>
 <figure class=inset-right>
-<img class=u-photo
+<img class="u-photo photo"
     srcset="/assets/images/robert-ante-portas-222x222.jpg 222w,
             /assets/images/robert-ante-portas-444x444.jpg 444w,
             /assets/images/robert-ante-portas-666x666.jpg 666w"
@@ -100,9 +82,9 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 <figcaption>Your host.</figcaption>
 </figure>
 
-<p>I am <span class=p-name>Robert Grimm</span> and I welcome you to
-<a class=u-url href="https://apparebit.com">Apparebit</a>, my personal website.
-Given a professional career spanning both academic computer science and
+<p>I am <span class="p-name fn">Robert Grimm</span> and I welcome you to
+<a class="u-url url" href="https://apparebit.com">Apparebit</a>, my personal
+website. Given a professional career spanning both academic computer science and
 industrial software engineering, technology is an important topic here. Having
 additional experience in social work, gay activism, movie making, and art
 photography, you will find that I also take a strong interest in arts and
@@ -116,17 +98,37 @@ other.</p>
 come back for more. I am in the process of migrating content from previous
 websites and Facebook—thus consolidating my online presence here. I am also
 working on new material. If you have a question or comment, please do reach out
-and say <a class=u-email href="mailto:apparebit@gmail.com"><span
+and say <a class="u-email email" href="mailto:apparebit@gmail.com"><span
 class=hello2>Hello</span></a>, too!</p>
 
 <p class=signature><span>Robert Grimm</span></p>
 </section>
 
+<!-- ============================== Featured =============================== -->
 <section aria-labelledby=featured>
 <h2 id=featured hidden>Featured</h2>
 <ul class=carddeck>
 
-<!-- *********************************************************************** -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://apparebit.com/features/ubu-trump"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "url": "https://apparebit.com/features/do-you-be"
+    }
+  ]
+}
+</script>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ So Long ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <li class=card style="filter: contrast(0.8) grayscale(1);">
 <h3><a id=coming-soon class=stylish>&nbsp;<span class=visually-hidden>So Long and Thanks for All the Gelato!</span></a></h3>
 <div class=image>
@@ -135,7 +137,7 @@ class=hello2>Hello</span></a>, too!</p>
 <p class=description><em>Coming Soon!</em></p>
 </li>
 
-<!-- *********************************************************************** -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Do You Be ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <li class=card>
 <h3><a class=stylish href="/features/do-you-be">&nbsp;<span>Do You Be?</span></a></h3>
 <div class=image>
@@ -151,7 +153,7 @@ class=hello2>Hello</span></a>, too!</p>
 <p class=description>The dancing voice of Meredith Monk</p>
 </li>
 
-<!-- *********************************************************************** -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Ubu Trump ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <li class=card>
 <h3><a class=stylish href="/features/ubu-trump">&nbsp;<span>Ubu Trump?<br>
   Trump Roi!</span></a></h3>
@@ -167,8 +169,6 @@ class=hello2>Hello</span></a>, too!</p>
 </div>
 <p class=description>The nihilism of Donald Trump</p>
 </li>
-
-<!-- *********************************************************************** -->
 </ul>
 </section>
 </main>
