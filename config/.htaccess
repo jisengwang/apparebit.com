@@ -20,9 +20,12 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
 # https://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
 
+# Images sized 1,200 by 630 are banners for social network shares.
+# They should be accessible without a-priori restriction.
+
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
-        <FilesMatch "1200x630.jpg$">
+        <FilesMatch "1200x630.(jpg|png)$">
             SetEnvIf Origin ":" IS_CORS
             Header set Access-Control-Allow-Origin "*" env=IS_CORS
         </FilesMatch>
@@ -33,14 +36,19 @@
 # | Cross-origin web fonts                                             |
 # ----------------------------------------------------------------------
 
-# Allow cross-origin access to web fonts.
-#
-# https://developers.google.com/fonts/docs/troubleshooting
+# Disallow cross-origin access to web fonts.
 
-<IfModule mod_headers.c>
-    <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
-        Header set Access-Control-Allow-Origin "https://apparebit.com"
-    </FilesMatch>
+# There generally is no need to send Access-Control-Allow-Origin, since
+# same-origin requests do not use CORS. The exception is front preloading,
+# which is crossorigin even for fonts hosted at the same origin.
+
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+        <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+            SetEnvIf Origin ":" IS_CORS
+            Header set Access-Control-Allow-Origin "https://apparebit.com" env=IS_CORS
+        </FilesMatch>
+    </IfModule>
 </IfModule>
 
 # ######################################################################
@@ -366,6 +374,10 @@ DirectorySlash Off
     RewriteCond %{REQUEST_URI} ^/$
     RewriteRule ^ index.html [L]
 
+    # Prevent hot-linking as well as direct access to font files.
+    RewriteCond %{HTTP_REFERER} !^https://apparebit.com/.*$ [NC]
+    RewriteRule \.(eot|otf|tt[fc]|woff2?)$ - [F]
+
     # Add ".html" to path naming a file with that extension.
     RewriteCond %{REQUEST_FILENAME}.html -f
     RewriteRule (.*) $1.html [L]
@@ -583,6 +595,18 @@ DirectorySlash Off
 </IfModule>
 
 # ----------------------------------------------------------------------
+# | X-Permitted-Cross-Domain-Policies Header                           |
+# ----------------------------------------------------------------------
+
+# The handling of cross-domain requests in Adobe Flash
+# was configurable, a timely reminder that it could be
+# much worse and Flash would still be a thing.
+
+<IfModule mod_headers.c>
+    Header set X-Permitted-Cross-Domain-Policies "none"
+</IfModule>
+
+# ----------------------------------------------------------------------
 # | Referrer Policy                                                    |
 # ----------------------------------------------------------------------
 
@@ -606,6 +630,33 @@ DirectorySlash Off
     # destination (HTTPS->HTTPS), but isn't sent to a less secure destination
     # (HTTPS->HTTP).
     Header set Referrer-Policy "no-referrer-when-downgrade" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# | Disable TRACE HTTP Method                                          |
+# ----------------------------------------------------------------------
+
+# Prevent Apache from responding to `TRACE` HTTP request.
+#
+# The TRACE method, while apparently harmless, can be successfully
+# leveraged in some scenarios to steal legitimate users' credentials.
+#
+# Modern browsers now prevent TRACE requests being made via JavaScript,
+# however, other ways of sending TRACE requests with browsers have been
+# discovered, such as using Java.
+#
+# (!) If you have access to the main server configuration file, use the 
+#     `TraceEnable` directive instead.
+#
+# https://tools.ietf.org/html/rfc7231#section-4.3.8
+# https://www.owasp.org/index.php/Cross_Site_Tracing
+# https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)
+# https://httpd.apache.org/docs/current/mod/core.html#traceenable
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} ^TRACE [NC]
+    RewriteRule .* - [R=405,L]
 </IfModule>
 
 # ----------------------------------------------------------------------
