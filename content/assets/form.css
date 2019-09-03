@@ -985,6 +985,10 @@ img {
   border-style: none;
 }
 
+.with-inset p + p {
+  margin-top: var(--margin-text-top);
+}
+
 /* The surrounding <div class=with-inset> also contains the floats. */
 .with-inset::after {
   content: '';
