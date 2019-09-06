@@ -5,9 +5,11 @@
 var options = document.currentScript.dataset;
 
 function addReferencesFooter() {
+  /* Only add references if article doesn't already have a footer with them. */
   var article = document.querySelector('main > article');
   if (!article || article.querySelector('footer.references')) return;
 
+  /* Create the new footer containing the references. */
   var footer = document.createElement('footer');
   footer.classList.add('references');
 
@@ -35,13 +37,17 @@ function addReferencesFooter() {
     }
   }
 
+  /* Add footer to article. */
   article.appendChild(footer);
 }
 
-window.onbeforeprint = addReferencesFooter;
-var queries = window.matchMedia('print');
-queries.addListener(function(mql) {
-  if (mql.matches) {
-    addReferencesFooter();
-  }
-});
+/* Only add references iff the body has class `print-references`. */
+if (document.body.classList.contains('print-references')) {
+  window.onbeforeprint = addReferencesFooter;
+  var queries = window.matchMedia('print');
+  queries.addListener(function(mql) {
+    if (mql.matches) {
+      addReferencesFooter();
+    }
+  });
+}

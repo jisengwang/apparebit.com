@@ -1427,17 +1427,19 @@ footer h2::before, footer h3::before {
     counter-increment: href;
   }
 
-  main a::after {
+  .print-references main a::after {
     content: ' [' counter(href) ']';
     /* Lining figures look a tad awkward. Omit. */
   }
 
   /* Disable references for website-internal hyperlinks and references. */
-  main a[href^="https://apparebit.com"], .references a {
+  main a[href^="https://apparebit.com"],
+  .references a {
     counter-increment: none;
   }
 
-  main a[href^="https://apparebit.com"]::after, .references a::after {
+  .print-references main a[href^="https://apparebit.com"]::after,
+  .print-references .references a::after {
     content: none;
   }
 
