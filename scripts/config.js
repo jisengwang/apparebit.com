@@ -21,6 +21,7 @@ module.exports = {
     '404.html',
     'index.html',
     'robots.txt',
+    'assets/apparebit.webmanifest',
   ],
   MARKUP: [
     '403.html',
