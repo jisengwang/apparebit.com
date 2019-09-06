@@ -354,25 +354,6 @@ p {
 
 /* -------------------------------------------------------------------------- */
 
-h1, h2, h3, .pullquote {
-  font-family: 'Reforma 2018', var(--system-fontstack);
-}
-
-@supports not (font-variant: lining-nums common-ligatures) {
-  h1, h2, h3 {
-    -webkit-font-feature-settings: var(--font-features-standout);
-    font-feature-settings: var(--font-features-standout);
-  }
-}
-
-@supports (font-variant: lining-nums common-ligatures) {
-  h1, h2, h3 {
-    font-variant: lining-nums common-ligatures;
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-
 /* 13<sup>th</sup> if font supports superscript */
 sup {
   font-size: 100%;
@@ -412,31 +393,51 @@ sup {
 
 /* -------------------------------------------------------------------------- */
 
-.bruutal {
+@supports not (font-variant: lining-nums common-ligatures) {
+  h1, h2, h3 {
+    -webkit-font-feature-settings: var(--font-features-standout);
+    font-feature-settings: var(--font-features-standout);
+  }
+}
+
+@supports (font-variant: lining-nums common-ligatures) {
+  h1, h2, h3 {
+    font-variant: lining-nums common-ligatures;
+  }
+}
+
+.belyssimo h1, .belyssimo h2 {
+  font-family: var(--bely-display-fontstack);
+}
+
+.belyssimo h3 {
+  font-family: var(--bely-fontstack);
+}
+
+.bild h1, .bild h2, .bild h3, .bild .pullquote strong {
+  font-family: var(--bild-fontstack);
+}
+
+.bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
   font-family: var(--bluu-fontstack);
   font-weight: 500;
 }
 
 @supports not (font-variant-alternates: styleset(bluu)) {
-  .bruutal {
+  .bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
     -webkit-font-feature-settings: var(--font-features-bluu);
     font-feature-settings: var(--font-features-bluu);
   }
 }
 
 @supports (font-variant-alternates: styleset(bluu)) {
-  .bruutal {
+  .bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
     font-variant-alternates: styleset(bluu);
   }
 }
 
-.bely {
-  font-family: var(--bely-fontstack);
-}
-
-.belyssimo {
-  font-family: var(--bely-display-fontstack);
-  font-weight: 400;
+.reforma h1, .reforma h2, .reforma h3 {
+  font-family: 'Reforma 2018', var(--system-fontstack);
 }
 
 /* ========================================================================== *
@@ -685,7 +686,9 @@ address {
 .card > h3 {
   font-family: var(--bely-fontstack);
   font-size: var(--s05);
+  font-style: normal;
   line-height: var(--r-minor);
+  margin: 0;
 }
 
 .card > h3 > a, .card > h3 > a::before {
@@ -847,28 +850,35 @@ h1, h2, h3 {
   line-height: var(--r-minor);
 }
 
-.heading h1 {
-  font-size: calc(var(--scale-to-reforma) * var(--s20));
-  /* See nav.barred + main for top margin. */
+h1 {
+  font-size: var(--s20);
   margin-bottom: calc(var(--r-major) * 1rem);
 }
 
-.heading h2 {
-  margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
-  font-size: calc(var(--scale-to-reforma) * var(--s10));
-}
-
-.heading h2 + p {
-  /* A subheading, which doesn't really make sense in Reforma. */
-  margin-top: 0;
+h2 {
   font-size: var(--s10);
-  font-style: italic;
+  margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
+  margin-bottom: calc(var(--r-minor) * 1rem);
 }
 
-.heading h3 {
-  margin-top: calc(var(--r-major) * 1rem);
-  font-size: calc(var(--scale-to-reforma) * var(--s05));
+.bild h2 {
+  font-size: var(--s15);
+  font-stretch: 95%;
+  margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
+}
+
+h3 {
+  font-size: var(--s05);
   font-style: italic;
+  margin-top: calc(var(--r-major) * 1rem);
+}
+
+.bild h3 {
+  font-size: var(--s10);
+  font-style: normal;
+  font-stretch: 100%;
+  margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
+  margin-bottom: calc(var(--r-minor) * 1rem);
 }
 
 /*
@@ -878,22 +888,6 @@ h1, h2, h3 {
  * Bluu does have a larger x-height, but looks puny when normalized. Hence, we
  * undo the Reforma's scaling as well.
  */
-
-.heading h1.bruutal, .heading h1.bely, .heading h1.belyssimo {
-  font-size: var(--s20);
-}
-
-.heading h2.bruutal, .heading h2.bely, .heading h2.belyssimo {
-  font-size: var(--s10);
-}
-
-.heading h3.bruutal, .heading h3.bely, .heading h3.belyssimo {
-  font-size: var(--s05);
-}
-
-.heading h3.belyssimo, .heading h3.belyssimo {
-  font-style: normal;
-}
 
 /* -------------------------------------------------------------------------- *
  * [hidden], .visually-hidden
@@ -1128,8 +1122,13 @@ main ul > li {
 }
 
 .page-footer h2 {
+  font-size: var(--s05);
+  font-stretch: 100%; /* Otherwise, Bild becomes too hard to read. */
+  margin: 0; /* Reset margins. */
+}
+
+.reforma .page-footer h2 {
   font-size: calc(var(--scale-to-reforma) * var(--s05));
-  margin: 0;
 }
 
 .page-footer ul {
@@ -1322,8 +1321,16 @@ main {
 }
 
 .pullquote strong {
-  font-size: calc(var(--scale-to-reforma) * var(--s20));
+  font-size: var(--s20);
   font-weight: normal;
+}
+
+.bild .pullquote strong {
+  font-stretch: 85%;
+}
+
+.reforma .pullquote strong {
+  font-size: calc(var(--scale-to-reforma) * var(--s20));
 }
 
 /* -------------------------------------------------------------------------- *
