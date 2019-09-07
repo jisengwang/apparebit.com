@@ -885,7 +885,7 @@ h2 {
 }
 
 /* -------------------------------------------------------------------------- *
- * [hidden], .visually-hidden
+ * [hidden], .invisible
  * -------------------------------------------------------------------------- */
 
 [hidden] {
@@ -893,7 +893,7 @@ h2 {
 }
 
 /* See https://zellwk.com/blog/hide-content-accessibly/ */
-.visually-hidden {
+.invisible {
   border: 0;
   clip: rect(0 0 0 0);
   height: auto;
