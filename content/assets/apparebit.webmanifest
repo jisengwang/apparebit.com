@@ -10,17 +10,17 @@
   "icons": [
     {
       "src": "/assets/icons/a-circle-32x32.png",
-      "type": "images/png",
+      "type": "image/png",
       "sizes": "32x32"
     },
     {
       "src": "/assets/icons/a-circle-192x192.png",
-      "type": "images/png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
       "src": "/assets/icons/a-circle-512x512.png",
-      "type": "images/png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ]
