@@ -867,27 +867,22 @@ h2 {
   margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
 }
 
-h3 {
-  font-size: var(--s05);
-  font-style: italic;
-  margin-top: calc(var(--r-major) * 1rem);
-}
-
 .bild h3 {
   font-size: var(--s10);
   font-style: normal;
   font-stretch: 100%;
-  margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
-  margin-bottom: calc(var(--r-minor) * 1rem);
+  margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
 }
 
-/*
- * Size adjustments for other typefaces:
- *
- * Bely Display is already sized to go with Bely and doesn't need scaling (duh).
- * Bluu does have a larger x-height, but looks puny when normalized. Hence, we
- * undo the Reforma's scaling as well.
- */
+@supports (-moz-appearance: none) {
+  .bild h2 {
+    font-size: calc(var(--r-minor) * var(--s15));
+  }
+
+  .bild h3 {
+    font-size: calc(var(--r-minor) * var(--s10));
+  }
+}
 
 /* -------------------------------------------------------------------------- *
  * [hidden], .visually-hidden
@@ -1127,6 +1122,10 @@ main ul > li {
   margin: var(--t40) 0;
 }
 
+.bild .page-footer h2 {
+  font-size: var(--s10);
+}
+
 .reforma .page-footer h2 {
   font-size: calc(var(--scale-to-reforma) * var(--s05));
 }
@@ -1328,6 +1327,21 @@ main {
 
 .bild .pullquote strong {
   font-stretch: 85%;
+}
+
+@supports (-moz-appearance: none) {
+  /*
+   * In Safari, the pullquote's banner style looks perfectly reasonable
+   * with a font size of 2.25em and a line height of 1.5. Notably, it has
+   * the right proportion relative to body text in Bely and the gap between
+   * lines is about right. In Chrome, that also is the case. In Firefox,
+   * however, the font is too small and the gap too large, hence these two
+   * adjustments.
+   */
+  .bild .pullquote strong {
+    font-size: calc(var(--r-minor) * var(--s20));
+    line-height: var(--r-minor);
+  }
 }
 
 .reforma .pullquote strong {
