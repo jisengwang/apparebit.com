@@ -1124,7 +1124,7 @@ main ul > li {
 .page-footer h2 {
   font-size: var(--s05);
   font-stretch: 100%; /* Otherwise, Bild becomes too hard to read. */
-  margin: 0; /* Reset margins. */
+  margin: var(--t40) 0;
 }
 
 .reforma .page-footer h2 {
@@ -1133,6 +1133,7 @@ main ul > li {
 
 .page-footer ul {
   list-style: none;
+  margin: 0 0 var(--t40) 0;
 }
 
 .in-here {
