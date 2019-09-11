@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
 const {
@@ -77,7 +78,10 @@ function announce(operation, ...args) {
 }
 
 function withCopyright(text) {
-  return '/* (C) Copyright 2019 Robert Grimm */ ' + text;
+  return (
+    '/* (C) Copyright 2019 Robert Grimm. Released under MIT license. */ ' +
+    text
+  );
 }
 
 function copy(file, source, target) {

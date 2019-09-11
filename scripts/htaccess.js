@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
 const { CONFIG_FILES } = require('./config.js');

@@ -1,3 +1,4 @@
+/* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
 const { join, resolve } = require('path');
