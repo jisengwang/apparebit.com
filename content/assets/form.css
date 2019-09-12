@@ -707,9 +707,8 @@ address {
 
 .card > h3 {
   font-family: var(--bely-fontstack);
-  font-size: var(--s05);
-  font-style: normal;
-  line-height: var(--r-minor);
+  /* Make non-breaking space invisible again. See above. */
+  font-size: 0;
   margin: 0;
 }
 
@@ -735,6 +734,7 @@ address {
 
 .card > h3 > a::before {
   content: '';
+  font-size: calc(var(--r-minor) * 1rem);
   border: solid var(--t10) var(--color-green);
   opacity: 0;
 }
@@ -753,6 +753,7 @@ address {
 /* >>>>>>>>>> The nested headline is presented on top of image. <<<<<<<<<< */
 
 .card > h3 > a > span {
+  font-size: calc(var(--r-minor) * 1rem);
   position: absolute;
   top: var(--t15);
   left: var(--t15);
