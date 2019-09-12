@@ -2,11 +2,11 @@
 
 This repository contains most of the sources for my personal website
 [apparebit.com](https://apparebit.com). The sources for the [.htaccess
-configuration](https://github.com/apparebit/server-configs-apache) configuration
-are in a separate, public repository. Most typefaces on Apparebit are
-commercially licensed and thus not publicly accessible. Git submodules are
-effective at isolating them in another, private repository, while still being
-readily accessible by myself.
+configuration](https://github.com/apparebit/server-configs-apache) are in a
+separate, public repository. Most typefaces on Apparebit are commercially
+licensed and thus not publicly accessible. Git submodules are effective at
+isolating them in another, private repository, while still being readily
+accessible by myself.
 
 This repository being public does *not* imply that its contents are open source.
 I chose to develop in the open to support the open web. But unless otherwise and
