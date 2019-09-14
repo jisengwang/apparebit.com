@@ -90,10 +90,10 @@ function copy(file, source, target) {
   return copyFile(from, to);
 }
 
-async function copyDirectory(source, target) {
+async function copyDirectory(source, target, skip = () => false) {
   const entries = await readdir(source, { withFileTypes: true });
   for (const entry of entries) {
-    if (!entry.isFile()) continue;
+    if (!entry.isFile() || skip(entry.name)) continue;
     await copy(entry.name, source, target);
   }
 }
@@ -133,7 +133,7 @@ async function build() {
     await copyDirectory(from, to);
   }
 
-  await copyDirectory(CONFIG_FILES, TARGET_ROOT);
+  await copyDirectory(CONFIG_FILES, TARGET_ROOT, n => n === '.htaccess.old');
 
   // ........................................ Copy select files
   for (const file of FILES_TO_COPY) {
