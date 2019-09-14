@@ -5,6 +5,8 @@
 const { CONFIG_FILES } = require('./config.js');
 const { join } = require('path');
 const { spawn } = require('child_process');
+const { logger } = require('./util');
+const log = logger('htaccess');
 
 const BUILD_SH = join(
   __dirname, '..', '..', 'server-configs-apache', 'bin', 'build.sh'
@@ -24,6 +26,12 @@ function htaccess() {
   .on('exit', resolve);
 
   return promise;
+}
+
+async function htaccess() {
+  // 1. Build the .htaccess configuration.
+  log(`Build .htaccess`);
+  await build();
 }
 
 if (require.main === module) {

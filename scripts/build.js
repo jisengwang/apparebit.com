@@ -17,8 +17,9 @@ const {
 } = require('fs').promises;
 
 const babel = require('@babel/core');
-const chalk = require('chalk');
 const { join, resolve } = require('path');
+const { logger } = require('./util.js');
+const log = logger('build');
 const { promisify } = require('util');
 const rimraf = promisify(require('rimraf'));
 
@@ -57,24 +58,22 @@ function announce(operation, ...args) {
 
   let detail = args[args.length - 1];
   if (operation === VALIDATE) {
-    detail = chalk.magenta(`Validate ${detail}`);
+    log(`Validate ${detail}`);
   } else if (operation === GENERATE) {
-    detail = chalk.magenta(`Generate ${detail}`);
+    log(`Generate ${detail}`);
   } else if (operation === DONE) {
-    detail = chalk.magenta(detail);
+    log(detail);
   } else if (!IS_VERBOSE) {
     return;
   } else if (operation === MKDIR) {
-    detail = `${operation.description} ${chalk.blue(detail)}`;
+    log.logv(`${operation.description} ${detail}`);
   } else if (operation === COPY) {
-    detail = ` ${operation.description} ${chalk.blue(detail)}`;
+    log.logv(` ${operation.description} ${detail}`);
   } else if (operation === BUILD) {
-    detail = `${operation.description} ${chalk.blue(detail)}`;
+    log.logv(`${operation.description} ${detail}`);
   } else {
     throw new Error(`unknown operation ${operation}`);
   }
-
-  console.error(chalk.grey('[build-apparebit]'), detail);
 }
 
 function withCopyright(text) {
@@ -100,7 +99,7 @@ async function copyDirectory(source, target) {
 }
 
 async function build() {
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
   announce(VALIDATE, 'HTML');
 
   let status;
@@ -117,7 +116,7 @@ async function build() {
     return;
   }
 
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Generate Content
   announce(GENERATE, 'content');
 
   announce(MKDIR, TARGET_ROOT);

@@ -2,11 +2,14 @@
 /* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
+const { logger } = require('./util.js');
+const log = logger('deploy');
 const { TARGET_ROOT } = require('./config.js');
 const source = TARGET_ROOT + (TARGET_ROOT.endsWith('/') ? '' : '/');
 const { spawn } = require('child_process');
 
-function deploy() {
+async function deploy() {
+  log('Deploy apparebit.com');
   let resolve, reject, promise = new Promise((res, rej) => {
     resolve = res;
     reject = rej;
@@ -46,7 +49,8 @@ function deploy() {
   .on('error', reject)
   .on('exit', resolve);
 
-  return promise;
+  await promise;
+  log('Done');
 }
 
 if (require.main === module) {
