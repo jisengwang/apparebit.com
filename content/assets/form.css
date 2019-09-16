@@ -183,42 +183,36 @@
    * ------------------------------------------------------------------------ */
 
   --color-white: #f6f6f8;
-  --color-grey1: #e3e7ed;
-  --color-grey2: #e0e0e0;
-  --color-grey3: #a0a0a0;
-  --color-grey4: #404040;
-  --color-blackish: #222225;
+  --color-light-grey: #e3e7ed;
   --color-black: #1d1d20;
-  --color-none: #000;
-  --color-yellow: #fff143;
   --color-cyan: #2bfff4;
   --color-green: #35ff61;
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
-  --color-bg-offset: var(--color-grey1);
-  --color-bg-hdr-ftr: var(--color-grey2);
-  --color-separator: var(--color-grey3);
+  --color-bg-offset: var(--color-light-grey);
+  --color-fg-hdr-ftr: var(--color-fg);
+  --color-bg-hdr-ftr: #e0e0e0;
+  --color-separator: #a0a0a0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
   --color-accent3: #ff82e8;
   --color-accent4: #ffb74a;
-  --color-accent5: var(--color-yellow);
+  --color-accent5: #fff143;
 }
 
 /* Don't even think to print dark color scheme! */
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --color-fg: var(--color-grey1);
-    --color-bg: var(--color-blackish);
-    --color-bg-offset: var(--color-grey4);
-    --color-bg-hdr-ftr: var(--color-none);
-    /* --color-separator stays as var(--color-grey3). */
+    --color-fg: var(--color-light-grey);
+    --color-bg: #222225;
+    --color-bg-offset: #404040;
+    --color-fg-hdr-ftr: var(--color-fg);
+    --color-bg-hdr-ftr: #000;
+    --color-separator: #606060;
     --color-accent1: #970202;
-    --color-accent2: #830183;
-    --color-accent3: #8039c9;
-    --color-accent4: #4739c9;
-    --color-accent5: #2c8672;
+    --color-accent2: #6F028D;
+    --color-accent5: #038334;
   }
 }
 
@@ -247,6 +241,16 @@
   background-color: var(--color-accent3);
   background-image: linear-gradient(to right,
     var(--color-accent3), var(--color-accent4));
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .gradient1 {
+    background: var(--color-accent1);
+  }
+
+  .gradient2 {
+    background: var(--color-accent2);
+  }
 }
 
 /* ========================================================================== *
@@ -455,9 +459,7 @@ abbr[title] {
 }
 
 body {
-  color: #201d1d;
   color: var(--color-fg);
-  background-color: #f6f6f8;
   background-color: var(--color-bg);
 }
 
@@ -480,12 +482,10 @@ main footer > * {
 }
 
 ::-moz-selection {
-  background-color: #fff143;
   background-color: var(--color-accent5);
 }
 
 ::selection {
-  background-color: #fff143;
   background-color: var(--color-accent5);
 }
 
@@ -1124,6 +1124,7 @@ main ul > li {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  color: var(--color-fg-hdr-ftr);
   background-color: var(--color-bg-hdr-ftr);
 }
 
@@ -1226,6 +1227,7 @@ main {
 .page-header.barred {
   height: var(--s20);
   width: 100%;
+  color: var(--color-fg-hdr-ftr);
   background-color: var(--color-bg-hdr-ftr);
 }
 
