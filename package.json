@@ -6,6 +6,9 @@
     "> 1%",
     "not dead"
   ],
+  "engines": {
+    "node": ">=12.10.0"
+  },
   "dependencies": {
     "@babel/core": "7.6.0",
     "babel-preset-minify": "0.5.1",
