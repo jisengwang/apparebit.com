@@ -9,8 +9,7 @@ const INLINE_SCRIPT = /<script>([\s\S]*?)<\/script>/u;
 const { join } = require('path');
 const { readFile, writeFile } = require('fs').promises;
 const { spawn } = require('child_process');
-const { logger } = require('./util');
-const log = logger('htaccess');
+const { log } = require('./util');
 
 const DOT_HTACCESS = join(CONFIG_FILES, '.htaccess');
 const BUILD_SH = join(

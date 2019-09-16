@@ -2,8 +2,7 @@
 /* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
-const { logger } = require('./util.js');
-const log = logger('deploy');
+const { log } = require('./util.js');
 const { TARGET_ROOT } = require('./config.js');
 const source = TARGET_ROOT + (TARGET_ROOT.endsWith('/') ? '' : '/');
 const { spawn } = require('child_process');

@@ -13,15 +13,14 @@ const {
 } = require('./config.js');
 
 const {
-  copyFile, mkdir, readdir, readFile, writeFile
+  copyFile, mkdir, readdir, readFile, rmdir, writeFile
 } = require('fs').promises;
 
 const babel = require('@babel/core');
+const { freeze } = Object;
 const { join, resolve } = require('path');
-const { logger } = require('./util.js');
-const log = logger('build');
-const { promisify } = require('util');
-const rimraf = promisify(require('rimraf'));
+const { checkNodeVersion, log, logv } = require('./util.js');
+const RECURSIVE = freeze({ recursive: true });
 
 const postcss = require('postcss')([
   require('cssnano')({
@@ -66,11 +65,11 @@ function announce(operation, ...args) {
   } else if (!IS_VERBOSE) {
     return;
   } else if (operation === MKDIR) {
-    log.logv(`${operation.description} ${detail}`);
+    logv(`${operation.description} ${detail}`);
   } else if (operation === COPY) {
-    log.logv(` ${operation.description} ${detail}`);
+    logv(` ${operation.description} ${detail}`);
   } else if (operation === BUILD) {
-    log.logv(`${operation.description} ${detail}`);
+    logv(`${operation.description} ${detail}`);
   } else {
     throw new Error(`unknown operation ${operation}`);
   }
@@ -99,6 +98,8 @@ async function copyDirectory(source, target, skip = () => false) {
 }
 
 async function build() {
+  checkNodeVersion();
+
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate HTML
   announce(VALIDATE, 'HTML');
 
@@ -120,7 +121,7 @@ async function build() {
   announce(GENERATE, 'content');
 
   announce(MKDIR, TARGET_ROOT);
-  await rimraf(TARGET_ROOT);
+  await rmdir(TARGET_ROOT, RECURSIVE);
   await mkdir(TARGET_ROOT);
 
   // ........................................ Copy entire directories
