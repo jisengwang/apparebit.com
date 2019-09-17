@@ -502,7 +502,7 @@ DirectorySlash Off
 
 <IfModule mod_headers.c>
     #                                   (1)                 (2)              (3)                 (4)                     (5)
-    Header set Content-Security-Policy-Report-Only "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; script-src 'self' 'sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg=' www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/reportOnly" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header set Content-Security-Policy "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg=' www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -601,11 +601,13 @@ DirectorySlash Off
 # https://blogs.msdn.microsoft.com/ieinternals/2014/08/18/strict-transport-security/
 # https://hstspreload.org/
 
-# <IfModule mod_headers.c>
-#     Header always set Strict-Transport-Security "max-age=16070400; includeSubDomains" "expr=%{HTTPS} == 'on'"
-#     # (1) Enable your site for HSTS preload inclusion.
-#     # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
-# </IfModule>
+# max-age=16070400
+
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=86400; includeSubDomains" "expr=%{HTTPS} == 'on'"
+    # (1) Enable your site for HSTS preload inclusion.
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | Reducing MIME type security risks                                  |
