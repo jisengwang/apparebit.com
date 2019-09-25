@@ -2,7 +2,7 @@
 /* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
-const { CONFIG_FILES, SOURCE_ROOT } = require('./config.js');
+const { CONFIG_FILES, ROOT, SOURCE_ROOT } = require('./config.js');
 const { createHash } = require('crypto');
 /* Don't use `.` for text between tags since it doesn't match newlines. */
 const https = require('https');
@@ -70,17 +70,12 @@ async function htaccess() {
   const frontpage = await readFile(join(SOURCE_ROOT, 'index.html'), 'utf8');
   const hashes = hashInlineScripts(frontpage);
 
-  // 3. Use hash of Google Analytics script because domain may be vulnerable
-  // (https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45542.pdf)
-  const analytics =
-    hash(await fetch('https://www.google-analytics.com/analytics.js'));
-
-  // 4. Inject into .htaccess configuration.
+  // 3. Inject into .htaccess configuration.
   log(`Inject into .htaccess`);
   let config = await readFile(DOT_HTACCESS, 'utf8');
   config = config.replace(
-    `script-src 'self' inject-hashes-he.re;`,
-    `script-src 'self' ${hashes} ${analytics};`
+    `script-src 'self' www.google-analytics.com;`,
+    `script-src 'self' ${hashes} www.google-analytics.com;`
   );
   await writeFile(DOT_HTACCESS, config, 'utf8');
 }
