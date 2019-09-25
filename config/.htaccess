@@ -604,7 +604,7 @@ DirectorySlash Off
 # max-age=16070400
 
 <IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=86400; includeSubDomains" "expr=%{HTTPS} == 'on'"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
     # (1) Enable your site for HSTS preload inclusion.
     # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
 </IfModule>
