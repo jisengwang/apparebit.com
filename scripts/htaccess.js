@@ -5,6 +5,7 @@
 const { CONFIG_FILES, SOURCE_ROOT } = require('./config.js');
 const { createHash } = require('crypto');
 /* Don't use `.` for text between tags since it doesn't match newlines. */
+const https = require('https');
 const INLINE_SCRIPT = /<script>([\s\S]*?)<\/script>/u;
 const { join } = require('path');
 const { readFile, writeFile } = require('fs').promises;
@@ -26,6 +27,21 @@ function hashInlineScripts(html) {
     .map(match => match[1])
     .map(hash)
     .join(' ');
+}
+
+function fetch(url) {
+  let resolve, reject, promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+
+  https.get(url, response => {
+    let data = '';
+    response.on('data', chunk => data += chunk);
+    response.on('end', () => resolve(data))
+  }).on('error', err => reject(err));
+
+  return promise;
 }
 
 function build() {
@@ -54,12 +70,17 @@ async function htaccess() {
   const frontpage = await readFile(join(SOURCE_ROOT, 'index.html'), 'utf8');
   const hashes = hashInlineScripts(frontpage);
 
-  // 3. Inject into .htaccess configuration.
+  // 3. Use hash of Google Analytics script because domain may be vulnerable
+  // (https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45542.pdf)
+  const analytics =
+    hash(await fetch('https://www.google-analytics.com/analytics.js'));
+
+  // 4. Inject into .htaccess configuration.
   log(`Inject into .htaccess`);
   let config = await readFile(DOT_HTACCESS, 'utf8');
   config = config.replace(
-    `script-src 'self' www.google-analytics.com;`,
-    `script-src 'self' ${hashes} www.google-analytics.com;`
+    `script-src 'self' inject-hashes-he.re;`,
+    `script-src 'self' ${hashes} ${analytics};`
   );
   await writeFile(DOT_HTACCESS, config, 'utf8');
 }
