@@ -10,16 +10,16 @@
     "node": ">=12.10.0"
   },
   "dependencies": {
-    "@babel/core": "7.6.0",
+    "@babel/core": "7.6.2",
     "babel-preset-minify": "0.5.1",
     "chalk": "2.4.2",
     "cssnano": "4.1.10",
     "postcss": "7.0.18",
-    "serve": "11.1.0",
+    "serve": "11.2.0",
     "vnu-jar": "19.9.4"
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "serve"
+    "start": "serve --ssl-cert config/localhost.crt --ssl-key config/localhost.key"
   }
 }
