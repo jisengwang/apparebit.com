@@ -7,16 +7,52 @@
   ],
   "headers": [
     {
-      "source": "**/*",
+      "source": "**",
       "headers": [{
+        "key": "X-Content-Type-Options",
+        "value": "nosniff"
+      }, {
+        "key": "X-Permitted-Cross-Domain-Policies",
+        "value": "none"
+      },{
         "key": "X-Powered-By",
         "value": "George Soros"
       }]
-    },{
+    }, {
       "source": "**/*.html",
       "headers": [{
         "key": "Content-Security-Policy",
-        "value": "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg=' www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'"
+        "value": "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self' 'sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg=' www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'"
+      }, {
+        "key": "Referrer-Policy",
+        "value": "no-referrer-when-downgrade"
+      }, {
+        "key": "X-Frame-Options",
+        "value": "DENY"
+      }, {
+        "key": "X-UA-Compatible",
+        "value": "IE=edge"
+      }, {
+        "key": "X-XSS-Protection",
+        "value": "1; mode=block"
+      }]
+    }, {
+      "source": "**/*1200x630.@(jpg|png)",
+      "headers": [{
+        "key": "Access-Control-Allow-Origin",
+        "value": "*"
+      }]
+    }, {
+      "source": "**/*.@(woff|woff2)",
+      "headers": [{
+        "key": "Access-Control-Allow-Origin",
+        "value": "https://apparebit.com"
+      }]
+    }, {
+      "source": "/assets/apparebit.webmanifest",
+      "headers": [{
+        "key": "Content-Type",
+        "value": "application/manifest+json"
       }]
     }
   ]
