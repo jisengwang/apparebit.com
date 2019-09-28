@@ -2,5 +2,7 @@
 .firebase
 build
 config/.htaccess.old
+config/localhost.crt
+config/localhost.key
 node_modules
 _stuff
