@@ -23,6 +23,9 @@ module.exports = {
     'index.html',
     'robots.txt',
     'assets/apparebit.webmanifest',
+    'config/.htaccess',
+    'config/aarrh6dhlwkj38ie8h9y1pmlzg3gyz.html',
+    'config/googlee753ef1b651640a9.html',
   ],
   MARKUP: [
     '403.html',

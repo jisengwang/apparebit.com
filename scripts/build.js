@@ -134,8 +134,6 @@ async function build() {
     await copyDirectory(from, to);
   }
 
-  await copyDirectory(CONFIG_FILES, TARGET_ROOT, n => n === '.htaccess.old');
-
   // ........................................ Copy select files
   for (const file of FILES_TO_COPY) {
     await copy(file, SOURCE_ROOT, TARGET_ROOT);
