@@ -26,10 +26,9 @@ function addReferencesFooter() {
   const ol = document.createElement('ol');
   footer.appendChild(ol);
 
-  const { origin } = window;
   const hyperlinks = article.querySelectorAll('a[href]');
-  for (const href of hyperlinks) {
-    if (!href.startsWith(origin)) {
+  for (const { href } of hyperlinks) {
+    if (!href.startsWith('https://apparebit.com/')) {
       const link = document.createElement('a');
       link.href = href;
       link.innerText = href;
