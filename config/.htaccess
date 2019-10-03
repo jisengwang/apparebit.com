@@ -227,6 +227,7 @@ AddDefaultCharset utf-8
                      .markdown \
                      .md \
                      .mjs \
+                     .svg \
                      .topojson \
                      .vtt \
                      .vcard \
