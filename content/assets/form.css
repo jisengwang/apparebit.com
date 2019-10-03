@@ -667,10 +667,18 @@ address {
 }
 
 .card {
-  max-width: calc(var(--r-minor) * var(--s70)); /* CardMax */
+  /* Width of iPhone 8 Plus, i.e., 414px. Google Pixel 3 is 411px. */
+  max-width: 21.8em;
   position: relative;
   width: 100%;
   margin: var(--s20) auto 0 auto;
+}
+
+@media (min-width: 35.625em) {
+  .card {
+    /* Font size changes already. Switch to sizing via modular scale. */
+    max-width: calc(var(--r-minor) * var(--s70)); /* CardMax */
+  }
 }
 
 /*
