@@ -3,11 +3,12 @@
 'use strict';
 
 const {
-  CONFIG_FILES,
+  CONFIG_ROOT,
   SOURCE_ROOT,
   TARGET_ROOT,
-  DIRECTORIES_TO_COPY,
-  FILES_TO_COPY,
+  CONTENT_DIRECTORIES_TO_COPY,
+  CONTENT_FILES_TO_COPY,
+  CONFIG_FILES_TO_COPY,
   STYLES,
   SCRIPTS,
 } = require('./config.js');
@@ -125,7 +126,7 @@ async function build() {
   await mkdir(TARGET_ROOT);
 
   // ........................................ Copy entire directories
-  for (const dir of DIRECTORIES_TO_COPY) {
+  for (const dir of CONTENT_DIRECTORIES_TO_COPY) {
     const from = join(SOURCE_ROOT, dir);
     const to = join(TARGET_ROOT, dir);
 
@@ -135,8 +136,13 @@ async function build() {
   }
 
   // ........................................ Copy select files
-  for (const file of FILES_TO_COPY) {
+  for (const file of CONTENT_FILES_TO_COPY) {
     await copy(file, SOURCE_ROOT, TARGET_ROOT);
+  }
+
+  // ........................................ Copy configuration files
+  for (const file of CONFIG_FILES_TO_COPY) {
+    await copy(file, CONFIG_ROOT, TARGET_ROOT);
   }
 
   // ........................................ Build styles
