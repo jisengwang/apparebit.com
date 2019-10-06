@@ -7,11 +7,12 @@ const { max, round } = Math;
 const options = document.currentScript.dataset;
 
 function addReferencesFooter() {
-  /* Only add references if article doesn't already have a footer with them. */
+  // >>> Phase 1: READ from DOM. If references don't exist, extract links.
   const article = document.querySelector('main > article');
   if (!article || article.querySelector('footer.references')) return;
+  const hyperlinks = article.querySelectorAll('a[href]');
 
-  /* Create the new footer containing the references. */
+  // >>> Phase 2: WRITE to DOM. Create mark-up for footer with references.
   const footer = document.createElement('footer');
   footer.classList.add('references');
 
@@ -26,7 +27,6 @@ function addReferencesFooter() {
   const ol = document.createElement('ol');
   footer.appendChild(ol);
 
-  const hyperlinks = article.querySelectorAll('a[href]');
   for (const { href } of hyperlinks) {
     if (!href.startsWith('https://apparebit.com/')) {
       const link = document.createElement('a');
