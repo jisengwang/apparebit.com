@@ -210,7 +210,7 @@
     --color-fg-hdr-ftr: var(--color-fg);
     --color-bg-hdr-ftr: #000;
     --color-separator: #606060;
-    --color-accent1: #970202;
+    --color-accent1: #8D0073;
     --color-accent2: #6F028D;
     --color-accent5: #038334;
   }
@@ -220,36 +220,6 @@
   :root {
     --color-fg: #000;
     --color-bg: transparent;
-  }
-}
-
-/*
- * To make the gradient look the same in each line of multiline text,
- *   background-attachment: fixed;
- * is the most general solution. However, it does not render reliably
- * in Chrome. If the gradient is horizontal and the width of the
- * container is known, there is a simple work-around: Size the
- * background image! See .banner
- */
-.gradient1 {
-  background-color: var(--color-accent1);
-  background-image: linear-gradient(to right,
-    var(--color-accent1), var(--color-accent2));
-}
-
-.gradient2 {
-  background-color: var(--color-accent3);
-  background-image: linear-gradient(to right,
-    var(--color-accent3), var(--color-accent4));
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .gradient1 {
-    background: var(--color-accent1);
-  }
-
-  .gradient2 {
-    background: var(--color-accent2);
   }
 }
 
@@ -577,6 +547,20 @@ a:not(.stylish):active {
  * .banner: the art of making banners out of text
  * -------------------------------------------------------------------------- */
 
+/*
+ * To create a banner effect, with text typeset against some gradient, the text
+ * must be contained in an inline element that is styled as follows:
+ *
+ * padding: ...;                          Give type breathing room.
+ * background-image: ...;                 Specify the gradient.
+ * -webkit-box-decoration-break: clone;   Make gradient and padding repeat...
+ * box-decoration-break: clone;           ...for each line, even on Safari.
+ * background-attachment: fixed;          Make gradient consistent across lines.
+ *
+ * However, that does not correctly render in Chrome, which has a bug handling
+ * a fixed background attachment. If the gradient is horizontal, sizing the
+ * background to maximum width of inline element is an effective alternative.
+ */
 .banner {
   padding: 0 0.2em;
   -webkit-box-decoration-break: clone;
@@ -597,6 +581,28 @@ a:not(.stylish):active {
 @media (min-width: 52.664em) {
   .banner {
     background-size: 40.125rem;
+  }
+}
+
+.background1 {
+  background-color: var(--color-accent1);
+  background-image: linear-gradient(to right,
+    var(--color-accent1), var(--color-accent2));
+}
+
+.background2 {
+  background-color: #ff6bff;
+  background-image: linear-gradient(to right,
+    #ff6bff 0%, #ff76d9 25%, #ff7f9d 50%, #ffa032 100%);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .background1 {
+    background: var(--color-accent1);
+  }
+
+  .background2 {
+    background: var(--color-accent2);
   }
 }
 
