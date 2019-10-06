@@ -2,7 +2,7 @@
 /* (C) Copyright 2019 Robert Grimm. Released under MIT license. */
 'use strict';
 
-const { CONFIG_FILES, ROOT, SOURCE_ROOT } = require('./config.js');
+const { CONFIG_ROOT, SOURCE_ROOT } = require('./config.js');
 const { createHash } = require('crypto');
 /* Don't use `.` for text between tags since it doesn't match newlines. */
 const https = require('https');
@@ -12,7 +12,7 @@ const { readFile, writeFile } = require('fs').promises;
 const { spawn } = require('child_process');
 const { log } = require('./util');
 
-const DOT_HTACCESS = join(CONFIG_FILES, '.htaccess');
+const DOT_HT_ACCESS = join(CONFIG_ROOT, '.htaccess');
 const BUILD_SH = join(
   __dirname, '..', '..', 'server-configs-apache', 'bin', 'build.sh'
 );
@@ -51,7 +51,7 @@ function build() {
   });
 
   spawn('bash', [BUILD_SH], {
-    cwd: CONFIG_FILES,
+    cwd: CONFIG_ROOT,
     stdio: 'inherit',
   })
   .on('error', reject)
@@ -72,12 +72,12 @@ async function htaccess() {
 
   // 3. Inject into .htaccess configuration.
   log(`Inject into .htaccess`);
-  let config = await readFile(DOT_HTACCESS, 'utf8');
+  let config = await readFile(DOT_HT_ACCESS, 'utf8');
   config = config.replace(
     `script-src 'self' www.google-analytics.com;`,
     `script-src 'self' ${hashes} www.google-analytics.com;`
   );
-  await writeFile(DOT_HTACCESS, config, 'utf8');
+  await writeFile(DOT_HT_ACCESS, config, 'utf8');
 }
 
 if (require.main === module) {
