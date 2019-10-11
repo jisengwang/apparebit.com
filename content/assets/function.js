@@ -3,7 +3,6 @@
  * ========================================================================== */
 'use strict';
 
-const { max, round } = Math;
 const options = document.currentScript.dataset;
 
 function addReferencesFooter() {
