@@ -77,7 +77,7 @@
 </script>
 <style>
 nav {
-  --nav-hilite: #fff143;
+  --nav-hilite: var(--color-yellow);
 }
 
 .cover img {
@@ -100,16 +100,16 @@ nav {
   display: inline-block;
   color: var(--color-black);
   padding: 0 0.2em;
+  background-color: var(--color-yellow);
 }
 
 .cover h1 span:nth-of-type(1) {
   transform: translateZ(10em) rotateX(37deg) rotateY(36deg) rotateZ(-33deg);
-  background-color: #f4e73a;
+  filter: contrast(0.9);
 }
 
 .cover > h1 > span:nth-of-type(2) {
   transform: translateZ(30em) rotateZ(-27deg)  rotateX(15deg) rotateY(33deg) rotateZ(29deg);
-  background-color: #fff143;
 }
 </style>
 </head>
