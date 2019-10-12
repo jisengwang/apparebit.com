@@ -44,9 +44,9 @@ function addReferencesFooter() {
 /* Only add references iff the body has class `print-references`. */
 if (document.body.classList.contains('print-references')) {
   window.onbeforeprint = addReferencesFooter;
-  const queries = window.matchMedia('print');
-  queries.addListener(mql => {
-    if (mql.matches) {
+  const query = window.matchMedia('print');
+  query.addListener(event => {
+    if (event.matches) {
       addReferencesFooter();
     }
   });
