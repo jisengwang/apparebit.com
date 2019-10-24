@@ -609,6 +609,32 @@ a:not(.stylish):active {
     #ff6bff 0%, #ff76d9 25%, #ff7f9d 50%, #ffa032 100%);
 }
 
+.background3 {
+  background-image: linear-gradient(to right,
+  /*  #87a1ff,
+    #9b9cff,
+    #ad96ff,
+    #bd90ff,
+    #cd89ff,
+    #dd80ff,*/
+    #ed75ff,
+    #ff66ff,
+    #ff6bee,
+    #ff6fdf,
+    #ff72d2,
+    #ff75c6,
+    #ff77ba,
+    #ff79ae,
+    #ff7ba1,
+    #ff7d93,
+    #ff7f83,
+    #ff816f,
+    #ff8352,
+    #ff8500,
+    #f08e00
+    );
+}
+
 @media screen and (prefers-color-scheme: dark) {
   .background1 {
     background: var(--color-accent1);
@@ -843,10 +869,6 @@ address {
  * .cover
  * -------------------------------------------------------------------------- */
 
-.cover {
-  line-height: 0;
-}
-
 .cover img, .cover svg {
   width: 100vw;
   height: 100vh;
@@ -859,14 +881,18 @@ address {
 
 .cover .title {
   position: absolute;
-  /* Navigation and headline may compete for pointer. */
-  pointer-events: none;
+  width: 100%;
   z-index: 665;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Make sure navigation always gets pointer events. */
+  pointer-events: none;
 }
 
 .cover h1, .cover p {
   line-height: var(--r-minor);
-  /* Reset margin and padding to simplify per-page styling. */
   margin: 0;
   padding: 0;
 }
@@ -1342,18 +1368,18 @@ main {
 
 .page-header.cornered [rel="home"]:link,
 .page-header.cornered [rel="home"]:visited {
-  fill: var(--color-black);
+  fill: var(--nav-lolite, var(--color-black));
   background-color: var(--nav-hilite, var(--color-white));
 }
 
 .page-header.cornered [rel="home"]:focus,
 .page-header.cornered [rel="home"]:hover {
   fill: var(--nav-hilite, var(--color-white));
-  background-color: var(--color-black);
+  background-color: var(--nav-lolite, var(--color-black));
 }
 
 .page-header.cornered [rel="home"]:active {
-  fill: var(--color-black);
+  fill: var(--nav-lolite, var(--color-black));
 }
 
 /* -------------------------------------------------------------------------- *

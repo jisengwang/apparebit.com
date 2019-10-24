@@ -85,21 +85,17 @@ nav {
 }
 
 .cover h1 {
-  top: 30vh;
-  right: 0;
-  left: 0;
-  text-align: center;
-
+  top: 32vh;
   font-size: calc(1em + 4vmin);
   line-height: var(--s15);
-  perspective: 80em;
+  perspective: 90em;
   transform-style: preserve-3d;
 }
 
 .cover h1 span {
-  display: inline-block;
+  display: block;
+  padding: 0 var(--t20);
   color: var(--color-black);
-  padding: 0 0.2em;
   background-color: var(--color-yellow);
 }
 
@@ -109,7 +105,8 @@ nav {
 }
 
 .cover > h1 > span:nth-of-type(2) {
-  transform: translateZ(30em) rotateZ(-27deg)  rotateX(15deg) rotateY(33deg) rotateZ(29deg);
+  transform: translateY(0.15em) translateZ(30em)
+    rotateZ(-27deg)  rotateX(15deg) rotateY(33deg) rotateZ(29deg);
 }
 </style>
 </head>
@@ -127,8 +124,7 @@ nav {
 <main class=h-entry>
 <article class=e-content>
 <header class=cover>
-<h1 class="p-name title"><span>Ubu Trump?</span><br><span>Trump
-Roi!</span></h1>
+<h1 class="p-name title"><span>Ubu Trump?</span><span>Trump Roi!</span></h1>
 <img srcset="/features/ubu-trump/the-dark-tower-900x900.jpg 900w,
              /features/ubu-trump/the-dark-tower-1191x1191.jpg 1191w,
              /features/ubu-trump/the-dark-tower-1300x1300.jpg 1300w,

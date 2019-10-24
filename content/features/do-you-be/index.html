@@ -78,6 +78,7 @@
 <style>
 nav {
   --nav-hilite: var(--color-purple);
+  --nav-lolite: #0b0b25;
 }
 
 .cover img {
@@ -85,53 +86,37 @@ nav {
 }
 
 .cover .title {
-  top: 27vh;
-  right: 0;
-  left: 0;
-  text-align: center;
-
+  top: 26vh;
   font-size: 1.1em;
   color: var(--color-purple);
+  text-align: center;
 }
 
-.cover h1 {
+.cover .title div {
+  padding: 0 var(--t10) var(--t10) var(--t10);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  background-color: #0b0b25a0;
+}
+
+.cover .title h1 {
   font-size: 2.5em;
 }
 
 @media (min-width: 20em) { .cover .title { font-size: calc(1em + 1vmin); }}
 @media (min-width: 24em) { .cover .title { font-size: calc(1em + 2vmin); }}
 
-@media (min-aspect-ratio: 50/40) { .cover .title { top: 27.00vh; }}
-@media (min-aspect-ratio: 51/40) { .cover .title { top: 26.50vh; }}
-@media (min-aspect-ratio: 52/40) { .cover .title { top: 26.00vh; }}
-@media (min-aspect-ratio: 53/40) { .cover .title { top: 25.25vh; }}
-@media (min-aspect-ratio: 54/40) { .cover .title { top: 24.50vh; }}
-@media (min-aspect-ratio: 55/40) { .cover .title { top: 23.75vh; }}
-@media (min-aspect-ratio: 56/40) { .cover .title { top: 23.00vh; }}
-@media (min-aspect-ratio: 57/40) { .cover .title { top: 22.25vh; }}
-@media (min-aspect-ratio: 58/40) { .cover .title { top: 21.50vh; }}
-@media (min-aspect-ratio: 59/40) { .cover .title { top: 20.75vh; }}
-@media (min-aspect-ratio: 60/40) { .cover .title { top: 20vh; }}
-@media (min-aspect-ratio: 61/40) { .cover .title { top: 19vh; }}
-@media (min-aspect-ratio: 62/40) { .cover .title { top: 18vh; }}
-@media (min-aspect-ratio: 63/40) { .cover .title { top: 17vh; }}
-@media (min-aspect-ratio: 64/40) { .cover .title { top: 16vh; }}
-@media (min-aspect-ratio: 65/40) { .cover .title { top: 15vh; }}
-@media (min-aspect-ratio: 66/40) { .cover .title { top: 14vh; }}
-@media (min-aspect-ratio: 67/40) { .cover .title { top: 13vh; }}
-@media (min-aspect-ratio: 68/40) { .cover .title { top: 12vh; }}
-@media (min-aspect-ratio: 69/40) { .cover .title { top: 11vh; }}
-@media (min-aspect-ratio: 70/40) { .cover .title { top: 10vh; }}
-@media (min-aspect-ratio: 71/40) { .cover .title { top:  9vh; }}
-@media (min-aspect-ratio: 72/40) { .cover .title { top:  8vh; }}
-@media (min-aspect-ratio: 73/40) { .cover .title { top:  7vh; }}
-@media (min-aspect-ratio: 74/40) { .cover .title { top:  6vh; }}
-@media (min-aspect-ratio: 75/40) { .cover .title { top:  5vh; }}
-@media (min-aspect-ratio: 76/40) { .cover .title { top:  4vh; }}
-@media (min-aspect-ratio: 77/40) { .cover .title { top:  3vh; }}
-@media (min-aspect-ratio: 78/40) { .cover .title { top:  2vh; }}
-@media (min-aspect-ratio: 79/40) { .cover .title { top:  1vh; }}
-@media (min-aspect-ratio: 80/40) { .cover .title { top:  0;   }}
+@media (min-aspect-ratio: 50/40) { .cover .title { top: 26.00vh; }}
+@media (min-aspect-ratio: 51/40) { .cover .title { top: 25.50vh; }}
+@media (min-aspect-ratio: 52/40) { .cover .title { top: 25.00vh; }}
+@media (min-aspect-ratio: 53/40) { .cover .title { top: 24.25vh; }}
+@media (min-aspect-ratio: 54/40) { .cover .title { top: 23.50vh; }}
+@media (min-aspect-ratio: 55/40) { .cover .title { top: 22.75vh; }}
+@media (min-aspect-ratio: 56/40) { .cover .title { top: 22.00vh; }}
+@media (min-aspect-ratio: 57/40) { .cover .title { top: 21.25vh; }}
+@media (min-aspect-ratio: 58/40) { .cover .title { top: 20.50vh; }}
+@media (min-aspect-ratio: 59/40) { .cover .title { top: 19.75vh; }}
+@media (min-aspect-ratio: 60/40) { .cover .title { top: 19vh; }}
 </style>
 </head>
 <body class=belyssimo>
@@ -148,10 +133,10 @@ nav {
 <main class=h-entry>
 <article class=e-content>
 <header class=cover>
-<div class=title>
+<div class=title><div>
 <h1 class=p-name>Do You Be?</h1>
 <p class=p-summary>An Appraisal of Meredith Monk</p>
-</div>
+</div></div>
 <img srcset="/features/do-you-be/auspicious-stillness-900x674.jpg 900w,
              /features/do-you-be/auspicious-stillness-1100x824.jpg 1100w,
              /features/do-you-be/auspicious-stillness-1300x974.jpg  1300w,
