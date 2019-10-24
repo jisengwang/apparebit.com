@@ -8,8 +8,9 @@ const { spawn } = require('child_process');
 const vnuPath = require('vnu-jar');
 
 const PATTERNS = [
-  'CSS: “background-image”: “0%” is not a “color” value.',
-  'File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.',
+  `CSS: “backdrop-filter”: Property “backdrop-filter” doesn't exist.`,
+  `CSS: “background-image”: “0%” is not a “color” value.`,
+  `File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.`,
 ];
 
 function validate() {
