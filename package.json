@@ -6,11 +6,12 @@
     "> 1%",
     "not dead"
   ],
+  "engineStrict": true,
   "engines": {
     "node": ">=12.10.0"
   },
   "dependencies": {
-    "@babel/core": "7.6.2",
+    "@babel/core": "7.6.4",
     "babel-preset-minify": "0.5.1",
     "chalk": "2.4.2",
     "cssnano": "4.1.10",
@@ -20,6 +21,7 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "serve --ssl-cert config/localhost.crt --ssl-key config/localhost.key"
+    "serve-tls": "serve --ssl-cert config/localhost.crt --ssl-key config/localhost.key",
+    "serve": "serve"
   }
 }
