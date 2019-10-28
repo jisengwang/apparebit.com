@@ -10,7 +10,9 @@ const vnuPath = require('vnu-jar');
 const PATTERNS = [
   `CSS: “backdrop-filter”: Property “backdrop-filter” doesn't exist.`,
   `CSS: “background-image”: “0%” is not a “color” value.`,
+  `CSS: “color-adjust”: Property “color-adjust” doesn't exist.`,
   `File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.`,
+  `The “contentinfo” role is unnecessary for element “footer”.`,
 ];
 
 function validate() {
