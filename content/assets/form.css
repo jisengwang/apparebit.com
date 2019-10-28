@@ -1504,6 +1504,49 @@ footer h2::before, footer h3::before {
 }
 
 /* -------------------------------------------------------------------------- *
+ * .so-long
+ * -------------------------------------------------------------------------- */
+
+.so-long {
+  font-family: 'Bild';
+  font-size: 21.5vh;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-aspect-ratio: 73/57) {
+  .so-long {
+    font-size: 16.7vw;
+    justify-content: center;
+  }
+}
+
+.so-long::before, .so-long::after {
+  content: '';
+  display: block;
+  height: 0.25em;
+  width: 100%;
+  background-color: currentColor;
+}
+
+.so-long > span {
+  display: block;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.so-long > span:nth-child(1) {
+  font-stretch: 60%; font-size: 2.91em; line-height: 0.75; padding-top: 0.01em; }
+.so-long > span:nth-child(2) {
+  font-stretch: 87%; font-size: 1.37em; line-height: 0.75; }
+.so-long > span:nth-child(3) {
+  font-stretch: 73%; font-size: 1em;    line-height: 0.85; }
+
+/* -------------------------------------------------------------------------- *
  * @media print
  * -------------------------------------------------------------------------- */
 
