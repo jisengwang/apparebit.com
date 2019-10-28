@@ -234,6 +234,11 @@
     --color-fg: #000;
     --color-bg: transparent;
   }
+
+  .card {
+    --color-bg: #fff;
+    --color-bg-offset: transparent;
+  }
 }
 
 /* ========================================================================== *
@@ -717,6 +722,8 @@ address {
   position: relative;
   width: 100%;
   margin: var(--s20) auto 0 auto;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
 }
 
 @media (min-width: 35.625em) {
@@ -1164,18 +1171,20 @@ main ul > li {
 /*
  * calc((
  *     var(--max-measure)
+ *     + 2 * var(--t15)
+ *     + 2 * 3em (assumed worst-case width)
  *     + 2 * var(--min-margin)
- *     + 2 * var(--s10)
  * ) * 131.25%)
  */
-@media (min-width: 43.3125em) {
+@media (min-width: 47.67em) {
   main ol > li {
     position: relative;
   }
 
   main ol > li::before {
     position: absolute;
-    left: calc(-1 * var(--s10));
+    right: calc(var(--max-measure) + var(--t10));
+    text-align: right;
   }
 
   main ul > li {
@@ -1510,25 +1519,21 @@ footer h2::before, footer h3::before {
 
 @media print {
   @page {
-    margin-top: var(---s30);
-  }
-
-  main {
-    margin-bottom: var(--s30);
+    margin: 1cm;
   }
 
   .page-header, .page-footer {
     display: none;
   }
 
-  h1 {
-    page-break-after: always;
-    break-after: always;
-  }
-
-  h2, h3 {
+  h1, h2, h3 {
     page-break-after: avoid;
     break-after: avoid;
+  }
+
+  .heading + p {
+    page-break-before: avoid;
+    break-before: avoid;
   }
 
   figure {
@@ -1562,11 +1567,22 @@ footer h2::before, footer h3::before {
     content: none;
   }
 
+  ul > li {
+    margin-left: 0;
+  }
+
+  ol > li::before {
+    position: absolute;
+    right: calc(var(--max-measure) + var(--t10));
+    text-align: right;
+  }
+
   .references {
     display: block;
   }
 
   .references ol > li {
+    position: relative;
     margin-top: 0;
     overflow-wrap: break-word;
   }
@@ -1575,28 +1591,5 @@ footer h2::before, footer h3::before {
     content: '[' counter(ol) '] ';
     -webkit-font-feature-settings: var(--font-features-standout);
     font-feature-settings: var(--font-features-standout);
-  }
-
-  /*
-  * calc((
-  *     var(--max-measure)
-  *     + 2 * var(--min-margin)
-  *     + 2 * var(--s20)
-  * ) * 131.25%)
-  */
-  @media (min-width: 45.28125em) {
-    .references ol > li {
-      position: relative;
-    }
-
-    .references ol > li::before {
-      position: absolute;
-      left: calc(-1 * (var(--s20) + var(--t50)));
-      text-align: right;
-    }
-
-    .references ul > li {
-      margin-left: 0;
-    }
   }
 }
