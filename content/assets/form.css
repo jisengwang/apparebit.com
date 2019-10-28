@@ -609,19 +609,13 @@ a:not(.stylish):active {
 }
 
 .background2 {
-  background-color: #ff6bff;
   background-image: linear-gradient(to right,
-    #ff6bff 0%, #ff76d9 25%, #ff7f9d 50%, #ffa032 100%);
-}
-
-.background3 {
-  background-image: linear-gradient(to right,
-  /*  #87a1ff,
+    /* #87a1ff,
     #9b9cff,
     #ad96ff,
     #bd90ff,
     #cd89ff,
-    #dd80ff,*/
+    #dd80ff, */
     #ed75ff,
     #ff66ff,
     #ff6bee,
@@ -637,7 +631,7 @@ a:not(.stylish):active {
     #ff8352,
     #ff8500,
     #f08e00
-    );
+  );
 }
 
 @media screen and (prefers-color-scheme: dark) {
