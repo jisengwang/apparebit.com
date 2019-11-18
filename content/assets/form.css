@@ -831,6 +831,7 @@ address {
 .card > .image {
   position: relative;
   padding-top: calc(100% / var(--r-major));
+  height: 0;
   width: 100%;
   overflow: hidden;
 }
