@@ -3,4 +3,5 @@
 build
 config/localhost.crt
 config/localhost.key
+content/.htaccess.old
 node_modules
