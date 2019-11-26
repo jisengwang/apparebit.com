@@ -3,23 +3,29 @@
 This repository contains most of the sources for my personal website
 [apparebit.com](https://apparebit.com). The sources for the [.htaccess
 configuration](https://github.com/apparebit/server-configs-apache) are in a
-separate, public repository. Most typefaces on Apparebit are commercially
-licensed and thus not publicly accessible. Git submodules are effective at
-isolating them in another, private repository, while still being readily
-accessible by myself.
+separate, public repository. So are the sources for
+[site:forge](https://github.com/apparebit/siteforge), which serves as
+Apparebit's static website generator. Most typefaces on Apparebit are
+commercially licensed and thus not publicly accessible. Git submodules are
+effective at isolating them in another, private repository, while still being
+readily accessible by myself.
 
-This repository being public does *not* imply that its contents are open source.
-I chose to develop in the open to support the open web. But unless otherwise and
-explicitly noted, I reserve *all* rights to the contents of this repository. In
-particular, I retain the full copyright on *all* writing and images. The one
-exception is the privacy policy, which I am making available under the [Creative
-Commons Attribution-ShareAlike 4.0 International
-License](https://creativecommons.org/licenses/by-sa/4.0/). As noted at the top
-of the corresponding files, I am also releasing Apparebit’s style sheets and
-scripts under the [MIT license](https://opensource.org/licenses/MIT). Next, I am
-perfectly fine with you copying markup patterns, e.g., the tags and attributes I
-use for accessibly marking up articles, sections, figures, and pullquotes.
-That’s how we learn from each other on the open web. But please respect my
-rights and do not copy, or otherwise reuse, my writing and photography.
+## Licensing
 
-—*Robert Grimm*
+This repository being publicly accessible does *not* imply that its contents are
+open source. I chose to develop in the open to support the open web. But unless
+otherwise and explicitly noted, I reserve *all* rights to the contents of this
+repository, including *all* writing and images. However, the following documents
+and code are available under permissive licenses:
+
+  * Apparebit's privacy policy under [CC BY-SA
+    4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
+  * Apparebit's [styles](content/assets/form.css) and
+    [scripts](content/assets/function.js) under
+    [MIT](https://opensource.org/licenses/MIT) terms.
+
+Furthermore, [site:forge](https://github.com/apparebit/siteforge), the static
+website generator I am developing in tandem with and support of Apparebit, is
+also licensed under [MIT](LICENSE) terms.
+
+— *Robert Grimm*
