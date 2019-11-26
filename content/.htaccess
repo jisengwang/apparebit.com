@@ -371,14 +371,14 @@ DirectorySlash Off
     RewriteRule ^(.*)/$ $1 [R=301,L]
 
     # Prevent hot-linking as well as direct access to font files.
-    RewriteCond %{HTTP_REFERER} !^https://apparebit.com/.*$ [NC]
+    RewriteCond %{HTTP_REFERER} !^https://apparebit.com/ [NC]
     RewriteRule \.(eot|otf|tt[fc]|woff2?)$ - [F]
 
-    # Add ".html" to path naming a file with that extension.
+    # Add ".html" to path for existing file with that extension.
     RewriteCond %{REQUEST_FILENAME}.html -f
     RewriteRule (.*) $1.html [L]
 
-    # Add "/index.html" to path naming a directory.
+    # Add "/index.html" to path for existing directory with that file.
     RewriteCond %{REQUEST_FILENAME}/ -d
     RewriteCond %{REQUEST_FILENAME}/index.html -f
     RewriteRule (.*) $1/index.html [L]
@@ -498,7 +498,7 @@ DirectorySlash Off
 
 <IfModule mod_headers.c>
     #                                   (1)                 (2)              (3)                 (4)                     (5)
-    Header set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self' sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg= www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self' 'sha256-mfzz3KYYS6HW6HVTCNj12HXac0vuohf9Ty1MLiJ7Ueg=' www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com; object-src 'none'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
