@@ -11,20 +11,11 @@
   "engines": {
     "node": ">=12.10.0"
   },
-  "dependencies": {
-    "@babel/core": "7.7.2",
-    "babel-preset-minify": "0.5.1",
-    "chalk": "3.0.0",
-    "cssnano": "4.1.10",
-    "postcss": "7.0.21",
-    "prettier": "1.19.1",
-    "serve": "11.2.0",
-    "vnu-jar": "19.9.4"
-  },
   "scripts": {
     "build": "node scripts/build.js",
     "serve-tls": "serve --ssl-cert config/localhost.crt --ssl-key config/localhost.key",
-    "serve": "serve"
+    "serve": "serve",
+    "forge": "../siteforge/siteforge.js"
   },
   "prettier": {
     "printWidth": 80,
@@ -38,10 +29,7 @@
     "proseWrap": "always"
   },
   "site:forge": {
-    "rightsNotice": "(C) 2019 Robert Grimm. Licensed under MIT terms.",
-    "doNotBuild": [
-      "so-long"
-    ],
+    "doNotBuild": ".*|so-long",
     "doNotValidate": [
       "aarrh6dhlwkj38ie8h9y1pmlzg3gyz.html",
       "googlee753ef1b651640a9.html"
