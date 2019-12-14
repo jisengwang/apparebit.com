@@ -71,4 +71,22 @@ const DEBUG = false;
   } else {
     wireUp();
   }
+
+  // A class on :root for light/dark mode much simplifies their styles!
+  // As an added bonus, :root is created early on during parsing.
+  if (window.matchMedia) {
+    const classList = document.documentElement.classList;
+    const setColorScheme = isDark => {
+      if (isDark) {
+        classList.add("dark");
+        classList.remove("light");
+      } else {
+        classList.add("light");
+        classList.remove("dark");
+      }
+    };
+    const query = window.matchMedia("(prefers-color-scheme:dark)");
+    query.addListener(event => setColorScheme(event.matches));
+    setColorScheme(query.matches);
+  }
 })(window, document);
