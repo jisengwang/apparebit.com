@@ -210,9 +210,9 @@
   :root {
     --color-fg: var(--color-light-grey);
     --color-bg: #222225;
-    --color-bg-offset: #404040;
+    --color-bg-offset: #38383d;
     --color-fg-hdr-ftr: var(--color-fg);
-    --color-bg-hdr-ftr: #000;
+    --color-bg-hdr-ftr: #161618;
     --color-separator: #606060;
     --color-accent1: #753f86;
     --color-accent2: #962d56;
@@ -1043,7 +1043,12 @@ hr::after {
 
 /* Respect the user's wishes! */
 @media (prefers-reduced-motion: reduce) {
-  hr, hr::after { -webkit-animation: none; animation: none; }
+  hr, hr::after {
+    -webkit-animation: none;
+    animation: none;
+    -webkit-transform: none;
+    transform: none;
+  }
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1217,7 +1222,7 @@ main ul > li {
 .page-footer h2 {
   font-size: var(--s05);
   font-stretch: 100%; /* Otherwise, Bild becomes too hard to read. */
-  margin: var(--t40) 0;
+  margin: var(--t40) 0 var(--t20) 0;
 }
 
 .bild .page-footer h2 {
