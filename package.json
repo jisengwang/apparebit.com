@@ -14,6 +14,9 @@
   "dependencies": {
     "serve": "11.3.0"
   },
+  "resolutions": {
+    "minimist": "1.2.5"
+  },
   "scripts": {
     "serve-tls": "serve --ssl-cert config/localhost.crt --ssl-key config/localhost.key",
     "serve": "serve"
