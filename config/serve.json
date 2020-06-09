@@ -1,5 +1,4 @@
 {
-  "public": "content",
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
