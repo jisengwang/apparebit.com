@@ -324,12 +324,11 @@ p {
 @supports not (font-variant-caps: all-small-caps) {
   abbr,
   .byline,
-  .capped span:first-child,
+  .capped::first-line,
   .roman {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
   }
-
   .capped::first-letter {
     -webkit-font-feature-settings: var(--font-features-standout);
     font-feature-settings: var(--font-features-standout);
@@ -339,11 +338,10 @@ p {
 @supports (font-variant-caps: all-small-caps) {
   abbr,
   .byline,
-  .capped span:first-child,
+  .capped::first-line,
   .roman {
     font-variant-caps: all-small-caps;
   }
-
   .capped::first-letter {
     font-variant-caps: normal;
   }
@@ -891,6 +889,18 @@ address {
 
   /* Make sure navigation always gets pointer events. */
   pointer-events: none;
+}
+
+.cover .title.left-cornered {
+  bottom: 2vmin;
+  left: 2vmin;
+  align-items: start;
+}
+
+@supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
+  .cover .title.left-cornered {
+    left: max(env(safe-area-inset-left), 2vmin);
+  }
 }
 
 .cover h1, .cover p {
@@ -1463,8 +1473,8 @@ main {
   margin: var(--s10) auto;
 }
 
-.quote p::before, .quote p::after {
-  font-size: var(--s10);
+.quote p:first-child::before, .quote p:last-child::after {
+  font-size: var(--s05);
   line-height: 0;
   position: relative;
 }
@@ -1473,8 +1483,8 @@ main {
  * U+275d and U+275e are heavy double turned comma quotes.
  * U+200a is hair space.
  */
-.quote p::before { content: '\275d'; padding-right: 0.024em; }
-.quote p::after  { content: '\275e'; padding-left:  0.024em; }
+.quote p:first-child::before { content: '\275d'; padding-right: 0.024em; }
+.quote p:last-child::after   { content: '\275e'; padding-left:  0.024em; }
 
 /* -------------------------------------------------------------------------- *
  * .section-count
