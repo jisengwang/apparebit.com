@@ -874,6 +874,12 @@ address {
   height: 100vh;
 }
 
+@supports (-webkit-touch-callout: none) {
+  .cover img, .cover svg {
+    height: -webkit-fill-available;
+  }
+}
+
 .cover img {
   -o-object-fit: cover;
   object-fit: cover;
