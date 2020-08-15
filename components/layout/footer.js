@@ -1,7 +1,5 @@
 /* © 2020 Robert Grimm */
 
-//const xhtml = ([s]) => s;
-
 export default function Footer() {
   return `<footer class=page-footer role=contentinfo>
 <div class=in-here>
@@ -24,7 +22,8 @@ export default function Footer() {
 </ul>
 </div>
 
-<p class=copyright>© 2019 <a rel="me author" href="https://apparebit.com">Robert
-Grimm</a>. All rights reserved.</p>
+<p class=copyright>© 2019–2020
+<a rel="me author" href="https://apparebit.com">Robert Grimm</a>.
+All rights reserved.</p>
 </footer>`;
 }
