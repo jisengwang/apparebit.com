@@ -20,7 +20,7 @@
   "scripts": {
     "serve-tls": "serve --config ../config/serve.json --ssl-cert config/localhost.crt --ssl-key config/localhost.key build",
     "preserve": "../siteforge/cli/main.js build",
-    "serve": "serve --config ../config/serve.json build/dev"
+    "serve": "serve --config ../../config/serve.json build/dev"
   },
   "prettier": {
     "printWidth": 80,

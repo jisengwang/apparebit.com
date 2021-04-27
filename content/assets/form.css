@@ -865,6 +865,11 @@ address {
   line-height: 1;
 }
 
+/* Raise embedded links above the cardwide default link */
+.card > .description a {
+  position: relative;
+}
+
 /* -------------------------------------------------------------------------- *
  * .cover
  * -------------------------------------------------------------------------- */
@@ -1309,14 +1314,14 @@ main {
 
 .page-header a {
   display: block;
-  padding: calc((var(--s20) - var(--s05)) / 2);
+  padding: calc((var(--s20) - var(--s10)) / 2);
   text-decoration: none;
   outline: none;
 }
 
 .page-header svg {
-  height: var(--s05);
-  width: var(--s05);
+  height: var(--s10);
+  width: var(--s10);
 }
 
 .page-header.barred {

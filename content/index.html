@@ -55,13 +55,14 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello, .hello2 { font-family: var(--bely-display-fontstack); }
 .hello { font-size: var(--s20); line-height: 1; }
 .hello2 { font-size: var(--s05); line-height: calc(var(--r-minor)  * 1rem); }
-.card:nth-of-type(1) > .image > img {
+
+.card:nth-of-type(2) > .image > img {
   object-position: 50% 100%;
 }
-.card:nth-of-type(2) > .image > img {
+.card:nth-of-type(3) > .image > img {
   object-position: 75% 0%;
 }
-.card:nth-of-type(2) > h3 > a > span {
+.card:nth-of-type(3) > h3 > a > span {
   transform: rotate(-14deg) translateY(-0.4em) translateX(-0.4em);
 }
 </style>
@@ -71,7 +72,7 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 <nav class="page-header barred">
 <div>
 <a rel=home class=stylish href="/">
-<svg aria-hidden=true viewBox="18 22 60 57" width="25.2" height="25.2"><path d="M51 60c-8 2-10-1-9-5l1-5-1-4c-1-5 1-8 9-6l1-6c1-10-8-12-14-12h-1c-16 0-19 10-19 28s3 29 19 29h1c7 0 15-4 14-13l-1-6zm3-3l3 20h21V23H57l-3 20v14z"/></svg>
+<svg aria-hidden="true" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
 <span class=invisible>Home</span>
 </a>
 </div>
@@ -96,10 +97,10 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 </figure>
 
 <p>Welcome to <a class="u-url u-uid" href="https://apparebit.com">Apparebit</a>!
-I am <span class=p-name>Robert Grimm</span>, a <span class=p-job-title>software
-engineer</span> currently looking for a new position and living in <span
-class=p-locality>Brooklyn</span>, <abbr class=p-region>NY</abbr>. This is my
-personal website.</p>
+I am <span class=p-name>Robert Grimm</span>. I live in <span
+class=p-locality>Brooklyn</span>, <abbr class=p-region>NY</abbr> and work as a
+<span class=p-job-title>software engineer</span> at <a class="p-org"
+href="https://valon.com">Valon</a>. This is my personal website.</p>
 
 <p>Given a professional career spanning both academic computer science and
 industrial software engineering, technology is an important topic here. Having
@@ -134,16 +135,30 @@ class=hello2>Hello</span></a>, too!</p>
     {
       "@type": "ListItem",
       "position": 1,
-      "url": "https://apparebit.com/features/do-you-be"
+      "url": "https://youtu.be/iYJQSfQGDEE"
     },
     {
       "@type": "ListItem",
       "position": 2,
+      "url": "https://apparebit.com/features/do-you-be"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
       "url": "https://apparebit.com/features/ubu-trump"
     }
   ]
 }
 </script>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Technology Today ~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<li class=card>
+<h3><a class=stylish href="https://youtu.be/iYJQSfQGDEE"></a></h3>
+<div class=image>
+  <img src="assets/images/technology-today.svg" alt="Technology Today: A Paucity of Integrity and Imagination — an apocalypse by Robert Grimm presented at Rebase/SPLASH 2020">
+</div>
+<p class=description>The globally toxic impact of Mark Zuckerberg</p>
+</li>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Do You Be ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <li class=card>
