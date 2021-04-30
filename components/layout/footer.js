@@ -23,7 +23,7 @@ export default function Footer() {
 </div>
 
 <p class=copyright>© 2019–2021
-<a rel="me author" href="https://apparebit.com">Robert Grimm</a>.
+<a rel="me author" href="mailto:apparebit@gmail.com">Robert Grimm</a>.
 All rights reserved.</p>
 </footer>`;
 }
