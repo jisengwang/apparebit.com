@@ -1,4 +1,4 @@
-/* © 2020 Robert Grimm */
+/* © 2020-2021 Robert Grimm */
 
 export default function Footer() {
   return `<footer class=page-footer role=contentinfo>
@@ -22,7 +22,7 @@ export default function Footer() {
 </ul>
 </div>
 
-<p class=copyright>© 2019–2020
+<p class=copyright>© 2019–2021
 <a rel="me author" href="https://apparebit.com">Robert Grimm</a>.
 All rights reserved.</p>
 </footer>`;
