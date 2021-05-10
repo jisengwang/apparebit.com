@@ -56,6 +56,11 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello { font-size: var(--s20); line-height: 1; }
 .hello2 { font-size: var(--s05); line-height: calc(var(--r-minor) * 1rem); }
 
+.card:nth-of-type(1) > .image > img {
+  object-fit: fill;
+  background-color: var(--color-white);
+}
+
 .card:nth-of-type(2) > .image > img {
   object-position: 50% 100%;
 }
