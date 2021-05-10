@@ -194,7 +194,7 @@
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
-  --color-bg-offset: var(--color-light-grey);
+  --color-bg-offset: #fff;
   --color-fg-hdr-ftr: var(--color-fg);
   --color-bg-hdr-ftr: #e0e0e0;
   --color-separator: #a0a0a0;
