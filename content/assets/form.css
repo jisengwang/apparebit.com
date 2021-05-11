@@ -13,14 +13,10 @@
  * PREFIXES
  * --------
  *
- * @-webkit-keyframes
- * -webkit-animation
  * -webkit-filter
- * -moz-font-feature-settings, -webkit-font-feature-settings
- * -ms-hyphens, -moz-hyphens, -webkit-hyphens
+ * -ms-hyphens, -webkit-hyphens
  * -o-object-fit
  * -webkit-text-decoration-color
- * -webkit-transform
  */
 
 @font-face {
@@ -183,8 +179,7 @@
    * Colors
    * ------------------------------------------------------------------------ */
 
-  --color-white: #f6f6f8;
-  --color-light-grey: #e3e7ed;
+  --color-white: #f4f4f6;
   --color-black: #1d1d20;
   --color-cyan: #2bfff4;
   --color-green: #35ff61;
@@ -194,10 +189,9 @@
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
-  --color-bg-offset: #fff;
-  --color-fg-hdr-ftr: var(--color-fg);
-  --color-bg-hdr-ftr: #e0e0e0;
-  --color-separator: #a0a0a0;
+  --color-bg-lifted: #fff;
+  --color-bg-sunk: #e0e0e0;
+  --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
   --color-accent3: var(--color-purple);
@@ -208,12 +202,11 @@
 /* Don't even think to print dark color scheme! */
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --color-fg: var(--color-light-grey);
+    --color-fg: #e3e7ed;
     --color-bg: #222225;
-    --color-bg-offset: #38383d;
-    --color-fg-hdr-ftr: var(--color-fg);
-    --color-bg-hdr-ftr: #161618;
-    --color-separator: #606060;
+    --color-bg-lifted: #38383d;
+    --color-bg-sunk: #161618;
+    --color-separator: #48484e;
     --color-accent1: #753f86;
     --color-accent2: #962d56;
     --color-accent3: #753f86;
@@ -237,7 +230,7 @@
 
   .card {
     --color-bg: #fff;
-    --color-bg-offset: transparent;
+    --color-bg-lifted: transparent;
   }
 }
 
@@ -271,7 +264,10 @@
   font-synthesis: none;
 
   font-size: 118.75%;
-  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
   line-height: var(--r-major);
 }
 
@@ -289,7 +285,6 @@
 }
 
 li, :not(.pullquote) > p {
-  -moz-hyphens: auto;
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
@@ -820,7 +815,7 @@ address {
 
 @media screen and (prefers-color-scheme: dark) {
   .card > h3 > a > span {
-    background-color: var(--color-bg-offset);
+    background-color: var(--color-bg-lifted);
   }
 }
 
@@ -860,7 +855,7 @@ address {
 
 .card > .description {
   padding: var(--t05);
-  background-color: var(--color-bg-offset);
+  background-color: var(--color-bg-lifted);
   text-align: right;
   line-height: 1;
 }
@@ -1025,12 +1020,8 @@ hr {
   --amp: calc(var(--s10) / 4);
   --rot: 10deg;
 
-  -webkit-transform: translateY(0.5em);
   transform: translateY(0.5em);
-  -webkit-animation:
-    10s var(--sine) infinite up-down;
-  animation:
-    10s var(--sine) infinite up-down;
+  animation: 10s var(--sine) infinite up-down;
 }
 
 hr::after {
@@ -1039,35 +1030,18 @@ hr::after {
   display: inline-block;
   content: '⁂';
 
-  -webkit-transform: rotate(calc(-1 * var(--rot)));
   transform: rotate(calc(-1 * var(--rot)));
-  -webkit-animation:
-    10s var(--sine) -6.25s infinite back-forth;
-  animation:
-    10s var(--sine) -6.25s infinite back-forth;
+  animation: 10s var(--sine) -6.25s infinite back-forth;
 }
 
 /* And action! */
-@-webkit-keyframes up-down {
-  50% { -webkit-transform: translateY(calc(-1 * var(--amp)));
-                transform: translateY(calc(-1 * var(--amp))); } }
-@keyframes up-down {
-  50% { -webkit-transform: translateY(calc(-1 * var(--amp)));
-                transform: translateY(calc(-1 * var(--amp))); } }
-
-@-webkit-keyframes back-forth {
-  50% { -webkit-transform: rotate(var(--rot));
-                transform: rotate(var(--rot)); } }
-@keyframes back-forth {
-  50% { -webkit-transform: rotate(var(--rot));
-                transform: rotate(var(--rot)); } }
+@keyframes up-down { 50% { transform: translateY(calc(-1 * var(--amp))); } }
+@keyframes back-forth { 50% { transform: rotate(var(--rot)); } }
 
 /* Respect the user's wishes! */
 @media (prefers-reduced-motion: reduce) {
   hr, hr::after {
-    -webkit-animation: none;
     animation: none;
-    -webkit-transform: none;
     transform: none;
   }
 }
@@ -1224,8 +1198,8 @@ main ul > li {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  color: var(--color-fg-hdr-ftr);
-  background-color: var(--color-bg-hdr-ftr);
+  color: var(--color-fg);
+  background-color: var(--color-bg-sunk);
 }
 
 .in-here, .out-there {
@@ -1260,14 +1234,14 @@ main ul > li {
 }
 
 .in-here {
-  padding-right: 0.44em;
+  padding-right: var(--t20);
   border-right: solid calc(var(--t05) / 2) var(--color-separator);
   text-align: right;
 }
 
 .out-there {
-  padding-left: 0.44em;
-   border-left: solid calc(var(--t05) / 2) var(--color-separator);
+  padding-left: var(--t20);
+  border-left: solid calc(var(--t05) / 2) var(--color-separator);
   text-align: left;
 }
 
@@ -1327,8 +1301,8 @@ main {
 .page-header.barred {
   height: var(--s20);
   width: 100%;
-  color: var(--color-fg-hdr-ftr);
-  background-color: var(--color-bg-hdr-ftr);
+  color: var(--color-fg);
+  background-color: var(--color-bg-sunk);
 }
 
 .page-header.barred > div {
