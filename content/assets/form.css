@@ -120,12 +120,22 @@
 }*/
 
 /* -------------------------------------------------------------------------- *
- * Sane Sizing
+ * Sane Sizing and Appearance
  * -------------------------------------------------------------------------- */
 
 * {
   padding: 0;
   margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  border: 0;
+}
+
+iframe {
+  border: 0;
 }
 
 *:before, *, *:after {
@@ -171,7 +181,7 @@
    * results, especially for Bluu Suuperstar.
    */
   --scale-to-reforma: 0.8281;
-  --scale-to-bluu: 0.826.2;
+  --scale-to-bluu: 0.8262;
 
   --margin-text-top: 1em;
 
@@ -218,7 +228,7 @@
   }
 
   img {
-    filter: contrast(1.2) saturate(0.8) brightness(0.8);
+    filter: grayscale(0.3);
   }
 }
 
@@ -709,13 +719,11 @@ address {
   position: relative;
   width: 100%;
   margin: var(--s20) auto 0 auto;
-  -webkit-print-color-adjust: exact;
-  color-adjust: exact;
 }
 
 @media (min-width: 35.625em) {
   .card {
-    /* Font size changes already. Switch to sizing via modular scale. */
+    /* Font size changed already. Switch to sizing via modular scale. */
     max-width: calc(var(--r-minor) * var(--s70)); /* CardMax */
   }
 }
@@ -805,18 +813,13 @@ address {
   top: var(--t15);
   left: var(--t15);
   padding: var(--t50);
+  /* Force link color. */
   color: var(--color-fg);
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-lifted);
 }
 
 .card > h3 > a > span:nth-child(2) {
   top: calc(var(--t15) + var(--s15));
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .card > h3 > a > span {
-    background-color: var(--color-bg-lifted);
-  }
 }
 
 /* >>>>>>>>>> Image aspect ratio is normalized to modular rhythm. <<<<<<<<<< */
@@ -830,7 +833,7 @@ address {
 }
 
 @media screen and (prefers-color-scheme: light) {
-  .card > .image {
+  .card > .image img {
     filter: grayscale(0.5);
   }
 }
@@ -841,7 +844,7 @@ address {
  * if top/right/bottom/left was used. Thankfully, top/left/width/height
  * do work.
  */
-.card > .image > img, .card > .image > svg {
+.card > .image img, .card > .image svg, .card > .image iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -858,11 +861,6 @@ address {
   background-color: var(--color-bg-lifted);
   text-align: right;
   line-height: 1;
-}
-
-/* Raise embedded links above the cardwide default link */
-.card > .description a {
-  position: relative;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1009,7 +1007,7 @@ h2 {
 
 hr {
   color: var(--color-fg);
-  border: none;
+  border: 0;
   /* Prevent Safari from making <hr> one 1px too large. */
   height: var(--s10);
   text-align: center;
@@ -1049,12 +1047,6 @@ hr::after {
 /* -------------------------------------------------------------------------- *
  * .inset-left, .inset-right
  * -------------------------------------------------------------------------- */
-
-img {
-  display: block;
-  max-width: 100%;
-  border-style: none;
-}
 
 .with-inset p + p {
   margin-top: var(--margin-text-top);
