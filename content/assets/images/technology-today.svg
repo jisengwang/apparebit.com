@@ -1,6 +1,7 @@
 <svg viewBox="0 0 6250 4167" xmlns="http://www.w3.org/2000/svg" fill-rule="nonzero" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" aria-labelledby="alt">
 <title id="alt">Technology Today: A Paucity of Integrity and Imagination. An apocalypse by Robert Grimm presented at Rebase/SPLASH 2020.</title>
 <style>
+svg { background-color: #fff }
 #bg, #apocalypse, #rebase { fill: #fff }
 #technology, #today { fill: #d72827 }
 #paucity, #integrity { fill: #ffca00 }
@@ -8,6 +9,7 @@
 #rebase-box { fill: #9da0a6 }
 
 @media screen and (prefers-color-scheme: dark) {
+  svg { background-color: #38383d } /* Appease Google Chrome */
   #bg, #apocalypse, #rebase { fill: #38383d }
   #technology, #today { fill: #923b3a }
   #paucity, #integrity { fill: #e3c863 }
