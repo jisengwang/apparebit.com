@@ -56,19 +56,14 @@ main > section:first-of-type > div:first-of-type { margin-bottom: var(--s10); }
 .hello { font-size: var(--s20); line-height: 1; }
 .hello2 { font-size: var(--s05); line-height: calc(var(--r-minor) * 1rem); }
 
-.card:nth-of-type(1) > .image > img {
-  object-fit: fill;
-  background-color: var(--color-white);
-}
-
-.card:nth-of-type(2) > .image > img {
+.card:nth-of-type(2) > .image img {
   object-position: 50% 100%;
 }
-.card:nth-of-type(3) > .image > img {
+.card:nth-of-type(3) > .image img {
   object-position: 75% 0%;
 }
 .card:nth-of-type(3) > h3 > a > span {
-  transform: rotate(-14deg) translateY(-0.4em) translateX(-0.4em);
+  transform: rotate(-14deg) translateY(-0.2em) translateX(-0.4em);
 }
 </style>
 </head>
@@ -160,9 +155,9 @@ class=hello2>Hello</span></a>, too!</p>
 <li class=card>
 <h3><a class=stylish href="https://youtu.be/iYJQSfQGDEE">&nbsp;<span class="invisible">Technology Today: A Paucity of Integrity and Imagination</span></a></h3>
 <div class=image>
-  <img src="assets/images/technology-today.svg" alt="Technology Today: A Paucity of Integrity and Imagination — an apocalypse by Robert Grimm presented at Rebase/SPLASH 2020">
+<iframe src="assets/images/technology-today.svg"></iframe>
 </div>
-<p class=description>The systemic threat that is Facebook</p>
+<p class=description>The systemic corruption of Facebook</p>
 </li>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Do You Be ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
