@@ -498,7 +498,7 @@ DirectorySlash Off
 
 <IfModule mod_headers.c>
     #                                   (1)                 (2)              (3)                 (4)                     (5)
-    Header set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; child-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
