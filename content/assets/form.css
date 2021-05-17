@@ -329,7 +329,7 @@ p {
 @supports not (font-variant-caps: all-small-caps) {
   abbr,
   .byline,
-  .capped::first-line,
+  .capped span:first-child,
   .roman {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
@@ -343,7 +343,7 @@ p {
 @supports (font-variant-caps: all-small-caps) {
   abbr,
   .byline,
-  .capped::first-line,
+  .capped span:first-child,
   .roman {
     font-variant-caps: all-small-caps;
   }
@@ -464,7 +464,7 @@ main {
 }
 
 main > p,
-main .heading,
+main header:not(.cover),
 main section > *,
 main footer > * {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
@@ -1561,7 +1561,7 @@ footer h2::before, footer h3::before {
     break-after: avoid;
   }
 
-  .heading + p {
+  h2 + * {
     page-break-before: avoid;
     break-before: avoid;
   }

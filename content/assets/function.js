@@ -27,11 +27,7 @@ const DEBUG = false;
     const h2 = document.createElement('h2');
     if (options.h2) h2.className = options.h2;
     h2.innerText = 'References';
-
-    const div = document.createElement('div');
-    div.className = 'heading';
-    div.appendChild(h2);
-    footer.appendChild(div);
+    footer.appendChild(h2);
 
     const ol = document.createElement('ol');
     footer.appendChild(ol);
@@ -78,14 +74,14 @@ const DEBUG = false;
     const classList = document.documentElement.classList;
     const setColorScheme = isDark => {
       if (isDark) {
-        classList.add("dark");
-        classList.remove("light");
+        classList.add('dark');
+        classList.remove('light');
       } else {
-        classList.add("light");
-        classList.remove("dark");
+        classList.add('light');
+        classList.remove('dark');
       }
     };
-    const query = window.matchMedia("(prefers-color-scheme:dark)");
+    const query = window.matchMedia('(prefers-color-scheme:dark)');
     query.addListener(event => setColorScheme(event.matches));
     setColorScheme(query.matches);
   }
