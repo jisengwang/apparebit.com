@@ -330,7 +330,8 @@ p {
   abbr,
   .byline,
   .capped span:first-child,
-  .roman {
+  .roman,
+  ol.by-date time {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
   }
@@ -344,7 +345,8 @@ p {
   abbr,
   .byline,
   .capped span:first-child,
-  .roman {
+  .roman,
+  ol.by-date time {
     font-variant-caps: all-small-caps;
   }
   .capped::first-letter {
@@ -470,6 +472,10 @@ main footer > * {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
   margin: var(--margin-text-top) auto 0 auto;
   padding: 0 var(--min-margin);
+}
+
+main header:not(.cover) .byline {
+  padding: 0;
 }
 
 ::-moz-selection {
@@ -957,6 +963,10 @@ h2 {
   margin-bottom: calc(var(--r-minor) * 1rem);
 }
 
+h1 + h2 {
+  margin-top: calc(var(--t10) * -1);
+}
+
 .bild h2 {
   font-size: var(--s15);
   font-stretch: 95%;
@@ -1140,12 +1150,12 @@ main ul {
   margin-top: var(--margin-text-top);
 }
 
-main ol > li {
+main ol:not(.by-date) > li {
   counter-increment: ol;
   margin-top: var(--margin-text-top);
 }
 
-main ol > li::before {
+main ol:not(.by-date) > li::before {
   content: '(' counter(ol) ') ';
   -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
@@ -1177,6 +1187,10 @@ main ul > li {
   main ul > li {
     margin-left: 0;
   }
+}
+
+ol.by-date li + li {
+  margin-top: var(--t10);
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1275,37 +1289,20 @@ main {
  * -------------------------------------------------------------------------- */
 
 .page-header {
-  line-height: 0;
-}
-
-.page-header a {
-  display: block;
-  padding: calc((var(--s20) - var(--s10)) / 2);
-  text-decoration: none;
-  outline: none;
-}
-
-.page-header svg {
-  height: var(--s10);
-  width: var(--s10);
-}
-
-.page-header.barred {
   height: var(--s20);
   width: 100%;
-  color: var(--color-fg);
   background-color: var(--color-bg-sunk);
 }
 
-.page-header.barred > div {
-  height: 100%;
-  width: 100%;
+.page-header > ul {
+  display: flex;
+  list-style: none;
+}
+
+.page-header:not(.cornered) > ul {
   max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
   margin: 0 auto;
-  padding:
-    0 var(--min-margin);
-  display: flex;
-  justify-content: left;
+  padding: 0 var(--min-margin);
 }
 
 /*
@@ -1314,81 +1311,93 @@ main {
  * this two-clause query, they do not apply the padding—as they should.
  */
 @supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
-  .page-header.barred > div {
+  .page-header > ul {
     padding:
       0 max(env(safe-area-inset-left), var(--min-margin))
       0 max(env(safe-area-inset-right), var(--min-margin));
   }
 }
 
-.page-header.barred a:link, .page-header.barred a:visited {
-  color: var(--color-fg);
+.page-header a {
+  display: inline-block;
+  padding: calc((var(--s20) - var(--s10)) / 2);
+  outline: none;
+  text-decoration: none;
+}
+
+.page-header li:first-of-type a {
+  line-height: 0;
+}
+
+.page-header svg {
+  height: var(--s10);
+  width: var(--s10);
+}
+
+.page-header li:nth-of-type(2) {
+  margin-left: auto;
+}
+
+.page-header a:link, .page-header a:visited {
   fill: var(--color-fg);
+  color: var(--color-fg);
   background-color: var(--color-bg);
 }
 
-.page-header.barred a:focus, .page-header.barred a:hover {
-  color: var(--color-bg);
+.page-header a:focus, .page-header a:hover {
   fill: var(--color-bg);
+  color: var(--color-bg);
   background-color: var(--color-fg);
 }
 
-.page-header.barred a:active {
-  color: var(--color-fg);
+.page-header a:active {
   fill: var(--color-fg);
+  color: var(--color-fg);
 }
 
 /*
  * Leave a large space between navigation bar and main content.
  * For .page-header.cornered, .byline declares the logical equivalent.
  */
-.page-header.barred + main {
+.page-header:not(.cornered) + main {
   margin-top: calc(var(--s30) - var(--margin-text-top));
 }
 
 .page-header.cornered {
   position: absolute;
-  top: 2vmin;
-  left: 2vmin;
+  top: 0;
+  left: 0;
   z-index: 665;
+  background-color: initial;
+}
+
+.page-header.cornered > ul {
+  padding: 2vmin;
 }
 
 @supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
-  .page-header.cornered {
-    left: max(env(safe-area-inset-left), 2vmin);
+  .page-header.cornered > ul {
+    padding: max(env(safe-area-inset-left), 2vmin);
   }
 }
 
 .page-header.cornered a:link,
 .page-header.cornered a:visited {
-  color: var(--color-black);
-  background-color: var(--color-white);
+  fill: var(--nav-lolite, var(--color-black));
+  color: var(--nav-lolite, var(--color-black));
+  background-color: var(--nav-hilite, var(--color-white));
 }
 
 .page-header.cornered a:focus,
 .page-header.cornered a:hover {
-  color: var(--color-white);
-  background-color: var(--color-black);
-}
-
-.page-header.cornered a:active {
-  color: var(--color-black);
-}
-
-.page-header.cornered [rel="home"]:link,
-.page-header.cornered [rel="home"]:visited {
-  fill: var(--nav-lolite, var(--color-black));
-  background-color: var(--nav-hilite, var(--color-white));
-}
-
-.page-header.cornered [rel="home"]:focus,
-.page-header.cornered [rel="home"]:hover {
   fill: var(--nav-hilite, var(--color-white));
+  color: var(--nav-hilite, var(--color-white));
   background-color: var(--nav-lolite, var(--color-black));
 }
 
-.page-header.cornered [rel="home"]:active {
+.page-header.cornered a:active {
   fill: var(--nav-lolite, var(--color-black));
+  color: var(--nav-lolite, var(--color-black));
 }
 
 /* -------------------------------------------------------------------------- *
