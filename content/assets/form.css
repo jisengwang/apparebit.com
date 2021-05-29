@@ -37,8 +37,7 @@
   font-display: swap;
 }
 
-/*
-@font-face {
+/*@font-face {
   font-family: 'Bely';
   src: url(fonts/bely-bold.woff2),
     url(fonts/bely-bold.woff);
@@ -661,7 +660,7 @@ a:not(.stylish):active {
   display: flex;
   justify-content: space-between;
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  /* Top margin is logical equivalent of (nav.barred + main)'s top margin. */
+  /* Top margin is logical equivalent of (nav + main)'s top margin. */
   margin: var(--s30) auto var(--s10) auto;
   padding: 0 var(--min-margin);
   line-height: var(--r-major);
@@ -901,18 +900,6 @@ address {
   pointer-events: none;
 }
 
-.cover .title.left-cornered {
-  bottom: 2vmin;
-  left: 2vmin;
-  align-items: start;
-}
-
-@supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
-  .cover .title.left-cornered {
-    left: max(env(safe-area-inset-left), 2vmin);
-  }
-}
-
 .cover h1, .cover p {
   line-height: var(--r-minor);
   margin: 0;
@@ -1146,10 +1133,6 @@ main ol {
   counter-reset: ol;
 }
 
-main ul {
-  margin-top: var(--margin-text-top);
-}
-
 main ol:not(.by-date) > li {
   counter-increment: ol;
   margin-top: var(--margin-text-top);
@@ -1159,10 +1142,6 @@ main ol:not(.by-date) > li::before {
   content: '(' counter(ol) ') ';
   -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
-}
-
-main ul > li {
-  margin-left: var(--margin-text-top);
 }
 
 /*
@@ -1183,14 +1162,18 @@ main ul > li {
     right: calc(var(--max-measure) + var(--t10));
     text-align: right;
   }
-
-  main ul > li {
-    margin-left: 0;
-  }
 }
 
 ol.by-date li + li {
   margin-top: var(--t10);
+}
+
+main ul {
+  padding-left: var(--s15);
+}
+
+main ul:not(.tight) li {
+  margin-top: var(--margin-text-top);
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1289,7 +1272,6 @@ main {
  * -------------------------------------------------------------------------- */
 
 .page-header {
-  height: var(--s20);
   width: 100%;
   background-color: var(--color-bg-sunk);
 }
@@ -1300,9 +1282,8 @@ main {
 }
 
 .page-header:not(.cornered) > ul {
-  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
+  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
   margin: 0 auto;
-  padding: 0 var(--min-margin);
 }
 
 /*
@@ -1310,17 +1291,17 @@ main {
  * did apply the padding despite not yet supporting the max() function. With
  * this two-clause query, they do not apply the padding—as they should.
  */
-@supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
+/*@supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
   .page-header > ul {
     padding:
       0 max(env(safe-area-inset-left), var(--min-margin))
       0 max(env(safe-area-inset-right), var(--min-margin));
   }
-}
+}*/
 
 .page-header a {
   display: inline-block;
-  padding: calc((var(--s20) - var(--s10)) / 2);
+  padding: var(--min-margin);
   outline: none;
   text-decoration: none;
 }
@@ -1341,12 +1322,12 @@ main {
 .page-header a:link, .page-header a:visited {
   fill: var(--color-fg);
   color: var(--color-fg);
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-sunk);
 }
 
 .page-header a:focus, .page-header a:hover {
-  fill: var(--color-bg);
-  color: var(--color-bg);
+  fill: var(--color-bg-sunk);
+  color: var(--color-bg-sunk);
   background-color: var(--color-fg);
 }
 
@@ -1372,12 +1353,14 @@ main {
 }
 
 .page-header.cornered > ul {
-  padding: 2vmin;
+  margin: 2vmin;
 }
 
 @supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
   .page-header.cornered > ul {
-    padding: max(env(safe-area-inset-left), 2vmin);
+    margin:
+      2vmin max(env(safe-area-inset-right), 2vmin)
+      2vmin max(env(safe-area-inset-left), 2vmin);
   }
 }
 
