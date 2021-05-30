@@ -517,7 +517,9 @@ main header:not(.cover) .byline {
  * -------------------------------------------------------------------------- */
 
 a:not(.stylish) {
-  transition: all 0.1s ease-in;
+  transition-property: color, -webkit-text-decoration-color, text-decoration-color, background-color, fill;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in;
   text-decoration: underline;
 }
 
@@ -530,17 +532,15 @@ a:not(.stylish):link, a:not(.stylish):visited {
 
 a:not(.stylish):focus, a:not(.stylish):hover {
   outline: none;
-  color: var(--link-focus-fg, var(--color-bg));
+  color: var(--color-bg);
   -webkit-text-decoration-color: transparent;
   text-decoration-color: transparent;
-  background-color: var(--link-focus-bg, var(--color-fg));
+  background-color: var(--color-fg);
 }
 
 a:not(.stylish):active {
-  color:
-    var(--link-active-fg, var(--link-focus-fg, var(--color-fg)));
-  background-color:
-    var(--link-active-bg, var(--link-focus-bg, var(--color-fg)));
+  color: var(--color-fg);
+  background-color: var(--color-fg);
 }
 
 /* -------------------------------------------------------------------------- *
