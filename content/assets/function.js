@@ -27,7 +27,10 @@ const DEBUG = false;
     const h2 = document.createElement('h2');
     if (options.h2) h2.className = options.h2;
     h2.innerText = 'References';
-    footer.appendChild(h2);
+
+    const div = document.createElement('div');
+    div.appendChild(h2);
+    footer.appendChild(div);
 
     const ol = document.createElement('ol');
     footer.appendChild(ol);
