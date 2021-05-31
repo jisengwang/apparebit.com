@@ -525,14 +525,16 @@ a:not(.stylish) {
 
 a:not(.stylish):link, a:not(.stylish):visited {
   color: var(--color-fg);
+  fill: var(--color-fg);
   -webkit-text-decoration-color: var(--color-fg);
   text-decoration-color: var(--color-fg);
-  background-color: transparent;
+  background-color: var(--color-bg);
 }
 
 a:not(.stylish):focus, a:not(.stylish):hover {
   outline: none;
   color: var(--color-bg);
+  fill: var(--color-bg);
   -webkit-text-decoration-color: transparent;
   text-decoration-color: transparent;
   background-color: var(--color-fg);
@@ -540,6 +542,7 @@ a:not(.stylish):focus, a:not(.stylish):hover {
 
 a:not(.stylish):active {
   color: var(--color-fg);
+  fill: var(--color-fg);
   background-color: var(--color-fg);
 }
 
@@ -813,7 +816,7 @@ address {
 
 /* >>>>>>>>>> The nested headline is presented on top of image. <<<<<<<<<< */
 
-.card > h3 > a > span {
+.card > h3 span {
   font-size: calc(var(--r-minor) * 1rem);
   position: absolute;
   top: var(--t15);
@@ -824,7 +827,7 @@ address {
   background-color: var(--color-bg-lifted);
 }
 
-.card > h3 > a > span:nth-child(2) {
+.card > h3 span:nth-child(2) {
   top: calc(var(--t15) + var(--s15));
 }
 
@@ -1190,6 +1193,7 @@ main ul:not(.tight) li {
   justify-content: center;
   color: var(--color-fg);
   background-color: var(--color-bg-sunk);
+  --color-bg: var(--color-bg-sunk);
 }
 
 .in-here, .out-there {
@@ -1275,6 +1279,7 @@ main {
 .page-header {
   width: 100%;
   background-color: var(--color-bg-sunk);
+  --color-bg: var(--color-bg-sunk);
 }
 
 .page-header > ul {
@@ -1303,7 +1308,6 @@ main {
 .page-header a {
   display: inline-block;
   padding: var(--min-margin);
-  outline: none;
   text-decoration: none;
 }
 
@@ -1318,23 +1322,6 @@ main {
 
 .page-header li:nth-of-type(2) {
   margin-left: auto;
-}
-
-.page-header a:link, .page-header a:visited {
-  fill: var(--color-fg);
-  color: var(--color-fg);
-  background-color: var(--color-bg-sunk);
-}
-
-.page-header a:focus, .page-header a:hover {
-  fill: var(--color-bg-sunk);
-  color: var(--color-bg-sunk);
-  background-color: var(--color-fg);
-}
-
-.page-header a:active {
-  fill: var(--color-fg);
-  color: var(--color-fg);
 }
 
 /*
@@ -1363,25 +1350,6 @@ main {
       2vmin max(env(safe-area-inset-right), 2vmin)
       2vmin max(env(safe-area-inset-left), 2vmin);
   }
-}
-
-.page-header.cornered a:link,
-.page-header.cornered a:visited {
-  fill: var(--nav-lolite, var(--color-black));
-  color: var(--nav-lolite, var(--color-black));
-  background-color: var(--nav-hilite, var(--color-white));
-}
-
-.page-header.cornered a:focus,
-.page-header.cornered a:hover {
-  fill: var(--nav-hilite, var(--color-white));
-  color: var(--nav-hilite, var(--color-white));
-  background-color: var(--nav-lolite, var(--color-black));
-}
-
-.page-header.cornered a:active {
-  fill: var(--nav-lolite, var(--color-black));
-  color: var(--nav-lolite, var(--color-black));
 }
 
 /* -------------------------------------------------------------------------- *
