@@ -25,7 +25,14 @@
     },
     {
       "src": "/assets/icons/a-circle.svg",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/assets/icons/a-maskable.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "maskable"
     }
   ]
 }
