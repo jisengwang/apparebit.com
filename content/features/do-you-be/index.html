@@ -96,12 +96,13 @@ nav a {
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(2px);
   background-color: #0b0b25a0;
-  -webkit-print-color-adjust: exact;
-  color-adjust: exact;
 }
 
 .cover .title h1 {
   font-size: 2.4em;
+}
+.cover .title h1, .cover .title p {
+  line-height: var(--r-minor);
 }
 
 @media (min-width: 20em) { .cover .title { font-size: calc(1em + 1vmin); }}
