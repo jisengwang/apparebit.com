@@ -900,10 +900,9 @@ address {
   pointer-events: none;
 }
 
-.cover h1, .cover p {
-  line-height: var(--r-minor);
-  margin: 0;
+.cover h1 {
   padding: 0;
+  margin: 0;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1523,6 +1522,11 @@ footer h2::before, footer h3::before {
     break-before: avoid;
   }
 
+  .cover .title {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
   figure {
     page-break-inside: avoid;
     break-inside: avoid;
@@ -1552,10 +1556,6 @@ footer h2::before, footer h3::before {
   .print-references main a[href^="https://apparebit.com"]::after,
   .print-references .references a::after {
     content: none;
-  }
-
-  ul > li {
-    margin-left: 0;
   }
 
   ol > li::before {
