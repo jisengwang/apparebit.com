@@ -891,7 +891,6 @@ address {
 .cover .title {
   position: absolute;
   width: 100%;
-  z-index: 665;
   display: flex;
   flex-direction: column;
   align-items: center;
