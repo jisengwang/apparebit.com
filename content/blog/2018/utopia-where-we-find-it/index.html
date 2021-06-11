@@ -33,18 +33,24 @@
 <meta name="theme-color" content="#fdbafd">
 <meta name="color-scheme" content="light dark">
 <style>
-nav a, .cover hgroup {
+nav a, .cover .title {
   --color-bg: #f9d08e;
   --color-fg: #1d1d20;
+}
+@media screen and (prefers-color-scheme: dark) {
+  nav a, .cover .title {
+    --color-fg: #f9d08e;
+    --color-bg: #1d1d20;
+  }
 }
 .cover .title {
   margin-top: 25vh;
 }
 .cover h1, .cover h2 {
-  color: var(--color-fb);
+  color: var(--color-fg);
   background-color: var(--color-bg);
   text-align: center;
-  padding: 2vmin;
+  padding: var(--t20);
   margin: 2vmin;
 }
 .cover h2 {
