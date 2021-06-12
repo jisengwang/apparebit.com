@@ -7,6 +7,7 @@ export default function Footer() {
 <ul>
   <li><a rel="home" href="/">Home</a></li>
   <li><a href="/blog">Blog</a></li>
+  <li><a href="/about/robert-grimm">Bio Sketch</a></li>
   <li><a href="/about/apparebit">Imprint</a></li>
   <li><a href="/about/privacy">Privacy</a></li>
 </ul>
