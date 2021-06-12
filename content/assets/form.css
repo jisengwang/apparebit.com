@@ -467,8 +467,8 @@ main {
 
 main > p,
 main header:not(.cover),
-main div > *,
 main section > *,
+main .section > *,
 main footer > * {
   max-width: calc(var(--max-measure) + 2 * var(--min-margin));
   margin: var(--margin-text-top) auto 0 auto;

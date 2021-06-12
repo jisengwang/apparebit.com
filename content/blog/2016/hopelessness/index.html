@@ -82,7 +82,7 @@
   line-height: var(--r-minor);
   margin: auto 2vmin 2vmin 2vmin;
 }
-.byline, section p {
+.byline, .section p {
   font-family: var(--bild-fontstack);
   font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
   font-stretch: 75%;
@@ -91,10 +91,10 @@
 .byline {
   margin-top:calc(var(--r-major) * 1rem);
 }
-section p span {
+.section p span {
   font-stretch: 100%;
 }
-section p span:first-of-type::before, p span::after {
+.section p span:first-of-type::before, p span::after {
   content: '\a';
   white-space: pre;
 }
@@ -150,9 +150,7 @@ i, em {
 </div>
 </header>
 
-<section aria-labelledby=emotions>
-<h2 id=emotions hidden>Going through the Emotions</h2>
-
+<div class=section>
 <p><em>Anohni</em> is the high priestess of an apocalyptic cult.
 Shrouded in the burqa of her new order, her angelic voice levitates above
 merciless dance beats and decries everything wrong with this world. Her vision
@@ -168,7 +166,7 @@ flawless, over one and a half hours I am
 <span>and finally utterly exhausted.</span>
 We will be talking about this show decades from now. Hopelessness indeed.
 <i lang=it>Brava!</i></p>
-</section>
+</div>
 
 </article>
 </main>
