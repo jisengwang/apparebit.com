@@ -1403,8 +1403,11 @@ main {
  * -------------------------------------------------------------------------- */
 
 .quote {
-  max-width: calc(var(--max-measure) - 2 * var(--s10) + 2 * var(--min-margin));
   margin: var(--s10) auto;
+}
+
+.quote blockquote {
+  margin-left: var(--s10);
 }
 
 .quote p:first-child::before, .quote p:last-child::after {
@@ -1415,7 +1418,7 @@ main {
 
 /*
  * U+275d and U+275e are heavy double turned comma quotes.
- * U+200a is hair space.
+ * U+200a is a hair space.
  */
 .quote p:first-child::before { content: '\275d'; padding-right: 0.024em; }
 .quote p:last-child::after   { content: '\275e'; padding-left:  0.024em; }
