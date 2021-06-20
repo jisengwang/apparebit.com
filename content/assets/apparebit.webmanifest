@@ -6,7 +6,7 @@
   "lang": "en",
   "display": "minimal-ui",
   "background_color": "#f4f4f6",
-  "theme_color": "#fff143",
+  "theme_color": "#e0e0e0",
   "icons": [
     {
       "src": "/assets/icons/a-circle.svg",
