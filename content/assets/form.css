@@ -204,12 +204,12 @@ iframe {
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
-  --color-accent3: var(--color-purple);
-  --color-accent4: var(--color-orange);
+  /*--color-accent3: var(--color-purple);
+  --color-accent4: var(--color-orange);*/
   --color-accent5: var(--color-yellow);
 }
 
-/* Don't even think to print dark color scheme! */
+/* Dark mode only applies to screen, not paper! */
 @media screen and (prefers-color-scheme: dark) {
   :root {
     --color-fg: #e3e7ed;
@@ -219,9 +219,7 @@ iframe {
     --color-separator: #48484e;
     --color-accent1: #753f86;
     --color-accent2: #962d56;
-    --color-accent3: #753f86;
-    --color-accent4: #962d56;
-    --color-accent5: #753f86;
+    --color-accent5: #851d10;
 
      /* Used in cover of "features/ubu-trump" */
     --color-yellow: #f9ec65;
@@ -465,18 +463,29 @@ main {
   margin-bottom: var(--s03);
 }
 
-main > p,
-main header:not(.cover),
-main section > *,
-main .section > *,
-main footer > * {
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  margin: var(--margin-text-top) auto 0 auto;
-  padding: 0 var(--min-margin);
+main :is(header, section, .section, footer) {
+  display: grid;
+  grid-template-columns:
+    minmax(var(--min-margin), 1fr)
+    minmax(0, var(--max-measure))
+    minmax(var(--min-margin), 1fr);
 }
 
-main header:not(.cover) .byline {
-  padding: 0;
+main :is(header, section, .section, footer) > * {
+  grid-column: 2/-2;
+}
+
+.cover > :not(.byline) {
+  grid-column: 1/-1;
+  grid-row: 1;
+}
+
+main :is(figure, ol, p, ul) + :is(figure, ol, p, ul), main li + li {
+  margin-top: var(--margin-text-top);
+}
+
+main .tight li {
+  margin-top: 0;
 }
 
 ::-moz-selection {
@@ -490,14 +499,11 @@ main header:not(.cover) .byline {
 .signature {
   text-align: right;
   font-style: italic;
+  font-size: var(--s05);
 }
 
 .signature::before {
   content: '—';
-}
-
-.signature > * {
-  font-size: var(--s05);
 }
 
 .standout {
@@ -664,11 +670,8 @@ a:not(.stylish):active {
 .byline {
   display: flex;
   justify-content: space-between;
-  max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-  /* Top margin is logical equivalent of (nav + main)'s top margin. */
-  margin: var(--s30) auto var(--s10) auto;
-  padding: 0 var(--min-margin);
-  line-height: var(--r-major);
+  margin-top: var(--s30);
+  margin-bottom: var(--s10);
 }
 
 address {
@@ -715,11 +718,10 @@ address {
 
 /* >>>>>>>>>> The Layout is Flex, but right-aligned and wrapping. <<<<<<<<<< */
 
-.carddeck {
-  max-width: unset;
-  margin: var(--s30) 0 0 0;
-  padding: 0;
-  width: 100%;
+main .carddeck {
+  grid-column: 1/-1;
+  margin-top: var(--s20);
+  padding-left: 0;
   list-style: none;
 }
 
@@ -752,15 +754,12 @@ address {
  * required, since the box model keeps the box left-aligned by default.
  */
 @media (min-width: 77.45em) {
-  .carddeck {
-    width: calc(50vw + var(--max-measure) / 2);
-    margin: calc(var(--s30) - var(--s10)) 0 0 0;
-    padding: 0;
+  main .carddeck {
+    grid-column: 1/-2;
     display: flex;
     flex-wrap: wrap;
     /* Safari and Chrome pretend to accept end, but don't act on it. */
     justify-content: flex-end;
-    overflow-y: hidden;
   }
 
   .card {
@@ -873,6 +872,10 @@ address {
  * .cover
  * -------------------------------------------------------------------------- */
 
+.cover picture, .cover img, .cover svg {
+  margin-top: 0;
+}
+
 .cover img, .cover svg {
   width: 100vw;
   height: 100vh;
@@ -933,17 +936,17 @@ figcaption {
  * .full-bleed
  * -------------------------------------------------------------------------- */
 
-.full-bleed img {
-  width: 100%;
+main .full-bleed {
+  grid-column: 1/-1;
 }
 
+/* calc((var(--max-measure) + 2 * var(--min-margin)) * 118.75%) */
 @media (min-width: 35.625em) {
-  .full-bleed img {
-    max-width: calc(var(--max-measure) + 2 * var(--min-margin));
-    margin: 0 auto;
-    padding: 0 var(--min-margin);
+  main .full-bleed {
+    grid-column: 2/-2;
   }
 }
+
 
 /* -------------------------------------------------------------------------- *
  * h1, h2, and h3
@@ -957,17 +960,18 @@ h1, h2, h3 {
 
 h1 {
   font-size: var(--s20);
+  margin-top: 1rem;
   margin-bottom: calc(var(--r-major) * 1rem);
 }
 
 h2 {
   font-size: var(--s10);
   margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
-  margin-bottom: calc(var(--r-minor) * 1rem);
-}
+  margin-bottom: calc(var(--r-minor) * 1rem);}
 
 h1 + h2 {
   margin-top: calc(var(--t10) * -1);
+  margin-bottom: 0;
 }
 
 .bild h2 {
@@ -1061,6 +1065,10 @@ hr::after {
  * .inset-left, .inset-right
  * -------------------------------------------------------------------------- */
 
+.with-inset p:first-of-type {
+  margin-top: 0;
+}
+
 .with-inset p + p {
   margin-top: var(--margin-text-top);
 }
@@ -1151,7 +1159,6 @@ main ol {
 
 main ol:not(.by-date) > li {
   counter-increment: ol;
-  margin-top: var(--margin-text-top);
 }
 
 main ol:not(.by-date) > li::before {
@@ -1309,13 +1316,13 @@ main {
  * did apply the padding despite not yet supporting the max() function. With
  * this two-clause query, they do not apply the padding—as they should.
  */
-/*@supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
+@supports (padding: max(1em)) and (padding: env(safe-area-inset-left)) {
   .page-header > ul {
     padding:
-      0 max(env(safe-area-inset-left), var(--min-margin))
-      0 max(env(safe-area-inset-right), var(--min-margin));
+      0 max(env(safe-area-inset-left), 0)
+      0 max(env(safe-area-inset-right), 0);
   }
-}*/
+}
 
 .page-header a {
   display: inline-block;
@@ -1350,15 +1357,12 @@ main {
   left: 0;
   z-index: 665;
   background-color: initial;
-}
-
-.page-header.cornered > ul {
-  margin: 2vmin;
+  padding: 2vmin;
 }
 
 @supports (left: max(1em)) and (left: env(safe-area-inset-left)) {
-  .page-header.cornered > ul {
-    margin:
+  .page-header.cornered {
+    padding:
       2vmin max(env(safe-area-inset-right), 2vmin)
       2vmin max(env(safe-area-inset-left), 2vmin);
   }
@@ -1417,10 +1421,6 @@ main {
 /* -------------------------------------------------------------------------- *
  * .quote
  * -------------------------------------------------------------------------- */
-
-.quote {
-  margin: var(--s10) auto;
-}
 
 .quote blockquote {
   margin-left: var(--s10);
