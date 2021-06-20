@@ -36,6 +36,7 @@
 <style>
 :root {
   --color-local-accent: #ff6fab;
+  --max-measure: 45rem;
 }
 @media screen and (prefers-color-scheme: dark) {
   :root {
@@ -92,11 +93,10 @@
     margin-top: 1em;
   }
 }
-.byline, .section p {
+.byline, .section {
   font-family: var(--bild-fontstack);
   font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
   font-stretch: 75%;
-  max-width: 22em;
 }
 .byline {
   margin-top:calc(var(--r-major) * 1rem);
