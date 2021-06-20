@@ -127,6 +127,10 @@
   margin: 0;
 }
 
+picture {
+  display: block;
+}
+
 img {
   display: block;
   height: auto;
