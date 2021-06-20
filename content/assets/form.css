@@ -1328,6 +1328,7 @@ main {
   display: inline-block;
   padding: var(--min-margin);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .page-header li:first-of-type a {
