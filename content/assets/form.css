@@ -484,11 +484,18 @@ main :is(header, section, .section, footer) > * {
   grid-row: 1;
 }
 
-main :is(figure, ol, p, ul) + :is(figure, ol, p, ul), main li + li {
+/*
+ * Another way of expressing the following rule would be through exclusion,
+ * e.g., :not(h1):not(h2):not(hgroup) and so on. In other words, all elements
+ * requiring special styling would be listed explicitly. Determining the
+ * "better" approach probably boils down to the size of the element selector,
+ * i.e., pointing towards exclusion instead of the below.
+ */
+main :is(blockquote, figure, ol, p, ul) + :is(blockquote, figure, p), main li {
   margin-top: var(--margin-text-top);
 }
 
-main .tight li {
+main .tight li:nth-of-type(n+2) {
   margin-top: 0;
 }
 
@@ -1427,11 +1434,11 @@ main {
  * .quote
  * -------------------------------------------------------------------------- */
 
-.quote blockquote {
+blockquote {
   margin-left: var(--s10);
 }
 
-.quote p:first-child::before, .quote p:last-child::after {
+blockquote :first-child::before, blockquote :last-child::after {
   font-size: var(--s05);
   line-height: 0;
   position: relative;
@@ -1441,8 +1448,8 @@ main {
  * U+275d and U+275e are heavy double turned comma quotes.
  * U+200a is a hair space.
  */
-.quote p:first-child::before { content: '\275d'; padding-right: 0.024em; }
-.quote p:last-child::after   { content: '\275e'; padding-left:  0.024em; }
+blockquote :first-child::before { content: '\275d'; padding-right: 0.024em; }
+blockquote :last-child::after   { content: '\275e'; padding-left:  0.024em; }
 
 /* -------------------------------------------------------------------------- *
  * .section-count
