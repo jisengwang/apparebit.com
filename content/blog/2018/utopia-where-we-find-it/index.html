@@ -42,6 +42,9 @@ nav a, .cover .title {
     --color-fg: #f9d08e;
     --color-bg: #1d1d20;
   }
+  .cover h1, .cover h2 {
+    background-color: #1d1d20a0;
+  }
 }
 .cover .title {
   margin-top: 25vh;
@@ -53,6 +56,12 @@ nav a, .cover .title {
   margin: 2vmin;
   padding: var(--t20);
 }
+@media screen and (prefers-color-scheme: dark) {
+  .cover h1, .cover h2 {
+    background-color: #1d1d20b0;
+  }
+}
+
 .cover h1 {
   font-size: clamp(var(--s10), 2vw + 2vh + 0.5em, var(--s30));
   max-width: 11em;
