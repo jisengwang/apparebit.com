@@ -491,10 +491,17 @@ main :is(header, section, .section, footer) > * {
  * "better" approach probably boils down to the size of the element selector,
  * i.e., pointing towards exclusion instead of the below.
  */
-main :is(blockquote, figure, ol, p, ul) + :is(blockquote, figure, p), main li {
+main :is(blockquote, figure, ol, p, ul) + :is(blockquote, figure, p),
+main li {
   margin-top: var(--margin-text-top);
 }
 
+/*
+ * <li> has a margin on top — unless:
+ *    1) a header element precedes the list containing this first list item.
+ *    2) this subsequent list item appears in a .tight list.
+ */
+main :is(h1, h2, hgroup) + :is(ol, ul) > li,
 main .tight li:nth-of-type(n+2) {
   margin-top: 0;
 }
