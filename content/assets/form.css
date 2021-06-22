@@ -496,12 +496,12 @@ main li {
   margin-top: var(--margin-text-top);
 }
 
-/*
- * <li> has a margin on top — unless:
- *    1) a header element precedes the list containing this first list item.
- *    2) this subsequent list item appears in a .tight list.
- */
-main :is(h1, h2, hgroup) + :is(ol, ul) > li,
+/* Negate the top list item's top margin when following a header element. */
+main :is(h1, h2, hgroup) + :is(ol, ul) {
+  margin-top: calc(-1 * var(--margin-text-top));
+}
+
+/* Outright remove the top margin from .tight list items again. */
 main .tight li:nth-of-type(n+2) {
   margin-top: 0;
 }
@@ -890,10 +890,6 @@ main .carddeck {
  * .cover
  * -------------------------------------------------------------------------- */
 
-.cover picture, .cover img, .cover svg {
-  margin-top: 0;
-}
-
 .cover img, .cover svg {
   width: 100vw;
   height: 100vh;
@@ -1087,10 +1083,6 @@ hr::after {
   margin-top: 0;
 }
 
-.with-inset p + p {
-  margin-top: var(--margin-text-top);
-}
-
 /* The surrounding <div class=with-inset> also contains the floats. */
 .with-inset::after {
   content: '';
@@ -1205,16 +1197,8 @@ main ol:not(.by-date) > li::before {
   }
 }
 
-ol.by-date li + li {
-  margin-top: var(--t10);
-}
-
 main ul {
   padding-left: var(--s15);
-}
-
-main ul:not(.tight) li {
-  margin-top: var(--margin-text-top);
 }
 
 /* -------------------------------------------------------------------------- *
