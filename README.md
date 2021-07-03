@@ -10,6 +10,39 @@ commercially licensed and thus not publicly accessible. Git submodules are
 effective at isolating them in another, private repository, while still being
 readily accessible by myself.
 
+
+## Preparing Images
+
+**Raster images** via [RetroBatch](https://flyingmeat.com/retrobatch/):
+
+  * Delete metadata.
+  * Normalize color profile to sRGB.
+  * Scale to desired size.
+  * Change bits per channel to 8.
+  * Remove color profile.
+  * Add copyright notice.
+  * Export as JPEG at 80% quality and WebP at 85% quality.
+
+**Vector images** mostly manually:
+
+  * Prepare image.
+  * Move flush to origin.
+  * Reduce document size to size of image elements.
+  * Increase to integer document size while centering elements.
+  * Export with these settings:
+      * 96 dpi;
+      * Text as curves;
+      * Transforms flattened;
+      * Relative coordinates;
+      * `viewBox` attribute.
+  * Manually edit file to remove:
+      * XML declaration;
+      * Document type;
+      * Name spaces besides `xmlns="http://www.w3.org/2000/svg"`;
+      * Useless styles including fill rule.
+  * Maybe process with [SVGOMG](https://jakearchibald.github.io/svgomg/).
+
+
 ## Licensing
 
 This repository being publicly accessible does *not* imply that its contents are
