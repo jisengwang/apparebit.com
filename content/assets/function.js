@@ -33,6 +33,7 @@ const DEBUG = false;
     footer.appendChild(div);
 
     const ol = document.createElement('ol');
+    ol.className = 'counted';
     footer.appendChild(ol);
 
     for (const { href } of hyperlinks) {
