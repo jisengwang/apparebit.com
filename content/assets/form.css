@@ -142,7 +142,7 @@ iframe {
   border: 0;
 }
 
-*:before, *, *:after {
+*::before, *, *::after {
   box-sizing: inherit;
 }
 
@@ -200,6 +200,7 @@ iframe {
   --color-yellow: #fff143;
   --color-orange: #ffbb55;
   --color-purple: #fdbafd;
+  --color-blue: #bbdefb;
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
@@ -333,7 +334,7 @@ p {
   .byline,
   .capped span:first-child,
   .roman,
-  ol.by-date time {
+  .datelist time {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
   }
@@ -348,7 +349,7 @@ p {
   .byline,
   .capped span:first-child,
   .roman,
-  ol.by-date time {
+  .datelist time {
     font-variant-caps: all-small-caps;
   }
   .capped::first-letter {
@@ -470,17 +471,57 @@ main {
 main :is(header, section, .section, footer) {
   display: grid;
   grid-template-columns:
-    minmax(var(--min-margin), 1fr)
+    [view-start wide-start figure-start]
+    var(--min-margin)
+    [text-start]
     minmax(0, var(--max-measure))
-    minmax(var(--min-margin), 1fr);
+    [text-end]
+    var(--min-margin)
+    [figure-end wide-end view-end];
+}
+
+/* calc((var(--max-measure) + 2 * var(--min-margin)) * 131.25%)*/
+@media (min-width: 39.375em) {
+  main :is(header, section, .section, footer) {
+    grid-template-columns:
+      [view-start]
+      var(--min-margin)
+      [wide-start]
+      1fr
+      [figure-start text-start]
+      minmax(0, var(--max-measure))
+      [text-end figure-end]
+      1fr
+      [wide-end]
+      var(--min-margin)
+      [view-end];
+  }
+}
+
+/* calc((var(--max-measure) + 2 * var(--s50) + 2 * var(--min-margin)) * 131.25%) */
+@media (min-width: 59.31em) {
+  main :is(header, section, .section, footer) {
+    grid-template-columns:
+      [view-start]
+      minmax(var(--min-margin), 1fr)
+      [wide-start]
+      var(--s50)
+      [figure-start text-start]
+      minmax(0, var(--max-measure))
+      [text-end figure-end]
+      var(--s50)
+      [wide-end]
+      minmax(var(--min-margin), 1fr)
+      [view-end];
+  }
 }
 
 main :is(header, section, .section, footer) > * {
-  grid-column: 2/-2;
+  grid-column: text;
 }
 
 .cover > :not(.byline) {
-  grid-column: 1/-1;
+  grid-column: view;
   grid-row: 1;
 }
 
@@ -737,7 +778,7 @@ address {
 /* >>>>>>>>>> The Layout is Flex, but right-aligned and wrapping. <<<<<<<<<< */
 
 main .carddeck {
-  grid-column: 1/-1;
+  grid-column: view;
   margin-top: var(--s20);
   padding-left: 0;
   list-style: none;
@@ -773,7 +814,7 @@ main .carddeck {
  */
 @media (min-width: 77.45em) {
   main .carddeck {
-    grid-column: 1/-2;
+    grid-column: view;
     display: flex;
     flex-wrap: wrap;
     /* Safari and Chrome pretend to accept end, but don't act on it. */
@@ -890,13 +931,13 @@ main .carddeck {
  * .cover
  * -------------------------------------------------------------------------- */
 
-.cover img, .cover svg {
+.cover img {
   width: 100vw;
   height: 100vh;
 }
 
 @supports (-webkit-touch-callout: none) {
-  .cover img, .cover svg {
+  .cover img {
     height: -webkit-fill-available;
   }
 }
@@ -924,8 +965,12 @@ main .carddeck {
 }
 
 /* -------------------------------------------------------------------------- *
- * figcaption
+ * .figure, figcaption
  * -------------------------------------------------------------------------- */
+
+main .figure {
+  grid-column: figure;
+}
 
 figcaption::before {
   content: '—';
@@ -947,20 +992,79 @@ figcaption {
 }
 
 /* -------------------------------------------------------------------------- *
- * .full-bleed
+ * .gallery
  * -------------------------------------------------------------------------- */
 
-main .full-bleed {
-  grid-column: 1/-1;
+.sprites {
+  display: none;
 }
 
-/* calc((var(--max-measure) + 2 * var(--min-margin)) * 118.75%) */
-@media (min-width: 35.625em) {
-  main .full-bleed {
-    grid-column: 2/-2;
-  }
+main .gallery {
+  margin-top: var(--margin-text-top);
+  grid-column: wide;
 }
 
+.gallery {
+  position: relative;
+}
+
+.gallery .images {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.gallery .images li {
+  margin-top: 0;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+}
+
+.gallery img {
+  filter: none;
+}
+
+.gallery figcaption::before {
+  content: '';
+}
+
+.gallery figcaption {
+  font-size: 1em;
+  font-family: inherit;
+  line-height: var(--r-major);
+  padding: 1em 0;
+  height: unset;
+  text-align: center;
+  background-color: var(--color-bg-lifted);
+}
+
+.gallery .images:focus {
+  outline: solid var(--t30) var(--color-blue);
+}
+
+.gallery .images::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery .images::-webkit-scrollbar:hover {
+  background-color: rgba(0,0,0,0.09);
+}
+
+.gallery .images::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,0);
+  border: solid 0.5px rgba(0,0,0,0.09);
+}
+
+.gallery .images::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 100px;
+}
+
+.gallery .images::-webkit-scrollbar-thumb:active {
+  background: rgba(0,0,0,0.61);
+}
 
 /* -------------------------------------------------------------------------- *
  * h1, h2, and h3
@@ -1144,34 +1248,19 @@ hr::after {
 }
 
 /* -------------------------------------------------------------------------- *
- * .large-image
- * -------------------------------------------------------------------------- */
-
- /* No --min-margin for images! */
-.large-image {
-  max-width: calc(var(--max-measure) + 2 * var(--s30));
-  margin: var(--s10) auto;
-}
-
-.large-image figcaption { padding-right: var(--min-margin); }
-@media (min-width: 49.22em) {
-  .large-image figcaption { padding-right: 0; }
-}
-
-/* -------------------------------------------------------------------------- *
  * ol, ul
  * -------------------------------------------------------------------------- */
 
-main ol {
+ol {
   list-style: none;
   counter-reset: ol;
 }
 
-main ol:not(.by-date) > li {
+ol > li {
   counter-increment: ol;
 }
 
-main ol:not(.by-date) > li::before {
+.counted > li::before {
   content: '(' counter(ol) ') ';
   -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
@@ -1186,11 +1275,11 @@ main ol:not(.by-date) > li::before {
  * ) * 131.25%)
  */
 @media (min-width: 47.67em) {
-  main ol > li {
+  .counted > li {
     position: relative;
   }
 
-  main ol > li::before {
+  .counted > li::before {
     position: absolute;
     right: calc(var(--max-measure) + var(--t10));
     text-align: right;
@@ -1376,21 +1465,7 @@ main {
  * -------------------------------------------------------------------------- */
 
 .pullquote {
-  /* When changing max-width, change .banner as well. */
-  max-width: calc(var(--max-measure) + 2 * var(--s40) + 2 * var(--min-margin));
-  margin: var(--s10) auto;
-}
-
-@supports not (-moz-appearance: none) {
-  .pullquote p {
-    /*
-     * Safari doesn't account for inline padding when breaking lines. To
-     * prevent overflow, we reduce the max-width by an upper bound. Sadly,
-     * there seems to be no feature query to select only Safari. Chrome is
-     * thus impacted as well.
-     */
-    max-width: calc(100% - 0.5em);
-  }
+  grid-column: wide;
 }
 
 .pullquote strong {
@@ -1476,49 +1551,6 @@ footer h2::before, footer h3::before {
 }
 
 /* -------------------------------------------------------------------------- *
- * .so-long
- * -------------------------------------------------------------------------- */
-
-.so-long {
-  font-family: 'Bild';
-  font-size: 21.5vh;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-@media (max-aspect-ratio: 73/57) {
-  .so-long {
-    font-size: 16.7vw;
-    justify-content: center;
-  }
-}
-
-.so-long::before, .so-long::after {
-  content: '';
-  display: block;
-  height: 0.25em;
-  width: 100%;
-  background-color: currentColor;
-}
-
-.so-long > span {
-  display: block;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.so-long > span:nth-child(1) {
-  font-stretch: 60%; font-size: 2.91em; line-height: 0.75; padding-top: 0.01em; }
-.so-long > span:nth-child(2) {
-  font-stretch: 87%; font-size: 1.37em; line-height: 0.75; }
-.so-long > span:nth-child(3) {
-  font-stretch: 73%; font-size: 1em;    line-height: 0.85; }
-
-/* -------------------------------------------------------------------------- *
  * @media print
  * -------------------------------------------------------------------------- */
 
@@ -1534,6 +1566,19 @@ footer h2::before, footer h3::before {
   .page-header, .page-footer {
     display: none;
   }
+
+  main :is(header, section, .section, footer) {
+    display: block;
+  }
+
+  main :is(header, section, .section, footer) > * {
+    max-width: var(--max-measure);
+  }
+
+  main .cover > :not(.byline) {
+    max-width: unset;
+  }
+
 
   h1, h2, h3 {
     page-break-after: avoid;
@@ -1581,25 +1626,11 @@ footer h2::before, footer h3::before {
     content: none;
   }
 
-  ol > li::before {
-    position: absolute;
-    right: calc(var(--max-measure) + var(--t10));
-    text-align: right;
-  }
-
   .references {
     display: block;
   }
 
   .references ol > li {
-    position: relative;
-    margin-top: 0;
     overflow-wrap: break-word;
-  }
-
-  .references ol > li::before {
-    content: '[' counter(ol) '] ';
-    -webkit-font-feature-settings: var(--font-features-standout);
-    font-feature-settings: var(--font-features-standout);
   }
 }
