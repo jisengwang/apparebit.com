@@ -814,7 +814,7 @@ main .carddeck {
  */
 @media (min-width: 77.45em) {
   main .carddeck {
-    grid-column: view;
+    grid-column: view-start/text-end;
     display: flex;
     flex-wrap: wrap;
     /* Safari and Chrome pretend to accept end, but don't act on it. */
