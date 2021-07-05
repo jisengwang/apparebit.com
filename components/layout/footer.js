@@ -24,7 +24,7 @@ export default function Footer() {
 </ul>
 </div>
 
-<p class=copyright>© 2016–2021
+<p class=copyright>© 2011–2021
 <a rel="me author" href="mailto:apparebit@gmail.com">Robert Grimm</a>.
 All rights reserved.</p>
 </footer>`;
