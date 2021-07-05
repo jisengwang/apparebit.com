@@ -212,6 +212,13 @@ iframe {
   /*--color-accent3: var(--color-purple);
   --color-accent4: var(--color-orange);*/
   --color-accent5: var(--color-yellow);
+
+  --color-focus: var(--color-blue);
+
+  --color-sb-track: #f4f4f6;
+  --color-sb-track-border: rgba(0,0,0,0.1);
+  --color-sb-thumb: rgba(0,0,0,0.3);
+  --color-sb-thumb-hover: rgba(0,0,0,0.5);
 }
 
 /* Dark mode only applies to screen, not paper! */
@@ -228,6 +235,14 @@ iframe {
 
      /* Used in cover of "features/ubu-trump" */
     --color-yellow: #f9ec65;
+
+
+    --color-focus: #395872;
+
+    --color-sb-track: #222225;
+    --color-sb-track-border: #38383d;
+    --color-sb-thumb: #a0a0a0;
+    --color-sb-thumb-hover: #c0c0c0;
   }
 
   img {
@@ -1041,29 +1056,33 @@ main .gallery {
 }
 
 .gallery .images:focus {
-  outline: solid var(--t30) var(--color-blue);
+  outline: solid var(--t20) var(--color-focus);
+}
+
+.gallery .images:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.gallery .images {
+  scrollbar-color: var(--color-sb-thumb) var(--color-sb-track);
 }
 
 .gallery .images::-webkit-scrollbar {
-  height: 8px;
-}
-
-.gallery .images::-webkit-scrollbar:hover {
-  background-color: rgba(0,0,0,0.09);
+  height: var(--t20);
 }
 
 .gallery .images::-webkit-scrollbar-track {
-  background-color: rgba(0,0,0,0);
-  border: solid 0.5px rgba(0,0,0,0.09);
+  background-color: var(--color-sb-track);
+  border: solid 0.05em var(--color-sb-track-border);
 }
 
 .gallery .images::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.5);
+  background-color: var(--color-sb-thumb);
   border-radius: 100px;
 }
 
-.gallery .images::-webkit-scrollbar-thumb:active {
-  background: rgba(0,0,0,0.61);
+.gallery .images::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sb-thumb-hover);
 }
 
 /* -------------------------------------------------------------------------- *
