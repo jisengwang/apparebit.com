@@ -1085,6 +1085,7 @@ main .gallery {
 }
 
 .gallery .images {
+  scrollbar-width: thin;
   scrollbar-color: var(--color-sb-thumb) var(--color-sb-track);
 }
 
@@ -1094,7 +1095,7 @@ main .gallery {
 
 .gallery .images::-webkit-scrollbar-track {
   background-color: var(--color-sb-track);
-  border: solid 0.05em var(--color-sb-track-border);
+  border: solid 0.03em var(--color-sb-track-border);
 }
 
 .gallery .images::-webkit-scrollbar-thumb {
