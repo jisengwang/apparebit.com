@@ -349,7 +349,8 @@ p {
   .byline,
   .capped span:first-child,
   .roman,
-  .datelist time {
+  .datelist time,
+  .gallery .hint .text {
     -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
     font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
   }
@@ -364,7 +365,8 @@ p {
   .byline,
   .capped span:first-child,
   .roman,
-  .datelist time {
+  .datelist time,
+  .gallery .hint .text {
     font-variant-caps: all-small-caps;
   }
   .capped::first-letter {
@@ -1061,6 +1063,25 @@ main .gallery {
 
 .gallery .images:focus:not(:focus-visible) {
   outline: none;
+}
+
+.gallery .hint {
+  margin-top: var(--t20);
+  margin-bottom: var(--t10);
+  font-size: 1em;
+  text-align: center;
+}
+
+@media (min-width: 35.625em) {
+  .gallery .hint {
+    font-size: var(--t05);
+  }
+}
+
+.gallery .hint .arrow {
+  -webkit-font-feature-settings: 'ss02';
+  font-feature-settings: 'ss02';
+  vertical-align: -7%;
 }
 
 .gallery .images {

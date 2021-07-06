@@ -120,7 +120,9 @@ grid of light and shadow.</p>
 
 <div class=gallery>
 
-<ol class=images tabindex=0>
+<div id=gallery-label class=invisible>image gallery</div>
+
+<ol class=images tabindex=0 aria-labelledby=gallery-label>
 <li>
 <figure>
 <picture>
@@ -694,15 +696,22 @@ grid of light and shadow.</p>
 </li>
 
 </ol>
+
+<p class=hint>
+<span class=arrow aria-label="left arrow">b</span>
+<span class=text>Scroll for more</span>
+<span class=arrow aria-label="right arrow">a</span>
+</p>
+
 </div>
 </section>
 
-
+<!-- ####################################################################### -->
 <section aria-labelledby=bust>
 <h2 id=bust>Bust</h2>
 
 <div class=gallery>
-<ol class=images tabindex=0>
+<ol class=images tabindex=0 aria-labelledby=gallery-label>
 
 <li>
 <figure>
@@ -1277,6 +1286,13 @@ grid of light and shadow.</p>
 </li>
 
 </ol>
+
+<p class=hint>
+<span class=arrow aria-label="left arrow">b</span>
+<span class=text>Scroll for more</span>
+<span class=arrow aria-label="right arrow">a</span>
+</p>
+
 </div>
 </section>
 
