@@ -434,6 +434,7 @@ sup {
 
 .belyssimo h3 {
   font-family: var(--bely-fontstack);
+  font-style: italic;
 }
 
 .bild h1, .bild h2, .bild h3, .bild .pullquote strong {
@@ -549,7 +550,7 @@ main :is(header, section, .section, footer) > * {
  * "better" approach probably boils down to the size of the element selector,
  * i.e., pointing towards exclusion instead of the below.
  */
-main :is(blockquote, figure, ol, p, ul) + :is(blockquote, figure, p),
+main :is(blockquote, figure, h3, ol, p, ul) + :is(blockquote, figure, h3, p),
 main li {
   margin-top: var(--margin-text-top);
 }
