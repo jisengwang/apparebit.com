@@ -177,7 +177,7 @@ iframe {
   --s70: calc(var(--r-major) * var(--s60));  /* 17.08594 */
   --s80: calc(var(--r-major) * var(--s70));  /* 25.62891 */
 
-  --min-margin: 0.5em;
+  --min-margin: 0.5rem;
   --max-measure: 29em;
   /*
    * Bely has low x-height, hence we set a relatively large root font size.
@@ -288,7 +288,7 @@ iframe {
   /* ------------------------------------------------------------------------ */
 
   font-family: var(--bely-fontstack);
-  font-size-adjust: 0.453;
+  font-size-adjust: none;
   font-synthesis: none;
 
   font-size: 118.75%;

@@ -36,13 +36,57 @@
 <style>
 :root {
   --color-local-accent: #ff6fab;
-  --max-measure: 45rem;
 }
 @media screen and (prefers-color-scheme: dark) {
   :root {
     --color-local-accent: #772748;
   }
 }
+
+header > *, .section > * {
+  font-family: var(--bild-fontstack);
+  font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
+  font-stretch: 75%;
+}
+main :is(header, section, .section, footer) {
+  grid-template-columns:
+    [view-start wide-start figure-start]
+    var(--min-margin)
+    [text-start]
+    minmax(0, 40rem)
+    [text-end]
+    var(--min-margin)
+    [figure-end wide-end view-end];
+}
+@media (min-width: 41em) {
+  main :is(header, section, .section, footer) {
+    grid-template-columns:
+      [view-start]
+      var(--min-margin)
+      [wide-start]
+      1fr
+      [figure-start text-start]
+      minmax(0, 40rem)
+      [text-end figure-end]
+      1fr
+      [wide-end]
+      var(--min-margin)
+      [view-end];
+  }
+}
+.section p span {
+  font-stretch: 100%;
+}
+.section p span:first-of-type::before, p span::after {
+  content: '\a';
+  white-space: pre;
+}
+
+i, em {
+  font-stretch: 100%;
+  text-transform: uppercase;
+}
+
 .page-header {
   --color-bg: var(--color-local-accent);
 }
@@ -70,22 +114,14 @@
   margin: auto 2vmin 2vmin 2vmin;
   text-align: center;
   padding: 2vmin;
+  font-size: var(--t10);
+  font-stretch: 90%;
+  line-height: 1.4;
 }
 .cover .title h2 span {
-  font-size: var(--t05);
-  font-stretch: 90%;
   padding: 0 var(--t40);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-@media (min-width: 35.625em) {
-  .cover .title h1 {
-    font-size: calc(var(--s20) + 3vh + 3vw);
-  }
-  .cover .title h2 span {
-    font-size: 1em;
-  }
-
 }
 @media print {
   .cover .title h1 {
@@ -93,24 +129,8 @@
     margin-top: 1em;
   }
 }
-.byline, .section {
-  font-family: var(--bild-fontstack);
-  font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
-  font-stretch: 75%;
-}
 .byline {
   margin-top: calc(var(--r-major) * 1rem);
-}
-.section p span {
-  font-stretch: 100%;
-}
-.section p span:first-of-type::before, p span::after {
-  content: '\a';
-  white-space: pre;
-}
-i, em {
-  font-stretch: 100%;
-  text-transform: uppercase;
 }
 </style>
 </head>
