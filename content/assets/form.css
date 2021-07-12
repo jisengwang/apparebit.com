@@ -200,7 +200,7 @@ iframe {
   --color-yellow: #fff143;
   --color-orange: #ffbb55;
   --color-purple: #fdbafd;
-  --color-blue: #bbdefb;
+  --color-blue: #bbdefb; /* Dark: #395872 */
 
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
@@ -209,12 +209,7 @@ iframe {
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
-  /*--color-accent3: var(--color-purple);
-  --color-accent4: var(--color-orange);*/
-  --color-accent5: var(--color-yellow);
-
-  --color-focus: var(--color-blue);
-
+  --color-selection: var(--color-yellow);
   --color-sb-track: #f4f4f6;
   --color-sb-track-border: rgba(0,0,0,0.1);
   --color-sb-thumb: rgba(0,0,0,0.3);
@@ -231,18 +226,14 @@ iframe {
     --color-separator: #48484e;
     --color-accent1: #753f86;
     --color-accent2: #962d56;
-    --color-accent5: #851d10;
-
-     /* Used in cover of "features/ubu-trump" */
-    --color-yellow: #f9ec65;
-
-
-    --color-focus: #395872;
-
+    --color-selection: #851d10;
     --color-sb-track: #222225;
     --color-sb-track-border: #38383d;
     --color-sb-thumb: #a0a0a0;
     --color-sb-thumb-hover: #c0c0c0;
+
+     /* Used in cover of "features/ubu-trump" */
+    --color-yellow: #f9ec65;
   }
 
   img {
@@ -491,9 +482,9 @@ main :is(header, section, .section, footer) {
   grid-template-columns:
     [view-start wide-start figure-start]
     var(--min-margin)
-    [text-start]
+    [margin-start text-start]
     minmax(0, var(--max-measure))
-    [text-end]
+    [text-end margin-end]
     var(--min-margin)
     [figure-end wide-end view-end];
 }
@@ -502,17 +493,17 @@ main :is(header, section, .section, footer) {
 @media (min-width: 39.375em) {
   main :is(header, section, .section, footer) {
     grid-template-columns:
-      [view-start]
+      [view-start wide-start]
       var(--min-margin)
-      [wide-start]
+      [margin-start]
       1fr
       [figure-start text-start]
       minmax(0, var(--max-measure))
       [text-end figure-end]
       1fr
-      [wide-end]
+      [margin-end]
       var(--min-margin)
-      [view-end];
+      [wide-end view-end];
   }
 }
 
@@ -521,7 +512,9 @@ main :is(header, section, .section, footer) {
   main :is(header, section, .section, footer) {
     grid-template-columns:
       [view-start]
-      minmax(var(--min-margin), 1fr)
+      var(--min-margin)
+      [margin-start]
+      1fr
       [wide-start]
       var(--s50)
       [figure-start text-start]
@@ -529,7 +522,9 @@ main :is(header, section, .section, footer) {
       [text-end figure-end]
       var(--s50)
       [wide-end]
-      minmax(var(--min-margin), 1fr)
+      1fr
+      [margin-end]
+      var(--min-margin)
       [view-end];
   }
 }
@@ -550,7 +545,7 @@ main :is(header, section, .section, footer) > * {
  * "better" approach probably boils down to the size of the element selector,
  * i.e., pointing towards exclusion instead of the below.
  */
-main :is(blockquote, figure, h3, ol, p, ul) + :is(blockquote, figure, h3, p),
+main :is(blockquote, figure, h3, ol, p, ul, .with-inset) + :is(blockquote, figure, h3, p),
 main li {
   margin-top: var(--margin-text-top);
 }
@@ -566,11 +561,11 @@ main .tight li:nth-of-type(n+2) {
 }
 
 ::-moz-selection {
-  background-color: var(--color-accent5);
+  background-color: var(--color-selection);
 }
 
 ::selection {
-  background-color: var(--color-accent5);
+  background-color: var(--color-selection);
 }
 
 .signature {
@@ -996,7 +991,6 @@ figcaption::before {
 
 figcaption {
   font-size: var(--t05);
-  height: calc(var(--r-minor) * var(--s10));
   text-align: right;
   font-style: italic;
   padding-top: 0.3em;
@@ -1050,16 +1044,13 @@ main .gallery {
 
 .gallery figcaption {
   font-size: 1em;
-  font-family: inherit;
-  line-height: var(--r-major);
   padding: 1em 0;
-  height: unset;
   text-align: center;
   background-color: var(--color-bg-lifted);
 }
 
 .gallery .images:focus {
-  outline: solid var(--t20) var(--color-focus);
+  outline: solid var(--t20) var(--color-fg);
 }
 
 .gallery .images:focus:not(:focus-visible) {
@@ -1264,10 +1255,10 @@ hr::after {
 
 /* As viewport gets bigger, inset images gradually slide out of the text. */
 
-/* calc((var(--max-measure) + 2 * 1.5em * 131.25%) */
-@media  (min-width: 42em) {
+/* calc((var(--max-measure) + 2 * 1em * 131.25%) */
+@media (min-width: 40.6875em) {
   .inset-left {
-    margin-left: calc((-100vw + var(--max-measure) + 3em) / 2);
+    margin-left: calc((-100vw + var(--max-measure) + 2em) / 2);
   }
 
   .inset-right {
@@ -1275,17 +1266,17 @@ hr::after {
   }
 }
 
-/* calc((var(--max-measure) + 2 * 10.5em + 4 * 1.5em) * 131.25%) */
-@media (min-width: 73.5em) {
+/* calc((var(--max-measure) + 2 * 10.5em + 4 * 1em) * 131.25%) */
+@media (min-width: 70.875em) {
   .inset-left {
     /* Not strictly necessary but eliminates weird dev tools appearance. */
     margin-right: 0;
     /* Consider reducing to -7 * s10 - 1em, requires change to .byline. */
-    margin-left: calc(-8 * var(--s10));
+    margin-left: calc(-7 * var(--s10) - 1em);
   }
   .inset-right {
     margin-left: 0;
-    margin-right: calc(-8 * var(--s10));
+    margin-right: calc(-7 * var(--s10) - 1em);
   }
 }
 
