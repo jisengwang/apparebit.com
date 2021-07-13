@@ -236,8 +236,8 @@ iframe {
     --color-yellow: #f9ec65;
   }
 
-  img {
-    filter: grayscale(0.3);
+  .cover img, .card img {
+    filter: grayscale(0.4);
   }
 }
 
@@ -910,8 +910,8 @@ main .carddeck {
 }
 
 @media screen and (prefers-color-scheme: light) {
-  .card > .image img {
-    filter: grayscale(0.5);
+  .card > .image img, .card > .image iframe {
+    filter: grayscale(0.3);
   }
 }
 
@@ -1032,10 +1032,6 @@ main .gallery {
   margin-top: 0;
   flex: 0 0 100%;
   scroll-snap-align: center;
-}
-
-.gallery img {
-  filter: none;
 }
 
 .gallery figcaption::before {
