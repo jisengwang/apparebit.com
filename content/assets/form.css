@@ -133,10 +133,22 @@ picture {
 
 img {
   display: block;
-  height: auto;
-  max-width: 100%;
   border: 0;
+
+  /* https://www.zachleat.com/web/fluid-images/ */
+  max-width: 100%;
 }
+img[width] {
+  width: auto;
+}
+img[width][height] {
+  height: auto;
+}
+/*img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}*/
 
 iframe {
   border: 0;
@@ -1012,7 +1024,6 @@ figcaption {
 }
 
 main .gallery {
-  margin-top: var(--margin-text-top);
   grid-column: wide;
 }
 
@@ -1054,8 +1065,7 @@ main .gallery {
 }
 
 .gallery .hint {
-  margin-top: var(--t20);
-  margin-bottom: var(--t10);
+  margin: var(--t20) 0;
   font-size: 1em;
   text-align: center;
 }
