@@ -102,7 +102,7 @@ Options -MultiViews
 # https://msdn.microsoft.com/en-us/library/ff955275.aspx
 
 <IfModule mod_headers.c>
-    Header set X-UA-Compatible "IE=edge" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header always set X-UA-Compatible "IE=edge" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ######################################################################
@@ -424,7 +424,7 @@ DirectorySlash Off
 # https://www.owasp.org/index.php/Clickjacking
 
 <IfModule mod_headers.c>
-    Header set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header always set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -498,7 +498,7 @@ DirectorySlash Off
 
 <IfModule mod_headers.c>
     #                                   (1)                 (2)              (3)                 (4)                     (5)
-    Header set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; child-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header always set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; child-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -621,7 +621,7 @@ DirectorySlash Off
 # https://mimesniff.spec.whatwg.org/
 
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
+    Header always set X-Content-Type-Options "nosniff"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -663,7 +663,7 @@ DirectorySlash Off
 
 <IfModule mod_headers.c>
     #                           (1)    (2)
-    Header set X-XSS-Protection "1; mode=block" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header always set X-XSS-Protection "1; mode=block" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -701,7 +701,7 @@ DirectorySlash Off
     # specified.The origin is sent as referrer to a-priori as-much-secure
     # destination (HTTPS->HTTPS), but isn't sent to a less secure destination
     # (HTTPS->HTTP).
-    Header set Referrer-Policy "no-referrer-when-downgrade" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -752,7 +752,7 @@ DirectorySlash Off
 # https://php.net/manual/en/ini.core.php#ini.expose-php
 
 <IfModule mod_headers.c>
-    Header set X-Powered-By "George Soros"
+    Header always set X-Powered-By "George Soros"
 </IfModule>
 
 # ----------------------------------------------------------------------
