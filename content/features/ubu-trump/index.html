@@ -88,34 +88,30 @@ nav a {
   --color-fg: var(--color-black);
   --color-bg: var(--color-yellow);
 }
-
-.cover img {
-  object-position: 75% 0%;
-}
-
-.cover h1 {
-  top: 32vh;
-  font-size: calc(1em + 4vmin);
+.cover .title {
   line-height: var(--s15);
+}
+.cover h1 {
+  font-size: calc(1em + 4vmin);
   perspective: 90em;
   transform-style: preserve-3d;
 }
-
 .cover h1 span {
-  display: block;
   padding: 0 var(--t20);
   color: var(--color-black);
   background-color: var(--color-yellow);
 }
-
 .cover h1 span:nth-of-type(1) {
   transform: translateZ(10em) rotateX(37deg) rotateY(36deg) rotateZ(-33deg);
   filter: contrast(0.9);
 }
-
 .cover > h1 > span:nth-of-type(2) {
   transform: translateY(0.15em) translateZ(30em)
     rotateZ(-27deg)  rotateX(15deg) rotateY(33deg) rotateZ(29deg);
+}
+
+.cover img {
+  object-position: 75% 0%;
 }
 </style>
 </head>

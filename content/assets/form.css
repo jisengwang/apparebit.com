@@ -607,6 +607,15 @@ main .tight li:nth-of-type(n+2) {
  * a:not(.stylish)
  * -------------------------------------------------------------------------- */
 
+a {
+  /*
+   * When it comes to removing the default semi-transparent grey tap overlay
+   * on iOS, "transparent" won't do. However, an alpha of 0 will.
+   * https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariCSSRef/Articles/StandardCSSProperties.html#//apple_ref/doc/uid/TP30001266-_webkit_tap_highlight_color
+   */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 a:not(.stylish) {
   transition-property: color, -webkit-text-decoration-color, text-decoration-color, background-color, fill;
   transition-duration: 0.1s;
@@ -956,13 +965,13 @@ main .carddeck {
  * .cover
  * -------------------------------------------------------------------------- */
 
-.cover img {
+.cover img, .cover hero {
   width: 100vw;
   height: 100vh;
 }
 
 @supports (-webkit-touch-callout: none) {
-  .cover img {
+  .cover img, .cover .hero {
     height: -webkit-fill-available;
   }
 }
@@ -973,14 +982,24 @@ main .carddeck {
 }
 
 .cover .title {
-  position: absolute;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  line-height: var(--r-minor);
+  /*
+   * Without the z-index, the title vanishes when enabling dark mode. While
+   * certainly surprising, this is the direct result of CSS rules for creating
+   * stacking contexts. Notably, the subsequent hero image has a (grey) filter
+   * in dark mode. That also creates a new stacking context for the image.
+   * Without the title having a z-index, it does not create a stacking context
+   * and thus looses out to the image's stacking context. With the z-index, the
+   * title not only has its own stacking context but also is closer to the
+   * viewer. Arguably, a z-index of 1 would suffice.
+   */
   z-index: 665;
 
-  /* Make sure navigation always gets pointer events. */
+  /* Make sure navigation gets pointer events even on small screens. */
   pointer-events: none;
 }
 
@@ -1458,7 +1477,6 @@ main {
   display: inline-block;
   padding: var(--min-margin);
   text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .page-header li:first-of-type a {

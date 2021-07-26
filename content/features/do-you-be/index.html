@@ -94,7 +94,6 @@ nav a {
 }
 
 .cover .title {
-  top: 26vh;
   font-size: 1.1em;
   color: var(--color-purple);
   text-align: center;
@@ -110,9 +109,10 @@ nav a {
 .cover .title h1 {
   font-size: 2.4em;
 }
-.cover .title h1, .cover .title p {
-  line-height: var(--r-minor);
-}
+
+@media screen and (min-width: 20em) { .cover .title { font-size: calc(1em + 1vmin); }}
+@media screen and (min-width: 24em) { .cover .title { font-size: calc(1em + 2vmin); }}
+
 @media screen and (prefers-color-scheme: dark) {
   nav a {
     --color-fg: var(--color-purple);
@@ -123,21 +123,6 @@ nav a {
     background-color: #413357;
   }
 }
-
-@media (min-width: 20em) { .cover .title { font-size: calc(1em + 1vmin); }}
-@media (min-width: 24em) { .cover .title { font-size: calc(1em + 2vmin); }}
-
-@media (min-aspect-ratio: 50/40) { .cover .title { top: 26.00vh; }}
-@media (min-aspect-ratio: 51/40) { .cover .title { top: 25.50vh; }}
-@media (min-aspect-ratio: 52/40) { .cover .title { top: 25.00vh; }}
-@media (min-aspect-ratio: 53/40) { .cover .title { top: 24.25vh; }}
-@media (min-aspect-ratio: 54/40) { .cover .title { top: 23.50vh; }}
-@media (min-aspect-ratio: 55/40) { .cover .title { top: 22.75vh; }}
-@media (min-aspect-ratio: 56/40) { .cover .title { top: 22.00vh; }}
-@media (min-aspect-ratio: 57/40) { .cover .title { top: 21.25vh; }}
-@media (min-aspect-ratio: 58/40) { .cover .title { top: 20.50vh; }}
-@media (min-aspect-ratio: 59/40) { .cover .title { top: 19.75vh; }}
-@media (min-aspect-ratio: 60/40) { .cover .title { top: 19vh; }}
 </style>
 </head>
 <body class=belyssimo>

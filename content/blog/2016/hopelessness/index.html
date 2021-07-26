@@ -106,19 +106,25 @@ i, em {
   text-transform: uppercase;
   font-size: calc(var(--s10) + 2vh + 2vw);
   font-stretch: 70%;
-  line-height: 0.8;
+  line-height: var(--t05);
   transform: rotate(-3deg);
   margin-top: 20vh;
   padding: calc(1rem / var(--r-major) / var(--r-major));
 }
 .cover .title h2 {
   margin: auto 2vmin 2vmin 2vmin;
-  text-align: center;
   padding: 2vmin;
-  font-size: var(--t10);
+  font-size: 1em;
   font-stretch: 90%;
-  line-height: 1.4;
+  line-height: var(--s10);
+  text-align: center;
 }
+@media (min-width: 35.625em) {
+  .cover .title h2 {
+    font-size: var(--t05);
+  }
+}
+
 .cover .title h2 span {
   padding: 0 var(--t40);
   -webkit-box-decoration-break: clone;
