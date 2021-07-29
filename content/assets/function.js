@@ -1,74 +1,84 @@
 /* ========================================================================== *
- * (C) Copyright 2019 Robert Grimm, released under the MIT license.
+ * (C) Copyright 2019-2021 Robert Grimm, released under the MIT license.
  * ========================================================================== */
-'use strict';
 
-const DEBUG = false;
+let DEBUG = true;
 
-(function main(window, document) {
-  const options = document.currentScript.dataset;
+function createFooterWithReferences() {
+  // >>> (1) Read from DOM: Check footer, determine options, extract links.
+  const article = document.querySelector('main > article');
 
-  function createFooterWithReferences() {
-    if (DEBUG) console.log('called createFooterWithReferences()');
+  if (!article || article.querySelector('footer.references')) {
+    if (DEBUG) console.log(`❌ Skipping creation of footer with references`);
+    return;
+  }
 
-    // >>> (1) Read from DOM: If footer doesn't exist, extract all links.
-    const article = document.querySelector('main > article');
-    if (!article || article.querySelector('footer.references')) return;
-    const hyperlinks = article.querySelectorAll('a[href]');
-
-    if (DEBUG) {
-      console.log(`processing ${hyperlinks.length} references`);
+  let options = {};
+  const { url } = import.meta;
+  const { pathname } = new URL(url);
+  const { scripts } = document;
+  for (let index = 0; index < scripts.length; index++) {
+    const script = scripts[index];
+    const { src } = script;
+    if (src === url || src === pathname) {
+      options = script.dataset;
+      break;
     }
+  }
 
-    // >>> (2) Create DOM: Build up footer with references.
-    const footer = document.createElement('footer');
-    footer.className = 'references';
+  const hyperlinks = article.querySelectorAll('a[href]');
 
-    const h2 = document.createElement('h2');
-    if (options.h2) h2.className = options.h2;
-    h2.innerText = 'References';
+  // >>> (2) Prepare changes to DOM: Create footer with references.
+  const footer = document.createElement('footer');
+  footer.className = 'references';
 
-    const div = document.createElement('div');
-    div.appendChild(h2);
-    footer.appendChild(div);
+  const h2 = document.createElement('h2');
+  if (options.referenceFooterClass) h2.className = options.referenceFooterClass;
+  h2.innerText = 'References';
+  footer.appendChild(h2);
 
-    const ol = document.createElement('ol');
-    ol.className = 'counted';
-    footer.appendChild(ol);
+  const ol = document.createElement('ol');
+  ol.className = 'counted';
+  footer.appendChild(ol);
 
-    for (const { href } of hyperlinks) {
-      if (!href.startsWith('https://apparebit.com/')) {
-        const link = document.createElement('a');
-        link.href = href;
-        link.innerText = href;
+  let count = 0;
+  for (const { href } of hyperlinks) {
+    if (!href.startsWith('https://apparebit.com/')) {
+      const link = document.createElement('a');
+      link.href = href;
+      link.innerText = href;
 
-        const li = document.createElement('li');
-        li.appendChild(link);
-        ol.appendChild(li);
+      const li = document.createElement('li');
+      li.appendChild(link);
+      ol.appendChild(li);
+      count++;
+    }
+  }
+
+  // >>> (3) Write to DOM: Add newly created footer to article.
+  article.appendChild(footer);
+
+  if (DEBUG) {
+    const total = hyperlinks.length;
+    console.log(`✅ Created footer with ${count}/${total} references`);
+  }
+}
+
+function setup() {
+  // Safari doesn't support beforeprint event, so media query serves as fallback.
+  // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeprint
+  if (document.body.classList.contains('print-references')) {
+    window.addEventListener('beforeprint', createFooterWithReferences);
+    window.matchMedia('print').addListener(event => {
+      if (event.matches) {
+        createFooterWithReferences();
       }
-    }
-
-    // >>> (3) Write to DOM: Add footer to article.
-    article.appendChild(footer);
+    });
   }
+}
 
-  // Once the DOM has loaded, wire up event handlers.
-  function wireUp() {
-    // Safari doesn't support beforeprint event, so media query serves as fallback.
-    // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeprint
-    if (document.body.classList.contains('print-references')) {
-      window.addEventListener('beforeprint', createFooterWithReferences);
-      window.matchMedia('print').addListener(event => {
-        if (event.matches) {
-          createFooterWithReferences();
-        }
-      });
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', wireUp);
-  } else {
-    wireUp();
-  }
-})(window, document);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setup);
+} else {
+  setup();
+}
