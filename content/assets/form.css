@@ -1611,7 +1611,7 @@ footer h2::before, footer h3::before {
  * @media print
  * -------------------------------------------------------------------------- */
 
-.references {
+footer.references {
   display: none;
 }
 
@@ -1657,28 +1657,30 @@ footer h2::before, footer h3::before {
     break-inside: avoid;
   }
 
-  /* Add compact, human-readable references for hyperlinks. */
-  main {
+  a {
+    text-decoration: none !important;
+  }
+
+  /* Support for numbered reference section as article footer. */
+  .print-references article {
     counter-reset: href;
   }
 
-  main a {
-    text-decoration: none !important;
+  .print-references article a {
     counter-increment: href;
   }
 
-  .print-references main a::after {
+  .print-references article a[href^="https://apparebit.com"],
+  .print-references .references a {
+    counter-increment: none;
+  }
+
+  .print-references article a::after {
     content: ' [' counter(href) ']';
     /* Lining figures look a tad awkward. Omit. */
   }
 
-  /* Disable references for website-internal hyperlinks and references. */
-  main a[href^="https://apparebit.com"],
-  .references a {
-    counter-increment: none;
-  }
-
-  .print-references main a[href^="https://apparebit.com"]::after,
+  .print-references article a[href^="https://apparebit.com"]::after,
   .print-references .references a::after {
     content: none;
   }
