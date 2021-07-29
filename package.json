@@ -34,10 +34,10 @@
     "proseWrap": "always"
   },
   "site:forge": {
-    "doNotBuild": ".DS_Store|.git|.htaccess.old|so-long",
-    "doNotValidate": [
-      "aarrh6dhlwkj38ie8h9y1pmlzg3gyz.html",
-      "googlee753ef1b651640a9.html"
+    "doNotBuild": ".DS_Store|.git|.htaccess.old|chromania",
+    "justCopy": [
+      "/aarrh6dhlwkj38ie8h9y1pmlzg3gyz.html",
+      "/googlee753ef1b651640a9.html"
     ],
     "deploymentHost": "rgrimm@192.232.251.218:public_html/"
   }
