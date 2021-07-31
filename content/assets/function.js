@@ -64,6 +64,36 @@ function createFooterWithReferences() {
   }
 }
 
+// -----------------------------------------------------------------------------
+
+function updateThemeColor() {
+  const metaElements =
+    Array.from(document.querySelectorAll('meta[name=theme-color]'));
+  if (!metaElements.some(element => element.dataset.fallback)) return;
+
+  let hero = document.querySelector('.cover img');
+  if (!hero) return;
+
+  const themes = metaElements.map(element => {
+    const original = element.content;
+    const fallback = element.dataset.fallback ?? original;
+    return { element, original, fallback };
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const { isIntersecting } = entry;
+      for (const theme of themes) {
+        theme.element.content = isIntersecting ? theme.original : theme.fallback;
+      }
+    }
+  });
+
+  observer.observe(hero);
+}
+
+// -----------------------------------------------------------------------------
+
 function setup() {
   // Safari doesn't support beforeprint event, so media query serves as fallback.
   // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeprint
@@ -75,6 +105,8 @@ function setup() {
       }
     });
   }
+
+  updateThemeColor();
 }
 
 if (document.readyState === 'loading') {
