@@ -1624,6 +1624,10 @@ footer.references {
     display: none;
   }
 
+  .page-header:not(.cornered) + main {
+    margin-top: 0;
+  }
+
   main :is(header, section, .section, footer) {
     display: block;
   }
@@ -1691,5 +1695,27 @@ footer.references {
 
   .references ol > li {
     overflow-wrap: break-word;
+  }
+
+  .gallery .images {
+    display: block;
+    overflow-x: unset;
+    margin-top: var(--s15);
+  }
+
+  .gallery .images:focus {
+    outline: 0;
+  }
+
+  .gallery .images li {
+    margin-top: var(--margin-text-top);
+  }
+
+  .gallery figcaption {
+    padding: var(--t15) 0 var(--s10)
+  }
+
+  .gallery .hint {
+    display: none;
   }
 }
