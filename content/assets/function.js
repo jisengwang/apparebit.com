@@ -2,14 +2,14 @@
  * (C) Copyright 2019-2021 Robert Grimm, released under the MIT license.
  * ========================================================================== */
 
-let DEBUG = true;
+let DEBUG = false;
 
 function createFooterWithReferences() {
   // >>> (1) Read from DOM: Check footer, determine options, extract links.
   const article = document.querySelector('main > article');
 
   if (!article || article.querySelector('footer.references')) {
-    if (DEBUG) console.log(`❌ Skipping creation of footer with references`);
+    if (DEBUG) console.log(`❌ No article requiring footer with references`);
     return;
   }
 
@@ -69,10 +69,16 @@ function createFooterWithReferences() {
 function updateThemeColor() {
   const metaElements =
     Array.from(document.querySelectorAll('meta[name=theme-color]'));
-  if (!metaElements.some(element => element.dataset.fallback)) return;
+  if (!metaElements.some(element => element.dataset.fallback)) {
+    if (DEBUG) console.log(`❌ No <meta name=theme-color> with fallback`);
+    return;
+  }
 
   let hero = document.querySelector('.cover img');
-  if (!hero) return;
+  if (!hero) {
+    if (DEBUG) console.log(`❌ No hero .cover requiring theme-color change`);
+    return;
+  }
 
   const themes = metaElements.map(element => {
     const original = element.content;
@@ -88,8 +94,12 @@ function updateThemeColor() {
       }
     }
   });
-
   observer.observe(hero);
+
+  if (DEBUG) {
+    const { length } = themes;
+    console.log(`✅ Enabled color switching for ${length} theme-colors`);
+  }
 }
 
 // -----------------------------------------------------------------------------
