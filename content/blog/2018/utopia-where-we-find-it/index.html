@@ -49,7 +49,9 @@ nav a, .cover .title {
   background-color: var(--color-bg);
   text-align: center;
   margin: var(--t40);
-  padding: var(--t30);
+  padding: var(--t20);
+  width: -moz-fit-content;
+  width: fit-content;
 }
 @media screen and (prefers-color-scheme: dark) {
   .cover h1, .cover h2 {
@@ -58,14 +60,12 @@ nav a, .cover .title {
 }
 .cover h1 {
   font-size: clamp(var(--s10), 2vw + 2vh + 0.5em, var(--s30));
-  max-width: 11em;
   line-height: calc(var(--r-minor) * var(--r-minor));
 }
 .cover h2 {
   font-family: var(--bely-fontstack);
   font-size:  clamp(1em, 1.5vw + 1.5vh, var(--s30) / var(--r-major));
   margin-top: var(--t10);
-  max-width: 12em;
   /*line-height: calc(var(--r-minor) * var(--r-minor));*/
 }
 </style>
@@ -86,8 +86,8 @@ nav a, .cover .title {
 <article class=e-content>
 <header class=cover>
 <hgroup class=title>
-<h1 class=p-name>Celebrating Utopia Where We Find It</h1>
-<h2>The Wondrous World of the Airline Safety Video</h2>
+<h1 class=p-name>Celebrating Utopia<br>Where We Find It</h1>
+<h2>The Wondrous World of the<br>Airline Safety Video</h2>
 </hgroup>
 <picture>
 <source
