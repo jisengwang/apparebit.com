@@ -557,14 +557,9 @@ main :is(header, section, .section, footer) > * {
  * "better" approach probably boils down to the size of the element selector,
  * i.e., pointing towards exclusion instead of the below.
  */
-main :is(blockquote, figure, h3, ol, p, ul, .with-inset) + :is(blockquote, figure, h3, p),
-main li {
+main :is(blockquote, figure, ol, p, ul, .with-inset) + :is(blockquote, figure, ol, p, ul),
+main li + li {
   margin-top: var(--margin-text-top);
-}
-
-/* Negate the top list item's top margin when following a header element. */
-main :is(h1, h2, hgroup) + :is(ol, ul) {
-  margin-top: calc(-1 * var(--margin-text-top));
 }
 
 /* Outright remove the top margin from .tight list items again. */
@@ -763,7 +758,7 @@ a:not(.stylish):active {
 .byline {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--s30);
+  margin-top: var(--s20);
   margin-bottom: var(--s10);
 }
 
@@ -775,24 +770,42 @@ address {
  * .capped
  * -------------------------------------------------------------------------- */
 
+.drop-count {
+  list-style: none;
+}
+
+.drop-count li::before {
+  content: counter(list-item);
+  -webkit-font-feature-settings: var(--font-features-standout);
+  font-feature-settings: var(--font-features-standout);
+}
+
 @supports not (initial-letter: 2) {
-  .capped::first-letter {
+  .drop-count li::before, .capped::first-letter {
     float: left;
     font-size: 3.3em;
-    line-height: 0.825;
-    font-weight: normal;
     padding-right: 0.06em;
+  }
+
+  .drop-count li::before {
+    line-height: 0.8;
+    margin-top: -0.005em;
+  }
+
+  .capped::first-letter {
+    line-height: 0.82;
+    padding-top: 0.05em;
   }
 }
 
 @supports (not (initial-letter: 2)) and (-moz-appearance: none) {
-  .capped::first-letter {
+  .drop-count ::before, .capped::first-letter {
     margin-top: 0.10em;
   }
 }
 
 @supports (initial-letter: 2) {
-  .capped::first-letter {
+  .drop-count ::before, .capped::first-letter {
     initial-letter: 2;
   }
 }
@@ -871,10 +884,7 @@ main .carddeck {
 
 .card > h3 > a, .card > h3 > a::before {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 /* >>>>>>>>>> The hover effect is opacity only. <<<<<<<<<< */
@@ -1054,8 +1064,8 @@ main .gallery {
   display: flex;
   overflow-x: scroll;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+  list-style: none;
 }
 
 .gallery .images li {
@@ -1143,11 +1153,17 @@ h1 {
 h2 {
   font-size: var(--s10);
   margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
-  margin-bottom: calc(var(--r-minor) * 1rem);}
+  margin-bottom: calc(var(--r-minor) * 1rem);
+}
+
+h3 {
+  font-size: var(--s05);
+  margin-top: var(--s05);
+  margin-bottom: 1rem;
+}
 
 h1 + h2 {
   margin-top: calc(var(--t10) * -1);
-  margin-bottom: 0;
 }
 
 .bild h2 {
@@ -1309,39 +1325,26 @@ hr::after {
  * ol, ul
  * -------------------------------------------------------------------------- */
 
-ol {
-  list-style: none;
-  counter-reset: ol;
+.counted {
+  padding-left: var(--s20);
 }
 
-ol > li {
-  counter-increment: ol;
-}
-
-.counted > li::before {
-  content: '(' counter(ol) ') ';
+.counted ::marker {
+  content: '(' counter(list-item) ') ';
   -webkit-font-feature-settings: var(--font-features-standout);
   font-feature-settings: var(--font-features-standout);
 }
 
-/*
- * calc((
- *     var(--max-measure)
- *     + 2 * var(--t15)
- *     + 2 * 3em (assumed worst-case width)
- *     + 2 * var(--min-margin)
- * ) * 131.25%)
- */
-@media (min-width: 47.67em) {
-  .counted > li {
-    position: relative;
-  }
+.references .counted ::marker {
+  content: '[' counter(list-item) '] ';
+}
 
-  .counted > li::before {
-    position: absolute;
-    right: calc(var(--max-measure) + var(--t10));
-    text-align: right;
-  }
+.references .counted li {
+  overflow-wrap: break-word;
+}
+
+.datelist {
+  list-style: none;
 }
 
 main ul {
@@ -1489,6 +1492,8 @@ main {
 }
 
 .page-header li:nth-of-type(2) {
+  font-size: var(--s05);
+  line-height: var(--r-minor);
   margin-left: auto;
 }
 
@@ -1640,6 +1645,9 @@ footer.references {
     max-width: unset;
   }
 
+  main {
+    margin-bottom: var(--s20);
+  }
 
   h1, h2, h3 {
     page-break-after: avoid;
@@ -1691,10 +1699,6 @@ footer.references {
 
   .references {
     display: block;
-  }
-
-  .references ol > li {
-    overflow-wrap: break-word;
   }
 
   .gallery .images {
