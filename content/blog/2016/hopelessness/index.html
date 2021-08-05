@@ -75,14 +75,14 @@ main :is(header, section, .section, footer) {
       [view-end];
   }
 }
-.section p span {
+.section p > * {
+  display: block;
+}
+.hopeless {
   font-stretch: 100%;
+  font-size: var(--s05);
+  line-height: var(--s05);
 }
-.section p span:first-of-type::before, p span::after {
-  content: '\a';
-  white-space: pre;
-}
-
 i, em {
   font-stretch: 100%;
   text-transform: uppercase;
@@ -188,21 +188,21 @@ i, em {
 </header>
 
 <div class=section>
-<p><em>Anohni</em> is the high priestess of an apocalyptic cult.
-Shrouded in the burqa of her new order, her angelic voice levitates above
-merciless dance beats and decries everything wrong with this world. Her vision
-is so dark and all-encompassing and her execution is so stark and close to
-flawless, over one and a half hours I am
-<span>on the brink of a panic attack,</span>
-<span>deeply depressed,</span>
-<span>sobbing,</span>
-<span>physically sick to my stomach,</span>
-<span>seething with rage,</span>
-<span>hoping for the end of it all,</span>
-<span>sobbing all over again,</span>
-<span>and finally utterly exhausted.</span>
-We will be talking about this show decades from now. Hopelessness indeed.
-<i lang=it>Brava!</i></p>
+<p><span><em>Anohni</em> is the high priestess of an apocalyptic cult. Shrouded
+in the burqa of her new order, her angelic voice levitates above merciless dance
+beats and decries everything wrong with this world. Her vision is so dark and
+all-encompassing and her execution is so stark and close to flawless, over one
+and a half hours I am</span>
+<span class=hopeless>on the brink of a panic attack,</span>
+<span class=hopeless>deeply depressed,</span>
+<span class=hopeless>sobbing,</span>
+<span class=hopeless>physically sick to my stomach,</span>
+<span class=hopeless>seething with rage,</span>
+<span class=hopeless>hoping for the end of it all,</span>
+<span class=hopeless>sobbing all over again,</span>
+<span class=hopeless>and finally utterly exhausted.</span>
+<span>We will be talking about this show decades from now. Hopelessness
+indeed. <i lang=it>Brava!</i></span></p>
 </div>
 
 </article>
