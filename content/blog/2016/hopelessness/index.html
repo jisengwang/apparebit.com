@@ -38,6 +38,7 @@
 :root {
   --color-local-accent: #ff6fab;
 }
+
 @media screen and (prefers-color-scheme: dark) {
   :root {
     --color-local-accent: #772748;
@@ -49,6 +50,7 @@ header > *, .section > * {
   font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
   font-stretch: 75%;
 }
+
 main :is(header, section, .section, footer) {
   grid-template-columns:
     [view-start wide-start figure-start]
@@ -59,6 +61,7 @@ main :is(header, section, .section, footer) {
     var(--min-margin)
     [figure-end wide-end view-end];
 }
+
 @media (min-width: 41em) {
   main :is(header, section, .section, footer) {
     grid-template-columns:
@@ -75,33 +78,24 @@ main :is(header, section, .section, footer) {
       [view-end];
   }
 }
-.section p > * {
-  display: block;
-}
-.hopeless {
-  font-stretch: 100%;
-  font-size: var(--s05);
-  line-height: var(--s05);
-}
-i, em {
-  font-stretch: 100%;
-  text-transform: uppercase;
-}
-
 .page-header {
   --color-bg: var(--color-local-accent);
 }
+
 .cover img {
   object-position: 40% 40%;
 }
+
 .cover .title {
   --color-bg: var(--color-local-accent);
   justify-content: center;
   height: 100%;
 }
+
 .cover .title h1, .cover .title h2 span {
   background-color: var(--color-bg);
 }
+
 .cover .title h1 {
   text-transform: uppercase;
   font-size: calc(var(--s10) + 2vh + 2vw);
@@ -111,6 +105,7 @@ i, em {
   margin-top: 20vh;
   padding: calc(1rem / var(--r-major) / var(--r-major));
 }
+
 .cover .title h2 {
   margin: auto 2vmin 2vmin 2vmin;
   padding: 2vmin;
@@ -119,6 +114,7 @@ i, em {
   line-height: var(--s10);
   text-align: center;
 }
+
 @media (min-width: 35.625em) {
   .cover .title h2 {
     font-size: var(--t05);
@@ -130,14 +126,58 @@ i, em {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-@media print {
-  .cover .title h1 {
-    font-size: 7em;
-    margin-top: 1em;
-  }
-}
+
 .byline {
   margin-top: calc(var(--r-major) * 1rem);
+}
+
+.section p > * {
+  display: block;
+}
+
+.hopeless {
+  font-stretch: 100%;
+  font-size: var(--s05);
+  line-height: var(--s05);
+}
+
+i, em {
+  font-stretch: 100%;
+  text-transform: uppercase;
+}
+
+em {
+  display: inline-block;
+}
+
+i, em {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 var(--t30);
+  position: relative;
+}
+
+i::before, em::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-local-accent);
+  transform: rotate(3deg) skew(-5deg, -5deg);
+  z-index: -1;
+}
+
+.page-footer {
+  --color-fg: var(--color-white);
+  --color-bg: var(--color-black);
+  --color-bg-sunk: var(--color-black);
+  --color-separator: var(--color-dark-separator);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .page-footer {
+    --color-bg-sunk: #000;
+    --color-separator: var(--color-bg-lifted);
+  }
 }
 </style>
 </head>
@@ -202,7 +242,9 @@ and a half hours I am</span>
 <span class=hopeless>sobbing all over again,</span>
 <span class=hopeless>and finally utterly exhausted.</span>
 <span>We will be talking about this show decades from now. Hopelessness
-indeed. <i lang=it>Brava!</i></span></p>
+indeed.</span>
+<i lang=it>Brava!</i>
+</p>
 </div>
 
 </article>
