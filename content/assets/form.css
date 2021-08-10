@@ -214,10 +214,13 @@ iframe {
   --color-purple: #fdbafd;
   --color-blue: #bbdefb; /* Dark: #395872 */
 
+  --color-dark-separator:#48484e;
+
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
-  --color-bg-sunk: #e0e0e0;
+  /* theme color: e0e2e5, eceef1 */
+  --color-bg-sunk: #e0e0e0; /* d8dce3 */
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
@@ -235,7 +238,7 @@ iframe {
     --color-bg: #222225;
     --color-bg-lifted: #38383d;
     --color-bg-sunk: #101012;
-    --color-separator: #48484e;
+    --color-separator: var(--color-dark-separator);
     --color-accent1: #753f86;
     --color-accent2: #962d56;
     --color-selection: #851d10;
@@ -257,11 +260,8 @@ iframe {
   :root {
     --color-fg: #000;
     --color-bg: transparent;
-  }
-
-  .card {
-    --color-bg: #fff;
     --color-bg-lifted: transparent;
+    --color-bg-sunk: transparent;
   }
 }
 
@@ -641,6 +641,10 @@ a:not(.stylish):active {
   background-color: var(--color-fg);
 }
 
+a:focus > picture, a:hover > picture {
+  outline: solid var(--t30) var(--color-fg);
+}
+
 /* -------------------------------------------------------------------------- *
  * .as-paragraph (flow <p> and <li> into one paragraph with Oxford comma)
  * -------------------------------------------------------------------------- */
@@ -930,6 +934,12 @@ main .carddeck {
   background-color: var(--color-bg-lifted);
 }
 
+@media print {
+  .card > h3 span {
+    background-color: #fff;
+  }
+}
+
 /* >>>>>>>>>> Image aspect ratio is normalized to modular rhythm. <<<<<<<<<< */
 
 .card > .image {
@@ -1132,6 +1142,30 @@ main .gallery {
 
 .gallery .images::-webkit-scrollbar-thumb:hover {
   background: var(--color-sb-thumb-hover);
+}
+
+@media print {
+  .gallery .images {
+    display: block;
+    overflow-x: unset;
+    margin-top: var(--s15);
+  }
+
+  .gallery .images:focus {
+    outline: 0;
+  }
+
+  .gallery .images li {
+    margin-top: var(--margin-text-top);
+  }
+
+  .gallery figcaption {
+    padding: var(--t15) 0 var(--s10)
+  }
+
+  .gallery .hint {
+    display: none;
+  }
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1699,27 +1733,5 @@ footer.references {
 
   .references {
     display: block;
-  }
-
-  .gallery .images {
-    display: block;
-    overflow-x: unset;
-    margin-top: var(--s15);
-  }
-
-  .gallery .images:focus {
-    outline: 0;
-  }
-
-  .gallery .images li {
-    margin-top: var(--margin-text-top);
-  }
-
-  .gallery figcaption {
-    padding: var(--t15) 0 var(--s10)
-  }
-
-  .gallery .hint {
-    display: none;
   }
 }
