@@ -219,8 +219,8 @@ iframe {
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
-  /* theme color: e0e2e5, eceef1 */
-  --color-bg-sunk: #e0e0e0; /* d8dce3 */
+  /* theme color: e7e9ef, e0e2e5, eceef1 */
+  --color-bg-sunk: #e0e0e0; /* d8dce3, e3e5ea */
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
@@ -540,6 +540,25 @@ main :is(header, section, .section, footer) {
       [view-end];
   }
 }
+
+/*@media print {
+  main :is(header, section, .section, footer) {
+    grid-template-columns:
+    [view-start]
+    var(--min-margin)
+    [margin-start]
+    1fr
+    [wide-start]
+    calc(2 * var(--s50))
+    [figure-start text-start]
+    minmax(0, var(--max-measure))
+    [text-end figure-end]
+    [wide-end]
+    [margin-end]
+    var(--min-margin)
+    [view-end];
+  }
+}*/
 
 main :is(header, section, .section, footer) > * {
   grid-column: text;
@@ -1667,6 +1686,7 @@ footer.references {
     margin-top: 0;
   }
 
+  /* Start snip */
   main :is(header, section, .section, footer) {
     display: block;
   }
@@ -1678,6 +1698,7 @@ footer.references {
   main .cover > :not(.byline) {
     max-width: unset;
   }
+  /* End snip */
 
   main {
     margin-bottom: var(--s20);
