@@ -1,5 +1,5 @@
 /* ========================================================================== *
- * (C) Copyright 2019 Robert Grimm, released under the MIT license.
+ * (C) Copyright 2019-2021 Robert Grimm, released under the MIT license.
  * ========================================================================== */
 
 /*
@@ -293,6 +293,7 @@ iframe {
   font-family: var(--bely-fontstack);
   font-size-adjust: none;
   font-synthesis: none;
+  font-kerning: auto;
 
   font-size: 118.75%;
   -moz-text-size-adjust: none;
@@ -332,49 +333,23 @@ p {
 
 /* -------------------------------------------------------------------------- */
 
-@supports not (font-variant: oldstyle-nums common-ligatures) {
-  body {
-    -webkit-font-feature-settings: var(--font-features-text);
-    font-feature-settings: var(--font-features-text);
-  }
-}
-
-@supports (font-variant: oldstyle-nums common-ligatures) {
-  body {
-    font-variant: oldstyle-nums common-ligatures;
-  }
+body {
+  font-variant: oldstyle-nums common-ligatures;
 }
 
 /* -------------------------------------------------------------------------- */
 
-@supports not (font-variant-caps: all-small-caps) {
-  abbr,
-  .byline,
-  .capped span:first-child,
-  .roman,
-  .datelist time,
-  .gallery .hint .text {
-    -webkit-font-feature-settings:'smcp', 'c2sc', var(--font-features-standout);
-    font-feature-settings: 'smcp', 'c2sc', var(--font-features-standout);
-  }
-  .capped::first-letter {
-    -webkit-font-feature-settings: var(--font-features-standout);
-    font-feature-settings: var(--font-features-standout);
-  }
+abbr,
+.byline,
+.capped span:first-child,
+.roman,
+.datelist time,
+.gallery .hint .text {
+  font-variant-caps: all-small-caps;
 }
 
-@supports (font-variant-caps: all-small-caps) {
-  abbr,
-  .byline,
-  .capped span:first-child,
-  .roman,
-  .datelist time,
-  .gallery .hint .text {
-    font-variant-caps: all-small-caps;
-  }
-  .capped::first-letter {
-    font-variant-caps: normal;
-  }
+.capped::first-letter {
+  font-variant-caps: normal;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -418,17 +393,8 @@ sup {
 
 /* -------------------------------------------------------------------------- */
 
-@supports not (font-variant: lining-nums common-ligatures) {
-  h1, h2, h3 {
-    -webkit-font-feature-settings: var(--font-features-standout);
-    font-feature-settings: var(--font-features-standout);
-  }
-}
-
-@supports (font-variant: lining-nums common-ligatures) {
-  h1, h2, h3 {
-    font-variant: lining-nums common-ligatures;
-  }
+h1, h2, h3 {
+  font-variant: lining-nums common-ligatures;
 }
 
 .belyssimo h1, .belyssimo h2 {
@@ -602,11 +568,6 @@ main .tight li:nth-of-type(n+2) {
 
 .signature::before {
   content: '—';
-}
-
-.standout {
-  -webkit-font-feature-settings: var(--font-features-standout);
-  font-feature-settings: var(--font-features-standout);
 }
 
 /* ========================================================================== *
@@ -799,8 +760,7 @@ address {
 
 .drop-count li::before {
   content: counter(list-item);
-  -webkit-font-feature-settings: var(--font-features-standout);
-  font-feature-settings: var(--font-features-standout);
+  font-variant: lining-nums;
 }
 
 @supports not (initial-letter: 2) {
@@ -812,7 +772,7 @@ address {
 
   .drop-count li::before {
     line-height: 0.8;
-    margin-top: -0.005em;
+    margin-top: 0.008em;
   }
 
   .capped::first-letter {
@@ -1384,8 +1344,7 @@ hr::after {
 
 .counted ::marker {
   content: '(' counter(list-item) ') ';
-  -webkit-font-feature-settings: var(--font-features-standout);
-  font-feature-settings: var(--font-features-standout);
+  font-variant: lining-nums;
 }
 
 .references .counted ::marker {
