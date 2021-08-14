@@ -45,7 +45,7 @@
   }
 }
 
-header > *, .section > * {
+main {
   font-family: var(--bild-fontstack);
   font-size: clamp(var(--r-minor) * 1rem, 2vw + 2vh, 2.5rem);
   font-stretch: 75%;
@@ -78,6 +78,7 @@ main :is(header, section, .section, footer) {
       [view-end];
   }
 }
+
 .page-header {
   --color-bg: var(--color-local-accent);
 }
@@ -115,12 +116,6 @@ main :is(header, section, .section, footer) {
   text-align: center;
 }
 
-@media (min-width: 35.625em) {
-  .cover .title h2 {
-    font-size: var(--t05);
-  }
-}
-
 .cover .title h2 span {
   padding: 0 var(--t40);
   -webkit-box-decoration-break: clone;
@@ -129,35 +124,26 @@ main :is(header, section, .section, footer) {
 
 .byline {
   margin-top: calc(var(--r-major) * 1rem);
+  font-size: var(--t05);
+  text-transform: uppercase;
+  font-variant-caps: normal;
 }
 
 .section p > * {
   display: block;
 }
 
-.hopeless {
-  font-stretch: 100%;
-  font-size: var(--s05);
-  line-height: var(--s05);
-}
-
-i, em {
+em, i {
   font-stretch: 100%;
   text-transform: uppercase;
-}
-
-em {
   display: inline-block;
-}
-
-i, em {
   width: -moz-fit-content;
   width: fit-content;
   padding: 0 var(--t30);
   position: relative;
 }
 
-i::before, em::before {
+em::before, i::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -166,6 +152,12 @@ i::before, em::before {
   z-index: -1;
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
+}
+
+.hopeless {
+  font-stretch: 100%;
+  font-size: var(--s05);
+  line-height: var(--s05);
 }
 
 .page-footer {
