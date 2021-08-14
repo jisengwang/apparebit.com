@@ -205,7 +205,7 @@ iframe {
    * Colors
    * ------------------------------------------------------------------------ */
 
-  --color-white: #f4f4f6;
+  --color-white: #f3f4f6;
   --color-black: #1d1d20;
   --color-cyan: #2bfff4;
   --color-green: #35ff61;
@@ -220,12 +220,12 @@ iframe {
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
   /* theme color: e7e9ef, e0e2e5, eceef1 */
-  --color-bg-sunk: #e0e0e0; /* d8dce3, e3e5ea */
+  --color-bg-sunk: #e5e6e8; /* d8dce3, e3e5ea */
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
   --color-selection: var(--color-yellow);
-  --color-sb-track: #f4f4f6;
+  --color-sb-track: #f3f4f6;
   --color-sb-track-border: rgba(0,0,0,0.1);
   --color-sb-thumb: rgba(0,0,0,0.3);
   --color-sb-thumb-hover: rgba(0,0,0,0.5);
