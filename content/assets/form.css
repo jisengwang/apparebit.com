@@ -219,8 +219,7 @@ iframe {
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
-  /* theme color: e7e9ef, e0e2e5, eceef1 */
-  --color-bg-sunk: #e5e6e8; /* d8dce3, e3e5ea */
+  --color-bg-sunk: #e5e6e8;
   --color-separator: #c0c0c0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
@@ -742,7 +741,7 @@ a:focus > picture, a:hover > picture {
 .byline {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--s20);
+  margin-top: var(--s10);
   margin-bottom: var(--s10);
 }
 
