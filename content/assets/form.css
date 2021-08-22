@@ -224,6 +224,7 @@ iframe {
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
   --color-selection: var(--color-yellow);
+  --color-picture-frame: var(--color-black);
   --color-sb-track: #f3f4f6;
   --color-sb-track-border: rgba(0,0,0,0.1);
   --color-sb-thumb: rgba(0,0,0,0.3);
@@ -241,6 +242,7 @@ iframe {
     --color-accent1: #753f86;
     --color-accent2: #962d56;
     --color-selection: #851d10;
+    --color-picture-frame: var(--color-accent1);
     --color-sb-track: #222225;
     --color-sb-track-border: #38383d;
     --color-sb-thumb: #a0a0a0;
@@ -546,6 +548,11 @@ main li + li {
   margin-top: var(--margin-text-top);
 }
 
+/* Adjust top margin for signature font size. */
+main p + .signature {
+  margin-top: calc(var(--margin-text-top) / var(--r-minor));
+}
+
 /* Outright remove the top margin from .tight list items again. */
 main .tight li:nth-of-type(n+2) {
   margin-top: 0;
@@ -621,7 +628,7 @@ a:not(.stylish):active {
 }
 
 a:focus > picture, a:hover > picture {
-  outline: solid var(--t30) var(--color-fg);
+  outline: solid var(--t20) var(--color-picture-frame);
 }
 
 /* -------------------------------------------------------------------------- *
@@ -750,7 +757,7 @@ address {
 }
 
 /* -------------------------------------------------------------------------- *
- * .capped
+ * .capped, .drop-count
  * -------------------------------------------------------------------------- */
 
 .drop-count {
@@ -763,31 +770,37 @@ address {
 }
 
 @supports not (initial-letter: 2) {
-  .drop-count li::before, .capped::first-letter {
+  .capped::first-letter, .drop-count li::before {
     float: left;
     font-size: 3.3em;
     padding-right: 0.06em;
+    line-height: 0.8;
+  }
+
+  /* ---------- Chrome ---------- */
+  .capped::first-letter {
+    margin-top: 0.006em;
   }
 
   .drop-count li::before {
-    line-height: 0.8;
     margin-top: 0.008em;
   }
-
-  .capped::first-letter {
-    line-height: 0.82;
-    padding-top: 0.05em;
-  }
 }
 
+/* ---------- Firefox ---------- */
 @supports (not (initial-letter: 2)) and (-moz-appearance: none) {
-  .drop-count ::before, .capped::first-letter {
-    margin-top: 0.10em;
+  .capped::first-letter {
+    margin-top: 0.15em;
+  }
+
+  .drop-count li::before {
+    margin-top: 0.016em;
   }
 }
 
+/* ---------- Safari ---------- */
 @supports (initial-letter: 2) {
-  .drop-count ::before, .capped::first-letter {
+  .capped::first-letter, .drop-count li::before {
     initial-letter: 2;
   }
 }
@@ -1359,7 +1372,7 @@ hr::after {
 }
 
 main ul {
-  padding-left: var(--s15);
+  padding-left: var(--s10);
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1574,7 +1587,15 @@ main {
  * -------------------------------------------------------------------------- */
 
 blockquote {
-  margin-left: var(--s10);
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+@media (min-width: 39.375em) {
+  blockquote {
+    margin-left: var(--s10);
+    margin-right: var(--s10);
+  }
 }
 
 blockquote :first-child::before, blockquote :last-child::after {
