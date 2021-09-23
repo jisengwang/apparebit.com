@@ -9,7 +9,9 @@ function createFooterWithReferences() {
   const article = document.querySelector('main > article');
 
   if (!article || article.querySelector('footer.references')) {
-    if (DEBUG) console.log(`❌ No article requiring footer with references`);
+    if (DEBUG) {
+      console.log(`ℹ️ Page did not request print footer with references.`);
+    }
     return;
   }
 
@@ -60,7 +62,7 @@ function createFooterWithReferences() {
 
   if (DEBUG) {
     const total = hyperlinks.length;
-    console.log(`✅ Created footer with ${count}/${total} references`);
+    console.log(`✅ Created footer with ${count}/${total} references.`);
   }
 }
 
@@ -70,14 +72,17 @@ function updateThemeColor() {
   const metaElements =
     Array.from(document.querySelectorAll('meta[name=theme-color]'));
   if (!metaElements.some(element => element.dataset.fallback)) {
-    if (DEBUG) console.log(`❌ No <meta name=theme-color> with fallback`);
+    if (DEBUG) console.log(`ℹ️ No <meta name=theme-color> with fallback.`);
     return;
   }
 
-  let hero = document.querySelector('.cover img');
-  if (!hero) {
-    if (DEBUG) console.log(`❌ No hero .cover requiring theme-color change`);
-    return;
+  let suspect = document.querySelector('.cover img');
+  if (!suspect) {
+    suspect = document.querySelector('.page-header');
+    if (!suspect) {
+      if (DEBUG) console.error(`❌ Page does not have .page-header!`);
+      return;
+    }
   }
 
   const themes = metaElements.map(element => {
@@ -94,11 +99,11 @@ function updateThemeColor() {
       }
     }
   });
-  observer.observe(hero);
+  observer.observe(suspect);
 
   if (DEBUG) {
     const { length } = themes;
-    console.log(`✅ Enabled color switching for ${length} theme-colors`);
+    console.log(`✅ Enabled color switching for ${length} theme-colors.`);
   }
 }
 
