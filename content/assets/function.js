@@ -69,37 +69,39 @@ function createFooterWithReferences() {
 // -----------------------------------------------------------------------------
 
 function updateThemeColor() {
-  const metaElements =
-    Array.from(document.querySelectorAll('meta[name=theme-color]'));
-  if (!metaElements.some(element => element.dataset.fallback)) {
+  // Pick <meta name="theme-color"> with data-fallback attribute.
+  const themes = Array
+    .from(document.querySelectorAll('meta[name=theme-color]'))
+    .filter(element => element.dataset.fallback)
+    .map(element => ({
+      element,
+      visible: element.content,
+      invisible: element.dataset.fallback,
+    }));
+  if (themes.length === 0) {
     if (DEBUG) console.log(`ℹ️ No <meta name=theme-color> with fallback.`);
     return;
   }
 
-  let suspect = document.querySelector('.cover img');
-  if (!suspect) {
-    suspect = document.querySelector('.page-header');
-    if (!suspect) {
-      if (DEBUG) console.error(`❌ Page does not have .page-header!`);
-      return;
-    }
+  // Pick top-of-page element whose visibility controls color.
+  let header = document.querySelector('.cover img');
+  if (!header) header = document.querySelector('.page-header');
+  if (!header) {
+    if (DEBUG) console.error(`❌ Page does not have .page-header!`);
+    return;
   }
 
-  const themes = metaElements.map(element => {
-    const original = element.content;
-    const fallback = element.dataset.fallback ?? original;
-    return { element, original, fallback };
-  });
-
+  // Set up intersection observer
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       const { isIntersecting } = entry;
       for (const theme of themes) {
-        theme.element.content = isIntersecting ? theme.original : theme.fallback;
+        theme.element.content =
+          isIntersecting ? theme.visible : theme.invisible;
       }
     }
   });
-  observer.observe(suspect);
+  observer.observe(header);
 
   if (DEBUG) {
     const { length } = themes;
