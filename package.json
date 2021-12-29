@@ -11,16 +11,8 @@
   "engines": {
     "node": ">=12.10.0"
   },
-  "dependencies": {
-    "serve": "11.3.2"
-  },
-  "resolutions": {
-    "minimist": "1.2.5"
-  },
   "scripts": {
-    "serve-tls": "serve --config ../config/serve.json --ssl-cert config/localhost.crt --ssl-key config/localhost.key build",
-    "preserve": "../siteforge/cli/main.js build",
-    "serve": "serve --config ../../config/serve.json build/dev"
+    "develop": "../siteforge/cli/main.js build develop -vv",
   },
   "prettier": {
     "printWidth": 80,
