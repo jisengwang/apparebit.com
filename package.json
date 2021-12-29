@@ -12,7 +12,7 @@
     "node": ">=12.10.0"
   },
   "scripts": {
-    "develop": "../siteforge/cli/main.js build develop -vv",
+    "develop": "../siteforge/cli/main.js build develop -vv"
   },
   "prettier": {
     "printWidth": 80,
