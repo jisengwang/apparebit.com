@@ -219,7 +219,7 @@ iframe {
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
-  --color-bg-sunk: #e9eaec;
+  --color-bg-sunk: #eaeaec;
   --color-separator: #cdced0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
