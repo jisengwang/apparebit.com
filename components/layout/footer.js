@@ -4,7 +4,7 @@ export default function Footer() {
   return `<footer class=page-footer role=contentinfo>
 <div class=in-here>
 <h2 id=in-here>In Here</h2>
-<ul>
+<ul role=list>
   <li><a rel="home" href="/">Home</a></li>
   <li><a href="/blog">Blog</a></li>
   <li><a href="/about/robert-grimm">Bio Sketch</a></li>
@@ -15,7 +15,7 @@ export default function Footer() {
 
 <div class=out-there>
 <h2 id=out-there>Out There</h2>
-<ul>
+<ul role=list>
   <li><a rel="author noreferrer" href="https://www.facebook.com/apparebit">Facebook</a></li>
   <li><a rel=author href="https://github.com/apparebit">Github</a></li>
   <li><a rel="author noreferrer" href="https://www.instagram.com/apparebit/">Instagram</a></li>
