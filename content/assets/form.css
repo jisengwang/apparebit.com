@@ -1665,20 +1665,6 @@ footer.references {
     margin-top: 0;
   }
 
-  /* Start snip */
-  main :is(header, section, .section, footer) {
-    display: block;
-  }
-
-  main :is(header, section, .section, footer) > * {
-    max-width: var(--max-measure);
-  }
-
-  main .cover > :not(.byline) {
-    max-width: unset;
-  }
-  /* End snip */
-
   main {
     margin-bottom: var(--s20);
   }
@@ -1731,7 +1717,7 @@ footer.references {
     content: none;
   }
 
-  .references {
-    display: block;
+  footer.references {
+    display: grid;
   }
 }
