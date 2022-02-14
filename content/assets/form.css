@@ -37,7 +37,7 @@
   font-display: swap;
 }
 
-/*@font-face {
+@font-face {
   font-family: 'Bely';
   src: url(fonts/bely-bold.woff2),
     url(fonts/bely-bold.woff);
@@ -46,7 +46,7 @@
   font-display: swap;
 }
 
-@font-face {
+/*@font-face {
   font-family: 'Bely';
   src: url(fonts/bely-bold-italic.woff2),
     url(fonts/bely-bold-italic.woff);
@@ -656,6 +656,14 @@ a:focus > picture, a:hover > picture {
 
 .conjunctive li:last-child::after {
   content: '.';
+}
+
+/* -------------------------------------------------------------------------- *
+ * b
+ * -------------------------------------------------------------------------- */
+
+ b {
+  font-weight: bold;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1598,7 +1606,7 @@ blockquote {
   }
 }
 
-blockquote :first-child::before, blockquote :last-child::after {
+blockquote > :first-child::before, blockquote > :last-child::after {
   font-size: var(--s05);
   line-height: 0;
   position: relative;
@@ -1608,8 +1616,8 @@ blockquote :first-child::before, blockquote :last-child::after {
  * U+275d and U+275e are heavy double turned comma quotes.
  * U+200a is a hair space.
  */
-blockquote :first-child::before { content: '\275d'; padding-right: 0.024em; }
-blockquote :last-child::after   { content: '\275e'; padding-left:  0.024em; }
+blockquote > :first-child::before { content: '\275d'; padding-right: 0.024em; }
+blockquote > :last-child::after   { content: '\275e'; padding-left:  0.024em; }
 
 /* -------------------------------------------------------------------------- *
  * .section-count
