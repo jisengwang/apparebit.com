@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wrong Impression • Apparebit</title>
+<link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async type="module" src="/assets/function.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="/assets/form.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
+<link rel="manifest" href="/assets/apparebit.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
+<meta property="og:title" content="Wrong Impression">
+<meta name="description" content="“We don’t reveal this definition externally”">
+<meta property="og:description" content="“We don’t reveal this definition externally”">
+<link rel="canonical" href="https://apparebit.com/blog/2022/wrong-impression">
+<meta property="og:url" content="https://apparebit.com/blog/2022/wrong-impression">
+<meta property="og:image" content="https://apparebit.com/blog/2022/wrong-impression-1200x630.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Facebook’s internal definition of an ad impression">
+<meta name="author" content="Robert Grimm">
+<meta property="article:author" content="https://facebook.com/apparebit">
+<meta property="fb:app_id" content="301854043178629">
+<meta property="og:site_name" content="Apparebit">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apparebit">
+<meta name="twitter:creator" content="@apparebit">
+<meta name="theme-color" content="#f3f4f6" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apparebit.com/blog/2022/wrong-impression"
+  },
+  "headline": "Wrong Impression",
+  "image": [
+    "https://apparebit.com/blog/2022/wrong-impression-1200x630.jpg"
+  ],
+  "datePublished": "2022-02-14",
+  "author": {
+    "@type": "Person",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apparebit.com/assets/a-circle.svg"
+    }
+  },
+  "description": "“We don’t reveal this definition externally”"
+}
+</script>
+</head>
+<body class="reforma print-references">
+
+<nav class="page-header">
+<ul role=list>
+<li><a rel=home href="/">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
+<span class=invisible>Home</span>
+</a></li>
+<li><a href="/blog">Blog</a></li>
+</ul>
+</nav>
+
+<main class=h-entry>
+<article class=e-content>
+<header>
+<hgroup>
+<h1 class=p-name>Wrong Impression</h1>
+<h2>“We don’t reveal this definition externally”</h2>
+</hgroup>
+<div class=byline>
+  <address>
+    <a class="p-author h-card" rel=author href=https://apparebit.com>Robert Grimm</a>
+  </address>
+  <time class=dt-published datetime=2022-01-20>February 14, 2022</time>
+</div>
+</header>
+
+<section aria-labelledby=introduction>
+<h2 id=introduction hidden>Introduction</h2>
+
+<p>On <time datetime=2019-03-19>19 March, 2019</time> in the early afternoon, I
+was at my desk in the New York city engineering office of Meta née Facebook and
+checking the status of my advertising campaigns. (Since I focus on events that
+largely predate the rebranding, I’ll stick with Facebook.) As an advertising
+company, Facebook encourages its employees to conduct their own advertising
+campaigns and supports those efforts with monthly advertising credits. I had
+been using those credits to boost posts on Instagram, while also experimenting
+with the composition of target audiences. Since advertising metrics still felt
+somewhat alien to me despite more than six months at the firm, I decided to look
+up basic metrics, notably <em>ad impressions</em>, on the firm’s wiki. I was
+about to discover compelling evidence that Facebook was artificially inflating
+that very metric and thereby misleading paying customers and investors
+alike.</p>
+</section>
+
+<section aria-labelledby=public>
+<h2 id=public>Public Impressions</h2>
+
+<p>Before we get to what I found, let’s make sure we understand what ad
+impressions are and what role they play in Facebook’s business. To get started,
+we turn to the <cite>Facebook Business Suite</cite>. The smartphone app is an
+indispensable tool for creating and monitoring ads on Facebook. In <time
+datetime=2021-10-27>October 2021</time>, the app’s builtin help defined ad
+impressions thusly:</p>
+
+<blockquote>
+<p>The number of times your ads were on screen</p>
+</blockquote>
+
+<p>In other words, an impression only happens when an ad is displayed on screen.
+That makes sense. But it also leaves unspecified who, if anyone, looks at that
+screen. Let’s dig a little deeper. Since Facebook is a publicly traded company,
+it must make regular filings with the Securities and Exchange Commission or
+<abbr>SEC</abbr>. Those filings matter because they help regulators and
+investors understand a company’s business and evaluate its future prospects.</p>
+
+<p>The quarterly and yearly reports covering the day I made my discovery are <a
+href="https://www.sec.gov/Archives/edgar/data/0001326801/000132680119000037/fb-03312019x10q.htm">form
+10-Q</a> as filed with the <abbr>SEC</abbr> on <time datetime=2019-04-25>April
+25, 2019</time> and <a
+href="https://www.sec.gov/ix?doc=/Archives/edgar/data/0001326801/000132680120000013/fb-12312019x10k.htm">form
+10-K</a> as filed on <time datetime=2020-01-30>January 30, 2020</time>. Both
+filings contain a section titled <cite>Management’s Discussion and Analysis of
+Financial Condition and Results of Operations</cite> and also a subheading
+<cite>Components of Results of Operations — Revenue</cite>. That’s where the
+firm’s management, foremost <abbr>CEO</abbr> Mark Zuckerberg, spell out how they
+understand the business they are in and how that business generates its revenue.
+The first two paragraphs, labelled <em>Advertising</em>, are identical in both
+filings and read (emphasis mine):</p>
+
+<blockquote>
+<p>We generate substantially all of our revenue from advertising. Our
+advertising revenue is generated by displaying ad products on Facebook,
+Instagram, Messenger, and third-party affiliated websites or mobile
+applications. <em>Marketers pay</em> for ad products either directly or through
+their relationships with advertising agencies or resellers, <em>based on the
+number of impressions delivered or the number of actions, such as clicks,
+taken</em> by users.</p>
+
+<p>We recognize revenue from the display of impression-based ads in the
+contracted period in which the impressions are delivered. <em>Impressions are
+considered delivered when an ad is displayed to a user.</em> We recognize
+revenue from the delivery of action-based ads in the period in which a user
+takes the action the marketer contracted for. The number of ads we show is
+subject to methodological changes as we continue to evolve our ads business and
+the structure of our ads products. We calculate price per ad as total ad revenue
+divided by the number of ads delivered, <em>representing the effective price
+paid per impression by a marketer regardless of their desired objective such as
+impression or action</em>. For advertising revenue arrangements where we are not
+the principal, we recognize revenue on a net basis.</p>
+</blockquote>
+
+<p>In short: Facebook generates almost all revenue through advertising, which
+maximizes either impressions or actions. Impressions requires display of the ad
+to human users. Impressions also are the more fundamental metric, with price
+per impression reported for all ads.</p>
+
+<p>Two years later, that still is management’s explanation for Facebook’s
+revenue. In its <a
+href="https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000132680122000018/fb-20211231.htm">most
+recent 10-K</a>, filed with the <abbr>SEC</abbr> on <time
+datetime=2022-02-03>February 3, 2022</time>, the firm’s management use a
+whittled down first paragraph, but still makes the same three points.</p>
+</section>
+
+<section aria-labelledby=internal>
+<h2 id=internal>Internal Impressions</h2>
+
+<figure>
+<img width=1200 height=630 src="/blog/2022/wrong-impression-1200x630.jpg"
+     alt="A computer screen showing Facebook’s internal wiki on ad impressions">
+<figcaption>An impressive definition of impressions.</figcaption>
+</figure>
+
+<p>Alas, Facebook’s actual, technical definition is substantially different:</p>
+
+<blockquote>
+<p>Facebook uses a specific definition for an external impression: the number of
+times a unit was on screen. This is technically defined as 1x1 pixel of a post
+or piece of content in a user’s viewport, for >0 than seconds. (We don’t reveal
+this definition externally.)</p>
+</blockquote>
+
+<p>My use of the present tense in this section is no mistake. This definition
+remains Facebook’s actual technical definition of ad impressions to this day.
+The only thing that has changed is that Facebook started <a rel=noreferrer
+href="https://www.facebook.com/business/help/785455638255832">sharing that
+definition</a> with the outside world in <time datetime=2019-09>September
+2019</time>. The page has an embedded view counter, but with today’s count at
+928 smaller than the 1,381 on my last visit on <time
+datetime=2021-10-31>Halloween</time> last year, I have some reservations about
+the counter’s accuracy.</p>
+</section>
+
+<section aria-labelledby=mine>
+<h2 id=mine>My Impressions</h2>
+
+<p>I have a few observations about Facebook’s technical definition of ad
+impressions.</p>
+
+<ol class=drop-count role=list>
+
+<li>This definition gives Facebook tremendous latitude in delivering ad
+impressions. In a worst case for advertisers, Facebook claims that it delivered
+some number <var>n</var> of ad impressions, when in manifest reality it delivered
+only <var>n</var> corner pixels. Then again, maybe it delivered all <var>n</var>
+ad impressions in their entirety.</li>
+
+<li>There is no technical reason that might justify such a loose definition.
+Determining the visible rectangle of some view element is straight-forward for
+applications running on the <a
+href="https://stackoverflow.com/questions/19032261/how-to-get-scroll-views-visible-rectangle-frame-after-it-scrolls-in-ios">iOS</a>
+and <a
+href="https://stackoverflow.com/questions/9073677/android-get-the-visible-area-of-a-view">Android</a>
+operating systems. It used to be slightly more complicated for <a
+href="https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport">web
+browsers</a>. But that has become straight-forward too.</li>
+
+<li>The parenthetical makes clear that the authors had some awareness of this
+definition being problematic. Why else add such a suggestive parenthetical? At
+the same time, the very presence of the parenthetical creates an impression of
+fraudulent intent. Since the wiki is widely accessible within the firm, that
+implies that other employees are expected to be similarly morally
+compromised.</li>
+
+<li>The self-serving definition of ad impressions as much as the withholding of
+that definition raise significant doubts about Facebook’s trustworthiness and
+reliability when it comes to even the most basic aspects of its advertising
+platform. Yet thanks to microtargeting, it also is nearly impossible to audit
+the performance of ads from outside the firm. Plus, Facebook has a history of
+<a
+href="https://themarkup.org/citizen-browser/2021/09/21/facebook-rolls-out-news-feed-change-that-blocks-watchdogs-from-gathering-data">disabling
+auditing tools</a> as well as <a
+href="https://www.nytimes.com/2021/08/10/opinion/facebook-misinformation.html">deplatforming
+auditors</a>.</li>
+
+<li>Nonetheless, Facebook continues peddling the fantasy of meaningful ad
+impressions in its regulatory filings and on its advertising platform. While the
+firm did disclose the self-serving and arbitrary nature of the metric
+
+
+
+
+real definition in
+
+
+
+nonetheless is still peddling the fantasy of meaningful ad
+  impressions in its regulatory filings. The cognitive dissonance between actual
+  and fantasy ad impressions again argues against plausible deniability. There is
+  no mistake here, only fraudulent intent.</li>
+
+
+
+the strong impression of fraudulent intent. Since the wiki is widely shared
+within the firm, the authors also expect others to be equally compromised.
+
+
+that implies an expectation that other employees are as
+morally compromised as the authors.
+
+Inclusion of this definition in the
+wiki
+
+
+Its inclusion in the wiki then makes
+clear that other employees are expectted to be as morally compromised as the
+authors.
+
+
+also creates a strong
+impression of fraudulent intent. Why else add such a suggestive parenthetical?
+
+  The
+authors of the wiki entry clearly had some awareness of how problematic that
+technical definition is. Why else add such a compromising parenthetical? Yet
+they are also counting on the fact that readers are as morally compromised as
+the authors and will abide by the exhortation.</li>
+
+<li>Facebook nonetheless is still peddling the fantasy of meaningful ad
+impressions in its regulatory filings. The cognitive dissonance between actual
+and fantasy ad impressions again argues against plausible deniability. There is
+no mistake here, only fraudulent intent.</li>
+
+
+There is
+no mistake here, only fraudulent intent.</li>
+
+<li>Facebook cannot be trusted to audit the degree of it faking ad impressions.
+cannDetermining the actual fraction of fake ad impressions from outside the firm
+is nearly impossible. Firtst
+
+
+  the actual fudge factor for ad impressions is nearly impossible
+from outside the firm. Random sampling might have worked  tThere is no way to tell one
+extreme from the other from outside the firm.
+
+
+</li> Since there is no way to tell one from the other
+from outside of the firm, Facebook’s ad impressions are meaningless.</li>
+
+<li>Facebook nonetheless continues with its fantasy of meaningful ad impressions
+in its regulatory filings. The cognitive dissonance between actual and fantasy
+ad impressions again eliminates plausible deniability: There is no mistake here,
+only fraudulent intent.</li>
+
+<li>The parenthetical only underlines that contention. The authors of the wiki
+entry obviously had some awareness of how problematic that technical definition
+is. Why else add such a compromising parenthetical? At the same time, they were
+also counting on an internal culture that values keeping the firm’s secrets far
+higher than even remotely ethical behavior.</li>
+
+<!--  Google eng -->
+
+</ol>
+
+<section>
+
+</article>
+</main>
