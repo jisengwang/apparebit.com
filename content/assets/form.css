@@ -1044,12 +1044,19 @@ figcaption {
   text-align: right;
   font-style: italic;
   padding-top: 0.3em;
+  margin-right: var(--min-margin);
 }
 
 @supports (-moz-appearance: none) {
   /* Firefox is more precise than Chrome/Safari, needs different constant. */
   figcaption {
     padding-top: 0.25em;
+  }
+}
+
+@media (min-width: 39.375em) {
+  figcaption {
+    margin-right: 0;
   }
 }
 
