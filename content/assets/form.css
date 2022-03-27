@@ -606,7 +606,7 @@ a:not(.stylish) {
 
 a:not(.stylish):link, a:not(.stylish):visited {
   color: var(--color-fg);
-  fill: var(--color-fg);
+  fill: currentColor;
   -webkit-text-decoration-color: var(--color-fg);
   text-decoration-color: var(--color-fg);
   background-color: var(--color-bg);
@@ -615,7 +615,7 @@ a:not(.stylish):link, a:not(.stylish):visited {
 a:not(.stylish):focus, a:not(.stylish):hover {
   outline: none;
   color: var(--color-bg);
-  fill: var(--color-bg);
+  fill: currentColor;
   -webkit-text-decoration-color: transparent;
   text-decoration-color: transparent;
   background-color: var(--color-fg);
@@ -623,12 +623,29 @@ a:not(.stylish):focus, a:not(.stylish):hover {
 
 a:not(.stylish):active {
   color: var(--color-fg);
-  fill: var(--color-fg);
+  fill: currentColor;
   background-color: var(--color-fg);
 }
 
 a:focus > picture, a:hover > picture {
   outline: solid var(--t20) var(--color-picture-frame);
+}
+
+@media (forced-colors: active) {
+  a:not(.stylish):link, a:not(.stylish):visited {
+    color: LinkText;
+    background-color: Canvas;
+  }
+
+  a:not(.stylish):focus, a:not(.stylish):hover {
+    forced-color-adjust: none;
+    color: Canvas;
+    background-color: LinkText;
+  }
+
+  .card > .description {
+    background-color: Canvas;
+  }
 }
 
 /* -------------------------------------------------------------------------- *
@@ -933,6 +950,12 @@ main .carddeck {
   background-color: var(--color-bg-lifted);
 }
 
+@media (forced-colors: active) {
+  .card > h3 span {
+    background-color: Canvas;
+  }
+}
+
 @media print {
   .card > h3 span {
     background-color: #fff;
@@ -978,6 +1001,12 @@ main .carddeck {
   background-color: var(--color-bg-lifted);
   text-align: right;
   line-height: 1;
+}
+
+@media (forced-colors: active) {
+  .card > .description {
+    background-color: Canvas;
+  }
 }
 
 /* -------------------------------------------------------------------------- *

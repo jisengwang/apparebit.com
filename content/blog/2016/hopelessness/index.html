@@ -161,6 +161,12 @@ main :is(header, section, .section, footer) {
   box-decoration-break: clone;
 }
 
+@media (forced-colors: active) {
+  .cover .title h1, .cover .title h2 span {
+    background-color: Canvas;
+  }
+}
+
 .byline {
   margin-top: calc(var(--r-major) * 1rem);
   font-size: var(--t05);

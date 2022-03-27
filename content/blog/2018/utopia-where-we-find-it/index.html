@@ -103,6 +103,15 @@ nav a, .cover .title {
     background-color: #1d1d20b0;
   }
 }
+@media (forced-colors: active) {
+  nav a {
+    background-color: Canvas;
+  }
+  .cover h1, .cover h2 {
+    color: CanvasText;
+    background-color: Canvas;
+  }
+}
 .cover h1 {
   font-size: clamp(var(--s10), 2vw + 2vh + 0.5em, var(--s30));
   line-height: calc(var(--r-minor) * var(--r-minor));
