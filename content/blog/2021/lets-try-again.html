@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Let’s Try Again • Apparebit</title>
+<link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async type="module" src="/assets/function.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="/assets/form.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
+<link rel="manifest" href="/assets/apparebit.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
+<meta property="og:title" content="Let’s Try Again">
+<meta name="description" content="Making Retries Work with Cloud Services">
+<meta property="og:description" content="Making Retries Work With Cloud Services">
+<link rel="canonical" href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">
+<meta property="og:url" content="https://apparebit.com/blog/2021/lets-try-again">
+<meta property="og:image" content="https://apparebit.com/assets/images/apparebit-1200x630.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="“apparebit” in high-contrast serif letters">
+<meta name="author" content="Robert Grimm">
+<meta property="article:author" content="https://facebook.com/apparebit">
+<meta property="fb:app_id" content="301854043178629">
+<meta property="og:site_name" content="Apparebit">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apparebit">
+<meta name="twitter:creator" content="@apparebit">
+<meta name="theme-color" content="#1977f2" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apparebit.com/blog/2021/lets-try-again"
+  },
+  "headline": "Let’s Try Again",
+  "image": [
+    "https://apparebit.com/assets/images/apparebit-1200x630.jpg"
+  ],
+  "datePublished": "2021-10-12",
+  "author": {
+    "@type": "Person",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apparebit.com/assets/a-circle.svg"
+    }
+  },
+  "description": "Making Retries Work with Cloud Services"
+}
+</script>
+</head>
+<body class=reforma>
+
+<nav class="page-header">
+<ul role=list>
+<li><a rel=home href="/">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
+<span class=invisible>Home</span>
+</a></li>
+<li><a href="/blog">Blog</a></li>
+</ul>
+</nav>
+
+<main class=h-entry>
+<article class=e-content>
+<header>
+<hgroup class=title>
+<h1 class=p-name>Let’s Try Again</h1>
+<h2>Making Retries Work with Cloud Services</h2>
+</hgroup>
+<div class=byline>
+  <address>
+    <a class="p-author h-card" rel=author href=https://apparebit.com>Robert Grimm</a>
+  </address>
+  <time class=dt-published datetime=2021-10-12>October 12, 2021</time>
+</div>
+</header>
+
+<section aria-labelledby=introduction>
+<h2 id=introduction hidden>Introduction</h2>
+
+<p>Not surprisingly, Amazon’s <abbr>AWS</abbr> enforces rate limits on their
+services. Their client libraries also incorporate automatic retries. They may
+allow an application to gracefully recover after exceeding those rate limits.
+But under heavy data volumes and with the <abbr>AWS</abbr> default retry
+strategy, a process can still trigger rate limits and fail despite
+retrying.</p>
+
+<p>In this article, we will:</p>
+
+<ul class=tight>
+
+<li>Review the basics of retries as a failure handling strategy.</li>
+<li>Explain the above interaction with rate limits and its solution illustrated
+by Python source code.</li>
+<li>Explore several other technical properties of effective retries.</li>
+
+</ul>
+
+<p>Our journey begins a couple of months ago, when one of our data processing
+pipelines failed because <abbr>AWS</abbr> returned a <samp>503 Slow Down</samp>
+error. After inspecting our logs and consulting Amazon’s documentation, my team
+determined that a bulk copy between two S3 buckets exceeded Amazon’s rate
+limits.</p>
+
+<p>At this point, I was already implementing retries in my head, a challenge
+familiar from previous employers and projects. After all, retries — executing
+the same operation with the same arguments again, possibly after a short delay —
+are simple and sufficient for overcoming many (but not all) failures.</p>
+
+<p>In fact, we constantly use retries in our everyday lives: think about asking
+somebody to repeat what they just said because face masks make it harder to
+understand people or swiping a credit or subway card again (and again) when the
+first swipe didn’t register.</p>
+
+<p>After digging a little deeper into Amazon’s documentation, it turned out that
+all <a
+href="https://docs.aws.amazon.com/whitepapers/latest/s3-optimizing-performance-best-practices/timeouts-and-retries-for-latency-sensitive-applications.html">their
+client libraries already implement retries</a> and automatically employ them
+when appropriate — so much for me implementing retries again. Under the default
+settings of boto3,
+<a href="https://github.com/boto/boto3">the Python client for
+<abbr>AWS</abbr></a>, our pipeline stage didn’t just fail once but failed five
+times on the same copy operation. Maybe retries aren’t so simple after all.</p>
+
+<p>Recent changes to <abbr>AWS</abbr>’ implementation of retries suggest that
+<abbr>AWS</abbr> engineers might just share that sentiment. In February 2020,
+boto3 demoted the previous retry mode to “legacy” status (though it still is the
+default) and gained two new modes called “standard” and “adaptive”. As it turns
+out, the latter solves our problem. But the technical reasons aren’t intuitively
+obvious.</p>
+
+<p>This blog post starts out by explaining the basics of when to use retries. We
+then explore their interaction with rate limits and show the Python code for
+configuring boto3 to gracefully handle that case. Along the way, I’ll explain
+several other technical aspects of rate limits and retries. By the end of the
+article, you’ll have a solid understanding of both rate limits and retries that
+you can apply to your own work.</p>
+</section>
+
+<section>
+<h2>Only Try Retries When…</h2>
+
+<p>Retries differ from other techniques for providing fault tolerance such as <a
+href="https://www.goodreads.com/book/show/23463279-designing-data-intensive-applications">data
+replication</a> or <a href="https://raft.github.io/">distributed consensus</a>
+in that they are strikingly simple: just do it — again! As a result, we don’t
+need to go through complex algorithms for retries themselves (yay!). But we do
+need to review the three primary criteria for when we can use retries.</p>
+
+
+<h3>Operations Are Idempotent</h3>
+
+<p>Fundamentally, retrying is only safe if an operation is idempotent, i.e.,
+repeated execution results in the exact same outcomes or state. If you were to
+retry</p>
+
+<pre><code>transfer_money_from_me_to(
+    recipient,
+    amount,
+)
+</code></pre>
+
+<p>and your bank’s <abbr>API</abbr> timed out, retrying would be ok if your
+request was dropped by the load balancer in your bank’s frontend but not so much
+if the confirmation was lost in the tangle of your bank’s microservices. The
+problem is that you couldn’t tell a-priori and retrying this particular
+operation might just drain your account of all its funds. To put this
+differently, <em>retrying is safe if and only if doing so eventually converges
+on the same global system state</em>.</p>
+
+<p>Conveniently, the protocol enabling the web, <abbr>HTTP</abbr>, was
+explicitly designed with retries in mind. They are part of the representational
+state transfer or <a
+href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"><abbr>REST</abbr>
+model</a> underlying the web. In particular, <code>DELETE</code>, <code>GET</code>,
+<code>HEAD</code>, and <code>PUT</code> are idempotent. <code>GET</code> and
+<code>HEAD</code> also are read-only. Only <code>POST</code> is not idempotent
+and thus not safe to retry. So when designing a <abbr>REST</abbr>
+<abbr>API</abbr>, you probably want to minimize the use of <code>POST</code>.
+Sure enough, <abbr>AWS</abbr> does just that. They expose their cloud services
+through a <abbr>REST</abbr> <abbr>API</abbr> and, out of 96 endpoints in the <a
+href="https://github.com/boto/botocore/blob/develop/botocore/data/s3/2006-03-01/service-2.json">service
+description for S3</a>, only six use <code>POST</code>.</p>
+
+<p>The central role of retries for recovering from failures on the web is seen
+in browsers and services alike. Notably, it explains why browsers have a reload
+button in the first place. It also explains why most websites warn us not to use
+the reload button during payment processing, which typically is implemented as a
+<code>POST</code>. Finally, it explains why eventual consistency is the dominant
+consistency model across the web. After all, that’s just what we get when
+combining idempotent operations with retries and also the reason I already used
+similar language in the above definition of safe retries.</p>
+
+<p>That’s all well and good. But what should we do about operations like the
+above endpoint to transfer money? To find a solution, it helps to ask how we
+distinguish seemingly indistinguishable events, such as birthdays or rent
+payments, as well as fungible packaged goods, such as cereal boxes and milk
+cartons. The answer is straightforward: We add another attribute based on
+date/time or a monotonically increasing counter. That certainly works for the
+above endpoint as well:</p>
+
+<pre><code>transfer_money_from_me_to(
+    recipient,
+    amount,
+    transaction_id,
+)
+</code></pre>
+
+<p>The bank doesn’t know how a client generates such a transaction
+<abbr>ID</abbr>. That is entirely up to each individual client. But the bank
+does commit to performing only one transfer, even if several requests with the
+same transaction <abbr>ID</abbr> are submitted to the endpoint. It may also want
+to reject any request that shares a transaction <abbr>ID</abbr> with a previous
+request but differs in recipient or amount. This pattern can be found in many
+<abbr>REST</abbr> <abbr>API</abbr>s. The corresponding operations may be named
+create_or_get_something.</p>
+
+
+<h3>Failures Are Transient</h3>
+
+<p>Even if it is safe to retry an operation, that doesn’t necessarily mean we
+should actually retry the operation. We also have to consider the nature of the
+failure. For an example, let’s consider our favorite banking endpoint again. If
+the bank returns an error indicating insufficient funds, retrying will only have
+the same result. The bank won’t transfer non-existent funds no matter how often
+(or nicely) we ask. We first need to transfer funds <i>into</i> the account or
+open a line of credit.</p>
+
+<p>However, if the request times out, we don’t know the outcome of the request
+and should definitely try again. In short, retrying only makes sense if the
+failure is non-deterministic or transient. While it is safe to retry on any
+error, doing so for deterministic errors is pointless and only wastes
+resources.</p>
+
+<p>Effective retries thus depend on the error reporting mechanism as well as the
+error classification policy. As far as mechanism is concerned, both server and
+client need to capture the concrete causes of failures and faithfully forward
+fine-grained error information. Whether an implementation uses error codes or
+exception types doesn’t really matter, but it is critical that higher layers do
+<i>not</i> mask the error information captured by lower layers.</p>
+
+<p>As far as policy is concerned, engineers need to inventory the specific
+errors occurring in a system and then classify them as retryable or not. A
+mechanized version of that classifier forms the core of the retry logic.</p>
+
+<p>Judging by boto3’s code repositories and commit histories <a
+class="external-link" href="https://github.com/boto" target="_blank"
+rel="noreferrer">on Github</a>, <abbr>AWS</abbr> engineers significantly
+deepened their understanding of both retry policy and mechanism over the years.
+The original version in boto3’s runtime botocore implements the so-called
+<i>legacy</i> mode. It dates back to April 2013 and comprises one module with
+360 lines of well-documented Python code.</p>
+
+<p>In contrast, the new version from February 2020 implements both the
+<i>standard</i> and <i>adaptive</i> modes. It comprises seven modules with 920
+lines of well-documented Python code. The primary difference between legacy and
+standard modes is that the latter classifies many more errors as retryable and
+thus covers many more endpoints. At the same time, the standard mode also
+enforces a quota on active retries, thus protecting the client from being
+overwhelmed by retries in case of, say, a network or <abbr>AWS</abbr> outage
+(which are rare <a class="external-link"
+href="https://www.theverge.com/2020/11/25/21719396/amazon-web-services-aws-outage-down-internet"
+target="_blank" rel="noreferrer">but do happen</a>).</p>
+
+
+<aside>
+<h3>Systems Archeology I</h3>
+
+<p>I suspect that <abbr>AWS</abbr> engineers started out with retry logic even
+simpler than what is offered by the legacy mode. When a client exceeds rate
+limits, S3 returns a 503 <abbr>HTTP</abbr> status code with a non-standard
+reason <samp>503 Slow Down</samp>. That’s a curious choice of status code
+because the 5xx status codes indicate server errors, whereas exceeding rate
+limits are client errors, as indicated by a 4xx status code in
+<abbr>HTTP</abbr>. Furthermore, <a
+href="https://datatracker.ietf.org/doc/html/rfc6585"><abbr>RFC</abbr> 6585</a>
+defines a directly suitable alternative, <samp>429 Too Many Requests</samp>. The
+standard definition of the 503 status code, <samp>503 Service
+Unavailable</samp>, suggests the reason for this non-standard choice by Amazon
+engineers: That status code is commonly used when a server is overloaded, an
+obviously retryable error condition. Hence I wouldn’t be surprised if earlier
+versions of
+<abbr>AWS</abbr> client libraries simply retried on 503 only and this was an
+expedient solution to increasing the reach of the retry logic.</p>
+</aside>
+
+
+<h3>Success Is Likely</h3>
+
+<p>In the introduction to this section, I breezed through one last major concern
+when I wrote “just do it — again,” leaving the timing entirely open. While the
+previous two subsections didn’t mention timing, we nonetheless made one
+important observation:retrying when the likely outcome is another failure wastes
+resources. If we extrapolate from that, retrying in short succession over and
+over again is equally pointless.</p>
+
+<p>Real world experience with children during long car journeys underlines that
+point. Pestering the parents by retrying incessant “Are we there yet?” chants
+does not bring the destination any closer. It may even unnerve the parents to
+the point of a forced hour-long break, thus delaying arrival. At least, that’s
+how my parents describe past car trips for summer vacation.</p>
+
+<p>The uncomfortable truth is that, in distributed systems, sending too many
+retries is fundamentally indistinguishable from a denial of service attack.
+Experienced service providers on the internet do not take kindly to such
+attacks. Instead they implement drastic countermeasures, up to and including
+dropping all requests originating from a suspect <abbr>IP</abbr> address in the
+firewall, before the request even gets to any application server. To avoid that,
+we need to pace ourselves when retrying. Best practice is to <i>delay</i>
+each retry, use <i>exponential backoff</i> for repeated retries, and to add some
+degree of variability by introducing <i>randomized jitter</i>.</p>
+
+<p>In my experience, jitter is typically computed <a class="external-link"
+href="https://cloud.google.com/iot/docs/how-tos/exponential-backoff"
+target="_blank" rel="noreferrer">as a smallish delta</a> on top of the
+deterministic exponential delay. Reading the source code for botocore, I
+discovered that it instead randomly scales the deterministic exponential delay
+between zero and the full value. I was surprised by that choice. As it turns
+out, <abbr>AWS</abbr> engineers carefully considered the interaction between
+exponential backoff and jitter, simulating several approaches, and found that
+“full jitter” was the most effective choice. Amazon’s Marc Brooker <a
+class="external-link"
+href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
+target="_blank" rel="noreferrer">wrote a great blog post</a> about just
+that.</p>
+
+<p><i>Are we there yet? — No!</i></p>
+</section>
+
+<section>
+<h2>Limiting the Rate of Tries and Retries</h2>
+
+<p>So far, we only considered retrying individual operations in isolation. In
+such cases, the above three criteria are sufficient for determining when and how
+to use retries. But when operations occur repeatedly, at more or less regular
+intervals, and loosely depend on each other, the three criteria aren’t
+sufficient anymore.</p>
+
+<p>Probably the loosest such dependency are rate limits, which do not impose any
+ordering constraints but do limit the overall number of operations per time
+period. They are critical for ensuring that a few overly aggressive or even
+malicious clients cannot overwhelm resources shared amongst many more clients.
+For that reason, they are pervasive across cloud services.</p>
+
+<p>While it is possible to trigger rate limits reliably and predictably by
+sending a sufficiently high volume of requests per time period for long enough,
+triggering rate limits for a particular request is exceedingly hard if not
+impossible. That’s good news: we can treat rate limit violations as
+non-deterministic errors that are subject to retries (of course, only if the
+operation also is idempotent). But retrying the failed operation does not
+suffice for making sustained progress. Instead, the rate limit violation serves
+as a signal that subsequent future operations are not currently welcome either —
+within some time period.</p>
+
+<p><i>Are we there yet? — No!</i></p>
+
+
+<h3>The Token Bucket Algorithm</h3>
+
+<p>That time period is
+typically determined by the algorithm used for enforcing rate limits, with the
+default choice being <a class="external-link"
+href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank"
+rel="noreferrer">the token bucket algorithm</a>. It is simple enough to describe
+in a paragraph:</p>
+
+<p>The name stems from the main data structure, a bucket holding fungible
+tokens, i.e., a counter. The server maintains a bucket per client and
+periodically adds a fixed amount of tokens into each bucket, up to some upper
+limit corresponding to the rate limit. When the server receives a request, it
+attempts to remove one or more tokens from the client’s bucket, with the amount
+corresponding to the effort necessary for servicing the request. If there are
+sufficient tokens in the bucket, the server removes them and completes the
+request. If there aren’t, it rejects the request with a rate limit
+violation.</p>
+
+<p><i>Are we there yet? — Now we are!</i></p>
+
+
+<h3>How Our Pipeline Failed</h3>
+
+<p>Now we have enough context to explain the exact circumstances leading to the
+failure of our data processing pipeline. As mentioned in the introduction, the
+pipeline failed during a bulk copy between two S3 volumes. The data being copied
+is a very large dataset in <a class="external-link"
+href="http://www.apache.org/" target="_blank" rel="noreferrer">Parquet’s
+columnar format</a>, which puts (parts of) columns into their own files
+organized by directories to represent tables.</p>
+
+<p>Many of these directories contain many thousands of files. The particular
+directory that triggered the rate limit failure contained 4,003 files. At the
+same time, <abbr>AWS</abbr> limits clients to 3,500 <code>DELETE</code>,
+<code>POST</code>, or <code>PUT</code> requests and 5,000 <code>GET</code> or
+<code>HEAD</code> requests per second per prefix in a bucket. (“Object,”
+“prefix,” and “bucket” are official S3 lingo. I’m using “file,” “directory,” and
+“volume” interchangeably.) There are no limits on the number of prefixes in a
+bucket.</p>
+
+<p>Since the bulk copy is implemented by copying individual objects and
+initiates those operations in a tight loop, it can easily exceed the above rate
+limits. Furthermore, since boto3’s retry logic uses full jitter, i.e.,
+randomizes the delay between 0 and the exponentially increasing duration, the
+retry may occur pretty much immediately after the failure, i.e., with a delay
+much smaller than the period <abbr>AWS</abbr> uses to track S3 rate limits.</p>
+
+<p>But that means that the retry will exceed the same already exceeded rate
+limit and fail again. While the probability of the retry delay being much
+smaller than the rate limit period is small and getting smaller as the number of
+retries increases, the number of copies is sufficiently large so that this event
+may happen five times in a row. At that point, boto3’s legacy retry mode stops
+retrying and fails the copy operation. That in turn fails our pipeline.</p>
+
+
+<aside>
+<h3>Systems Archeology II</h3>
+
+<p>In the first systems archeology above, I took note of an unusual choice of
+<abbr>HTTP</abbr> status code to speculate about earlier retry logic and an
+expedient engineering decision by <abbr>AWS</abbr> engineers. This time, I am
+basing my speculation on a note in the official documentation for S3. The
+section on “<a
+href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html">Optimizing
+Amazon S3 performance</a>” states: “You no longer have to randomize prefix
+naming for performance.” If users had to randomize prefixes before, that implies
+that <abbr>AWS</abbr> was partitioning the data stored in buckets by some prefix
+of the prefix or directory name.</p>
+
+<p>Nowadays, however, <abbr>AWS</abbr> can partition data at the granularity of
+a single prefix / directory name. Since it supports more flexible naming
+schemes, that certainly is a boon for users. At the same time, partitioning at
+such fine granularity must result in a massive maintenance state within S3’s
+implementation. I suspect it is just for that reason that the same documentation
+section <a
+href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance-design-patterns.html#optimizing-performance-timeouts-retries">later
+states</a>: “Amazon S3 automatically scales in response to sustained new request
+rates, dynamically optimizing performance.” In other words, S3 will partition a
+bucket by individual prefix, but only if necessary for a given access pattern.
+That is an impressive engineering achievement!</p>
+</aside>
+
+
+<h3>Fixing Our Pipeline</h3>
+
+<p>Conveniently, the carefully staged explanation of how exactly our pipeline
+failed also describes everything we need for avoiding just that kind of failure.
+Even more conveniently, <abbr>AWS</abbr> engineers already implemented the
+solution and then some — through the <i>adaptive</i> retry mode. The solution is
+based on the realization that, for bulk operations that exceed rate limits, it
+isn’t sufficient to retry the failing request. Instead we need to slow down the
+entire bulk operation and <i>throttle</i> any future requests, i.e., issue them
+at a slower rate.</p>
+
+<p>We already know how to do that: use the token bucket algorithm! The only
+difference when using the algorithm on the client for throttling is that we
+don’t fail requests when there aren’t enough tokens in the bucket, but rather we
+wait until there are enough tokens. That’s just what boto3’s adaptive retry mode
+does. Well, with one significant additional feature: iInstead of requiring that
+user code configures the maximum request rate, the adaptive retry mode
+automatically adjusts the maximum capacity of the bucket based on successful as
+well as unsuccessful outcomes.</p>
+
+<p>I’m sure you are as excited as I was when I discovered the retry mode and are
+itching to enable it for your own Python-based data processing pipelines.
+Thankfully, it doesn’t take much: All you need to do is pass an appropriate
+configuration object to boto3’s <code>client()</code> or <code>resource()</code>
+function via the config named argument. The only slightly tricky part is that
+you need to use botocore’s configuration object.</p>
+
+<figure>
+<pre><code>import boto3
+from botocore.config import Config
+
+# Access S3 with adaptive retries:
+ADAPTIVE_RETRIES = Config(retries={
+    # 1 try and up to 3 retries:
+    "total_max_attempts": 4,
+    "mode": "adaptive",
+})
+s3 = boto3.resource(
+    "s3",
+    config=ADAPTIVE_RETRIES
+)
+
+# Test: Can we break camel’s back?
+bucket = s3.create("camel")
+for index in range(0, 10000):
+    straw = f"straw #{index}"
+    bucket.upload_fileobj(
+        straw.encode("utf8"), straw
+    )
+</code></pre>
+
+<figcaption>Code example for configuring boto3 to use adaptive retry
+mode</figcaption>
+</figure>
+
+
+<h3>Beyond AWS</h3>
+
+<p>I apologize if the code example seems underwhelming. <abbr>AWS</abbr>
+engineers did all of the hard work here already, we just need to enable it.
+However, if you are looking for a coding challenge, consider what it would take
+to provide similar functionality for another cloud service. A likely source of
+frustration is the need for implementing similar algorithms for retries and rate
+limits for the server as well as the client libraries in every language.</p>
+
+<p>In fact, that’s already happening for <abbr>AWS</abbr>. Several of the client
+libraries for other programming languages as well as the Android and iOS
+<abbr>SDK</abbr>s support automatic retries for authentication errors <a
+class="external-link"
+href="https://altereos.com/how-to-correct-clock-skew-in-aws/" target="_blank"
+rel="noreferrer">caused by clock skew</a>. However, boto3 does not. The <a
+class="external-link" href="https://github.com/boto/boto3/issues/1252"
+target="_blank" rel="noreferrer">corresponding issue</a> has been open for four
+years now.</p>
+
+<p>That raises the question if we can do better. My answer is an emphatic
+“possibly maybe.” I base that decisive assessment on the observation that
+exponential backoff with jitter and the token bucket algorithm are both
+techniques for best guessing an appropriate delay for retries based solely on
+whether requests succeeded or failed. Yet the server generating these responses
+knows quite a bit more. Since it enforces rate limits, it knows their basic
+configuration and it knows their client-specific state.</p>
+
+<p>Hence the above question becomes: If we expose some of that server knowledge
+to clients, can we dispense with token buckets? My answer remains an emphatic
+“possibly maybe.” <abbr>HTTP</abbr> already includes the
+<code>Retry-After</code> header to provide a hint for the retry delay and <a
+class="external-link"
+href="https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html"
+target="_blank" rel="noreferrer">an <abbr>IETF</abbr> draft standardizes several
+more headers</a> that expose even more information.&nbsp;</p>
+
+<p>But the <code>Retry-After</code> header applies only to a single operation
+and thus becomes meaningless under sustained load, much like exponential backoff
+is insufficient under sustained load. <a class="external-link"
+href="https://www.useanvil.com/blog/engineering/throttling-and-consuming-apis-with-429-rate-limits/"
+target="_blank" rel="noreferrer">Ben Ogle wrote a blog post</a> exploring just
+that question and ended up showing that the token bucket algorithm works real
+well. But that outcome also was predictable because he applied the
+<code>Retry-After</code> header only to the next retry for that request. In
+short, the question of whether we can design a more general header remains
+open.</p>
+</section>
+
+
+<section>
+<h2>In Conclusion</h2>
+
+<p>We explored retries as a simple and effective fault tolerance
+mechanism in significant detail. While retries apply to many cases, they aren’t
+applicable in general. First, retries are only safe for idempotent operations.
+Second, they can only change the outcome upon non-deterministic failures, which
+include transient, rate-limit, and time-skew errors. Third, retries must be
+delayed, typically through exponential backoff with randomized jitter, to avoid
+denial-of-service attacks.</p>
+
+<p>When operations occur at regular intervals, retrying individual operations
+isn’t enough. Instead, we may have to throttle the request rate across all
+operations. This blog post used <abbr>AWS</abbr> and its client library for
+Python as running examples. Notably, it included source code for configuring
+throttled operation. But the techniques described in this blog post are general
+and supported <a class="external-link"
+href="https://medium.com/@juliozynger/be-a-good-client-jitter-19714ced379"
+target="_blank" rel="noreferrer">by many other client libraries</a>. Now that
+you understand all the necessary background, it is your turn to try retries — or
+to retry them again!</p>
+
+<p>At the same time, the single most important take-away from this blog post is
+not the particulars of retries, rate limits, and <abbr>AWS</abbr>’ exemplary
+support for them but rather an understanding that handling failure in
+distributed systems is genuinely hard — you are about to finish a 3,900 word
+article about “doing it again” — and critically depends on the exact semantics
+of error conditions. To put that differently, getting the normal code path
+working is easy. That’s also when the real engineering work starts!</p>
+
+</section>
+
+<footer class=about-this-page>
+<p>This article was originally published on <a
+href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">Enigma’s
+blog</a>. While this version has the same textual content as Enigma’s version,
+it does make better use of semantic markup in <abbr>HTML</abbr> and typographic
+features in <abbr>CSS</abbr>.</p>
+</footer>
+
+</article>
+</main>
