@@ -49,6 +49,8 @@
         <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
             SetEnvIf Origin ":" IS_CORS
             Header set Access-Control-Allow-Origin "https://apparebit.com" env=IS_CORS
+            # Response differs by Origin header:
+            Header append Vary Origin
         </FilesMatch>
     </IfModule>
 </IfModule>
@@ -377,6 +379,10 @@ DirectorySlash Off
     RewriteRule ^(.*)/$ $1 [R=301,L]
 
     # Prevent hot-linking as well as direct access to font files.
+    <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+        Header append Vary Referer
+    </FilesMatch>
+
     RewriteCond %{HTTP_REFERER} !^https://apparebit.com/ [NC]
     RewriteRule \.(eot|otf|tt[fc]|woff2?)$ - [F]
 
