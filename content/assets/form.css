@@ -456,7 +456,7 @@ main {
   margin-bottom: var(--s03);
 }
 
-main :is(header, section, .section, footer) {
+:where(main) :where(header, section, .section, footer) {
   display: grid;
   grid-template-columns:
     [view-start wide-start figure-start]
@@ -470,7 +470,7 @@ main :is(header, section, .section, footer) {
 
 /* calc((var(--max-measure) + 2 * var(--min-margin)) * 131.25%)*/
 @media (min-width: 39.375em) {
-  main :is(header, section, .section, footer) {
+  :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
       [view-start wide-start]
       var(--min-margin)
@@ -488,7 +488,7 @@ main :is(header, section, .section, footer) {
 
 /* calc((var(--max-measure) + 2 * var(--s50) + 2 * var(--min-margin)) * 131.25%) */
 @media (min-width: 59.31em) {
-  main :is(header, section, .section, footer) {
+  :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
       [view-start]
       var(--min-margin)
@@ -509,7 +509,7 @@ main :is(header, section, .section, footer) {
 }
 
 /*@media print {
-  main :is(header, section, .section, footer) {
+  :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
     [view-start]
     var(--min-margin)
@@ -527,7 +527,7 @@ main :is(header, section, .section, footer) {
   }
 }*/
 
-main :is(header, section, .section, footer) > * {
+:where(main) :where(header, section, .section, footer) > * {
   grid-column: text;
 }
 
@@ -543,7 +543,9 @@ main :is(header, section, .section, footer) > * {
  * "better" approach probably boils down to the size of the element selector,
  * i.e., pointing towards exclusion instead of the below.
  */
-main :is(blockquote, figure, ol, p, ul, .with-inset) + :is(blockquote, figure, ol, p, ul),
+:where(main)
+   :where(blockquote, figure, ol, p, pre, ul, .with-inset)
+ + :where(blockquote, figure, ol, p, pre, ul),
 main li + li {
   margin-top: var(--margin-text-top);
 }
@@ -574,6 +576,18 @@ main .tight li:nth-of-type(n+2) {
 
 .signature::before {
   content: '—';
+}
+
+table {
+  border-collapse: collapse;
+  /* Account for Chrome and Safari bugs
+     (https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css) */
+  text-indent: 0;
+  border-color: inherit;
+}
+
+table td {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ========================================================================== *
@@ -649,6 +663,19 @@ a:focus > picture, a:hover > picture {
 }
 
 /* -------------------------------------------------------------------------- *
+ * .about-this-page
+ * -------------------------------------------------------------------------- */
+
+.about-this-page {
+  margin-top: var(--s20);
+  font-style: italic;
+}
+
+.about-this-page em {
+  font-style: normal;
+}
+
+ /* -------------------------------------------------------------------------- *
  * .as-paragraph (flow <p> and <li> into one paragraph with Oxford comma)
  * -------------------------------------------------------------------------- */
 
@@ -676,6 +703,22 @@ a:focus > picture, a:hover > picture {
 }
 
 /* -------------------------------------------------------------------------- *
+ * aside
+ * -------------------------------------------------------------------------- */
+
+main aside {
+  --color-bg: var(--color-bg-sunk);
+  background-color: var(--color-bg);
+  grid-column: figure;
+  padding: var(--min-margin);
+  margin-top: var(--s10);
+}
+
+main aside > :first-child {
+  margin-top: 0;
+}
+
+ /* -------------------------------------------------------------------------- *
  * b
  * -------------------------------------------------------------------------- */
 
@@ -1010,6 +1053,32 @@ main .carddeck {
 }
 
 /* -------------------------------------------------------------------------- *
+ * code, pre
+ * -------------------------------------------------------------------------- */
+
+/* FIXME: need font-stack for monospace, which is 13pt instead of 16pt
+   Need to adjust top-margin of pre for that */
+
+code, pre {
+  background-color: var(--color-bg-sunk);
+}
+
+code {
+  padding: var(--t40) var(--t30);
+}
+
+pre {
+  padding: var(--t20);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-family: var(--bely-fontstack);
+}
+
+pre code {
+  padding: 0;
+}
+
+/* -------------------------------------------------------------------------- *
  * .cover
  * -------------------------------------------------------------------------- */
 
@@ -1073,7 +1142,6 @@ figcaption {
   text-align: right;
   font-style: italic;
   padding-top: 0.3em;
-  margin-right: var(--min-margin);
 }
 
 @supports (-moz-appearance: none) {
@@ -1083,8 +1151,12 @@ figcaption {
   }
 }
 
+.figure figcaption {
+  margin-right: var(--min-margin);
+}
+
 @media (min-width: 39.375em) {
-  figcaption {
+  .figure figcaption {
     margin-right: 0;
   }
 }
