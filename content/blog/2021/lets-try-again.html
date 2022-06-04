@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <title>Let’s Try Again • Apparebit</title>
 <link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
-<script async type="module" src="/assets/function.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="stylesheet" href="/assets/form.css">
+<script async type="module" src="/assets/function.js"></script>
+<script async src="/assets/prism.js"></script>
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
 <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
@@ -30,7 +31,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@apparebit">
 <meta name="twitter:creator" content="@apparebit">
-<meta name="theme-color" content="#1977f2" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#f3f4f6" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <script type="application/ld+json">
@@ -170,7 +171,7 @@ need to review the three primary criteria for when we can use retries.</p>
 repeated execution results in the exact same outcomes or state. If you were to
 retry</p>
 
-<pre><code>transfer_money_from_me_to(
+<pre><code class=language-python>transfer_money_from_me_to(
     recipient,
     amount,
 )
@@ -215,7 +216,7 @@ cartons. The answer is straightforward: We add another attribute based on
 date/time or a monotonically increasing counter. That certainly works for the
 above endpoint as well:</p>
 
-<pre><code>transfer_money_from_me_to(
+<pre><code class=language-python>transfer_money_from_me_to(
     recipient,
     amount,
     transaction_id,
@@ -229,7 +230,7 @@ same transaction <abbr>ID</abbr> are submitted to the endpoint. It may also want
 to reject any request that shares a transaction <abbr>ID</abbr> with a previous
 request but differs in recipient or amount. This pattern can be found in many
 <abbr>REST</abbr> <abbr>API</abbr>s. The corresponding operations may be named
-create_or_get_something.</p>
+<code>create_or_get_something</code>.</p>
 
 
 <h3>Failures Are Transient</h3>
@@ -470,7 +471,7 @@ at a slower rate.</p>
 difference when using the algorithm on the client for throttling is that we
 don’t fail requests when there aren’t enough tokens in the bucket, but rather we
 wait until there are enough tokens. That’s just what boto3’s adaptive retry mode
-does. Well, with one significant additional feature: iInstead of requiring that
+does. Well, with one significant additional feature: Instead of requiring that
 user code configures the maximum request rate, the adaptive retry mode
 automatically adjusts the maximum capacity of the bucket based on successful as
 well as unsuccessful outcomes.</p>
@@ -479,11 +480,11 @@ well as unsuccessful outcomes.</p>
 itching to enable it for your own Python-based data processing pipelines.
 Thankfully, it doesn’t take much: All you need to do is pass an appropriate
 configuration object to boto3’s <code>client()</code> or <code>resource()</code>
-function via the config named argument. The only slightly tricky part is that
-you need to use botocore’s configuration object.</p>
+function via the <code>config</code> named argument. The only slightly tricky
+part is that you need to use botocore’s configuration object.</p>
 
 <figure>
-<pre><code>import boto3
+<pre><code class=language-python>import boto3
 from botocore.config import Config
 
 # Access S3 with adaptive retries:
@@ -589,16 +590,17 @@ distributed systems is genuinely hard — you are about to finish a 3,900 word
 article about “doing it again” — and critically depends on the exact semantics
 of error conditions. To put that differently, getting the normal code path
 working is easy. That’s also when the real engineering work starts!</p>
-
 </section>
+
 
 <footer class=about-this-page>
 <p>This article was originally published on <a
 href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">Enigma’s
-blog</a>. While this version has the same textual content as Enigma’s version,
-it does make better use of semantic markup in <abbr>HTML</abbr> and typographic
-features in <abbr>CSS</abbr>.</p>
+blog</a>. While this version has the same textual content as the original post,
+this version does improve on the original through more semantic markup and more
+careful typography.</p>
 </footer>
+
 
 </article>
 </main>
