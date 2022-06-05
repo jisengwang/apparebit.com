@@ -70,7 +70,8 @@ function createFooterWithReferences() {
 
 function updateThemeColor() {
   // Pick <meta name="theme-color"> with data-fallback attribute.
-  themes = []
+  // There may be two, one for light mode and one for dark mode.
+  const themes = []
   for (const element of document.querySelectorAll('meta[name=theme-color]')) {
     if (element.dataset.fallback) {
       themes.push({
@@ -93,7 +94,8 @@ function updateThemeColor() {
     return;
   }
 
-  // Set up intersection observer
+  // Set up intersection observer that updates content attribute of all <meta>
+  // elements, independent of light or dark mode, in case that mode flips.
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       const { isIntersecting } = entry;
