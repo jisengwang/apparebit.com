@@ -1407,26 +1407,28 @@ h1 + h2 {
 hr {
   color: var(--color-fg);
   border: 0;
-  /* Prevent Safari from making <hr> one 1px too large. */
-  height: var(--s10);
   text-align: center;
-  margin-top: var(--s20);
-  margin-bottom: var(--s20);
+  margin-top: var(--s10);
+  margin-bottom: var(--s05);
+}
+
+hr::after {
+  display: inline-block;
+  content: '⁂';
+}
+
+hr.lively {
+  margin-bottom: var(--s10);
 
   --sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   --amp: calc(var(--s10) / 4);
   --rot: 10deg;
 
-  transform: translateY(0.5em);
+  transform: translateY(0.75em);
   animation: 10s var(--sine) infinite up-down;
 }
 
-hr::after {
-  font-size: var(--s05);
-  line-height: var(--r-minor);
-  display: inline-block;
-  content: '⁂';
-
+hr.lively::after {
   transform: rotate(calc(-1 * var(--rot)));
   animation: 10s var(--sine) -6.25s infinite back-forth;
 }
