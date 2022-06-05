@@ -70,14 +70,16 @@ function createFooterWithReferences() {
 
 function updateThemeColor() {
   // Pick <meta name="theme-color"> with data-fallback attribute.
-  const themes = Array
-    .from(document.querySelectorAll('meta[name=theme-color]'))
-    .filter(element => element.dataset.fallback)
-    .map(element => ({
-      element,
-      visible: element.content,
-      invisible: element.dataset.fallback,
-    }));
+  themes = []
+  for (const element of document.querySelectorAll('meta[name=theme-color]')) {
+    if (element.dataset.fallback) {
+      themes.push({
+        element,
+        visible: element.content,
+        invisible: element.dataset.fallback,
+      });
+    }
+  }
   if (themes.length === 0) {
     if (DEBUG) console.log(`ℹ️ No <meta name=theme-color> with fallback.`);
     return;
