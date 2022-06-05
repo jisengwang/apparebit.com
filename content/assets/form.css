@@ -118,6 +118,33 @@
   font-display: fallback;
 }*/
 
+@font-face {
+  font-family: 'DejaVu';
+  src: url(fonts/dejavu-sans-mono-book.woff2),
+    url(fonts/dejavu-sans-mono-book.woff);
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DejaVu';
+  src: url(fonts/dejavu-sans-mono-oblique.woff2),
+    url(fonts/dejavu-sans-mono-oblique.woff);
+  font-style: italic;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DejaVu';
+  src: url(fonts/dejavu-sans-mono-bold.woff2),
+    url(fonts/dejavu-sans-mono-bold.woff);
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+}
+
 /* -------------------------------------------------------------------------- *
  * Sane Sizing and Appearance
  * -------------------------------------------------------------------------- */
@@ -206,6 +233,8 @@ iframe {
    * ------------------------------------------------------------------------ */
 
   --color-white: #f5f6f8;
+  --color-darker: #eaeaec;
+  --color-still-darker: #e0e0e2;
   --color-black: #1d1d20;
   --color-cyan: #2bfff4;
   --color-green: #35ff61;
@@ -219,7 +248,7 @@ iframe {
   --color-fg: var(--color-black);
   --color-bg: var(--color-white);
   --color-bg-lifted: #fff;
-  --color-bg-sunk: #eaeaec;
+  --color-bg-sunk: var(--color-darker);
   --color-separator: #cdced0;
   --color-accent1: var(--color-cyan);
   --color-accent2: var(--color-green);
@@ -234,10 +263,12 @@ iframe {
 /* Dark mode only applies to screen, not paper! */
 @media screen and (prefers-color-scheme: dark) {
   :root {
+    --color-darker: #101012;
+    --color-still-darker: #08080a;
+
     --color-fg: #e3e7ed;
     --color-bg: #222225;
     --color-bg-lifted: #38383d;
-    --color-bg-sunk: #101012;
     --color-separator: var(--color-dark-separator);
     --color-accent1: #753f86;
     --color-accent2: #962d56;
@@ -281,6 +312,8 @@ iframe {
       'Bely Display', 'Abril Fatface', 'Playfair Display', serif;
   --bild-fontstack: 'Bild', system-ui, sans-serif;
   --bluu-fontstack: 'Bluu Suuperstar', 'Times New Roman', serif;
+
+  --mono-fontstack: DejaVu, Menlo, Consolas, monospace;
 
   /* Luckily, both Bely and Reforma support kerning, default ligatures, lining
      as well as old-style numerals, and case-sensitive alternates. */
@@ -1053,18 +1086,22 @@ main .carddeck {
 }
 
 /* -------------------------------------------------------------------------- *
- * code, pre
+ * code, pre, samp
  * -------------------------------------------------------------------------- */
 
-/* FIXME: need font-stack for monospace, which is 13pt instead of 16pt
-   Need to adjust top-margin of pre for that */
-
-code, pre {
-  background-color: var(--color-bg-sunk);
+code, pre, samp {
+  background-color: var(--color-darker);
+  line-height: 1;
 }
 
-code {
+aside :where(code, pre, samp) {
+  background-color: var(--color-still-darker);
+}
+
+code, samp {
   padding: var(--t40) var(--t30);
+  font-family: var(--mono-fontstack);
+  font-size: 0.7385rem;
 }
 
 pre {
@@ -1072,6 +1109,14 @@ pre {
   white-space: pre-wrap;
   overflow-wrap: break-word;
   font-family: var(--bely-fontstack);
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -ms-hyphens: none;
+  -webkit-hyphens: none;
+  hyphens: none;
 }
 
 pre code {
