@@ -116,7 +116,17 @@
   font-style: italic;
   font-weight: normal;
   font-display: fallback;
-}*/
+}
+
+@font-face {
+  font-family: 'Reforma 2018';
+  src: url(fonts/reforma-2018-negra.woff2),
+    url(fonts/reforma-2018-negra.woff);
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+}
+*/
 
 @font-face {
   font-family: 'DejaVu';
@@ -225,6 +235,7 @@ iframe {
    */
   --scale-to-reforma: 0.8281;
   --scale-to-bluu: 0.8262;
+  --scale-to-dejavu: 0.7385;
 
   --margin-text-top: 1em;
 
@@ -313,7 +324,6 @@ iframe {
       'Bely Display', 'Abril Fatface', 'Playfair Display', serif;
   --bild-fontstack: 'Bild', system-ui, sans-serif;
   --bluu-fontstack: 'Bluu Suuperstar', 'Times New Roman', serif;
-
   --mono-fontstack: DejaVu, Menlo, Consolas, monospace;
 
   /* Luckily, both Bely and Reforma support kerning, default ligatures, lining
@@ -759,7 +769,7 @@ main aside a {
  * b
  * -------------------------------------------------------------------------- */
 
- b {
+b {
   font-weight: bold;
 }
 
@@ -1093,26 +1103,18 @@ main .carddeck {
  * code, pre, samp
  * -------------------------------------------------------------------------- */
 
-code, pre, samp {
-  background-color: var(--color-bg-sunk);
-  line-height: 1;
-}
-
-aside :where(code, pre, samp) {
-  background-color: var(--color-bg);
-}
-
 code, samp {
-  padding: var(--t40) var(--t30);
   font-family: var(--mono-fontstack);
-  font-size: 0.7385rem;
+  font-size: calc(var(--scale-to-dejavu) * 1em);
 }
 
 pre {
+  background-color: var(--color-bg-sunk);
   padding: var(--t20);
   white-space: pre-wrap;
   overflow-wrap: break-word;
   font-family: var(--bely-fontstack);
+  line-height: var(--r-minor);
 
   -moz-tab-size: 4;
   -o-tab-size: 4;
@@ -1121,10 +1123,6 @@ pre {
   -ms-hyphens: none;
   -webkit-hyphens: none;
   hyphens: none;
-}
-
-pre code {
-  padding: 0;
 }
 
 /* -------------------------------------------------------------------------- *
