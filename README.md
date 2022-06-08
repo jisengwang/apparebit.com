@@ -54,8 +54,8 @@ and code are available under permissive licenses:
   * Apparebit's privacy policy under [CC BY-SA
     4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
   * Apparebit's client-side [styles](content/assets/form.css) and
-    [scripts](content/assets/function.js) as well as server-side
-    [scripts](scripts) under [MIT](https://opensource.org/licenses/MIT) terms.
+    [scripts](content/assets/function.js) as well as prepartory
+    [scripts](script) under [MIT](https://opensource.org/licenses/MIT) terms.
 
 Furthermore, [site:forge](https://github.com/apparebit/siteforge), the static
 website generator I am developing in tandem with and support of Apparebit, is
