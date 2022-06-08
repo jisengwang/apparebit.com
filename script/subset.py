@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# (C) Copyright 2022 Robert Grimm, released under the MIT license.
+
 # Subset a font (such as DejaVu Sans Mono) to Latin alphabet while converting to
 # WOFF and WOFF2 as well. This script requires that fontTools
 # (https://github.com/fonttools/fonttools) with the 'woff' extra are installed:
