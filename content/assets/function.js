@@ -1,6 +1,5 @@
-/* ========================================================================== *
- * (C) Copyright 2019-2022 Robert Grimm, released under the MIT license.
- * ========================================================================== */
+/* (C) Copyright 2019-2022 Robert Grimm
+   Licensed under the MIT License (https://opensource.org/licenses/MIT) */
 
 let DEBUG = false;
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# (C) Copyright 2022 Robert Grimm, released under the MIT license.
+# (C) Copyright 2019-2022 Robert Grimm
+# Licensed under the MIT License (https://opensource.org/licenses/MIT)
 
 # Subset a font (such as DejaVu Sans Mono) to Latin alphabet while converting to
 # WOFF and WOFF2 as well. This script requires that fontTools
