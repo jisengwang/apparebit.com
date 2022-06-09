@@ -1,6 +1,5 @@
-/* ========================================================================== *
- * (C) Copyright 2019-2022 Robert Grimm, released under the MIT license.
- * ========================================================================== */
+/* (C) Copyright 2019-2022 Robert Grimm
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT) */
 
 /*
  * CSS CUSTOM PROPERTIES
@@ -1824,7 +1823,7 @@ footer h2::before, footer h3::before {
  * (https://github.com/PrismJS/prism/blob/master/themes/prism-tomorrow.css)
  * -------------------------------------------------------------------------- */
 
-.token.comment,
+.token.prism-comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
@@ -1915,7 +1914,7 @@ code[class*="language-css"] {
 }
 
 @media screen and (prefers-color-scheme: dark) {
-  .token.comment,
+  .token.prism-comment,
   .token.block-comment,
   .token.prolog,
   .token.doctype,
