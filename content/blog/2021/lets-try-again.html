@@ -239,7 +239,7 @@ should actually retry the operation. We also have to consider the nature of the
 failure. For an example, let’s consider our favorite banking endpoint again. If
 the bank returns an error indicating insufficient funds, retrying will only have
 the same result. The bank won’t transfer non-existent funds no matter how often
-(or nicely) we ask. We first need to transfer funds <i>into</i> the account or
+(or nicely) we ask. We first need to transfer funds <em>into</em> the account or
 open a line of credit.</p>
 
 <p>However, if the request times out, we don’t know the outcome of the request
@@ -253,7 +253,7 @@ error classification policy. As far as mechanism is concerned, both server and
 client need to capture the concrete causes of failures and faithfully forward
 fine-grained error information. Whether an implementation uses error codes or
 exception types doesn’t really matter, but it is critical that higher layers do
-<i>not</i> mask the error information captured by lower layers.</p>
+<em>not</em> mask the error information captured by lower layers.</p>
 
 <p>As far as policy is concerned, engineers need to inventory the specific
 errors occurring in a system and then classify them as retryable or not. A
@@ -264,14 +264,14 @@ class="external-link" href="https://github.com/boto" target="_blank"
 rel="noreferrer">on Github</a>, <abbr>AWS</abbr> engineers significantly
 deepened their understanding of both retry policy and mechanism over the years.
 The original version in boto3’s runtime botocore implements the so-called
-<i>legacy</i> mode. It dates back to April 2013 and comprises one module with
+<em>legacy</em> mode. It dates back to April 2013 and comprises one module with
 360 lines of well-documented Python code.</p>
 
 <p>In contrast, the new version from February 2020 implements both the
-<i>standard</i> and <i>adaptive</i> modes. It comprises seven modules with 920
-lines of well-documented Python code. The primary difference between legacy and
-standard modes is that the latter classifies many more errors as retryable and
-thus covers many more endpoints. At the same time, the standard mode also
+<em>standard</em> and <em>adaptive</em> modes. It comprises seven modules with
+920 lines of well-documented Python code. The primary difference between legacy
+and standard modes is that the latter classifies many more errors as retryable
+and thus covers many more endpoints. At the same time, the standard mode also
 enforces a quota on active retries, thus protecting the client from being
 overwhelmed by retries in case of, say, a network or <abbr>AWS</abbr> outage
 (which are rare <a class="external-link"
@@ -322,9 +322,9 @@ Experienced service providers on the internet do not take kindly to such
 attacks. Instead they implement drastic countermeasures, up to and including
 dropping all requests originating from a suspect <abbr>IP</abbr> address in the
 firewall, before the request even gets to any application server. To avoid that,
-we need to pace ourselves when retrying. Best practice is to <i>delay</i>
-each retry, use <i>exponential backoff</i> for repeated retries, and to add some
-degree of variability by introducing <i>randomized jitter</i>.</p>
+we need to pace ourselves when retrying. Best practice is to <em>delay</em>
+each retry, use <em>exponential backoff</em> for repeated retries, and to add
+some degree of variability by introducing <em>randomized jitter</em>.</p>
 
 <p>In my experience, jitter is typically computed <a class="external-link"
 href="https://cloud.google.com/iot/docs/how-tos/exponential-backoff"
