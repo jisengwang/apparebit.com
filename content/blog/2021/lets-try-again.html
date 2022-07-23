@@ -15,7 +15,7 @@
 <meta property="og:title" content="Let’s Try Again">
 <meta name="description" content="Making Retries Work with Cloud Services">
 <meta property="og:description" content="Making Retries Work With Cloud Services">
-<link rel="canonical" href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">
+<link rel="canonical" href="https://apparebit.com/blog/2021/lets-try-again">
 <meta property="og:url" content="https://apparebit.com/blog/2021/lets-try-again">
 <meta property="og:image" content="https://apparebit.com/assets/images/apparebit-1200x630.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -91,6 +91,7 @@
 </div>
 </header>
 
+
 <section aria-labelledby=introduction>
 <h2 id=introduction hidden>Introduction</h2>
 
@@ -153,8 +154,9 @@ article, you’ll have a solid understanding of both rate limits and retries tha
 you can apply to your own work.</p>
 </section>
 
-<section>
-<h2>Only Try Retries When…</h2>
+
+<section aria-labelledby=only-try>
+<h2 id=only-try>Only Try Retries When…</h2>
 
 <p>Retries differ from other techniques for providing fault tolerance such as <a
 href="https://www.goodreads.com/book/show/23463279-designing-data-intensive-applications">data
@@ -260,12 +262,11 @@ errors occurring in a system and then classify them as retryable or not. A
 mechanized version of that classifier forms the core of the retry logic.</p>
 
 <p>Judging by boto3’s code repositories and commit histories <a
-class="external-link" href="https://github.com/boto" target="_blank"
-rel="noreferrer">on Github</a>, <abbr>AWS</abbr> engineers significantly
-deepened their understanding of both retry policy and mechanism over the years.
-The original version in boto3’s runtime botocore implements the so-called
-<em>legacy</em> mode. It dates back to April 2013 and comprises one module with
-360 lines of well-documented Python code.</p>
+href="https://github.com/boto">on Github</a>, <abbr>AWS</abbr> engineers
+significantly deepened their understanding of both retry policy and mechanism
+over the years. The original version in boto3’s runtime botocore implements the
+so-called <em>legacy</em> mode. It dates back to April 2013 and comprises one
+module with 360 lines of well-documented Python code.</p>
 
 <p>In contrast, the new version from February 2020 implements both the
 <em>standard</em> and <em>adaptive</em> modes. It comprises seven modules with
@@ -274,9 +275,9 @@ and standard modes is that the latter classifies many more errors as retryable
 and thus covers many more endpoints. At the same time, the standard mode also
 enforces a quota on active retries, thus protecting the client from being
 overwhelmed by retries in case of, say, a network or <abbr>AWS</abbr> outage
-(which are rare <a class="external-link"
-href="https://www.theverge.com/2020/11/25/21719396/amazon-web-services-aws-outage-down-internet"
-target="_blank" rel="noreferrer">but do happen</a>).</p>
+(which are rare <a
+href="https://www.theverge.com/2020/11/25/21719396/amazon-web-services-aws-outage-down-internet">but
+do happen</a>).</p>
 
 
 <aside>
@@ -295,9 +296,8 @@ standard definition of the 503 status code, <samp>503 Service
 Unavailable</samp>, suggests the reason for this non-standard choice by Amazon
 engineers: That status code is commonly used when a server is overloaded, an
 obviously retryable error condition. Hence I wouldn’t be surprised if earlier
-versions of
-<abbr>AWS</abbr> client libraries simply retried on 503 only and this was an
-expedient solution to increasing the reach of the retry logic.</p>
+versions of <abbr>AWS</abbr> client libraries simply retried on 503 only and
+this was an expedient solution to increasing the reach of the retry logic.</p>
 </aside>
 
 
@@ -326,25 +326,24 @@ we need to pace ourselves when retrying. Best practice is to <em>delay</em>
 each retry, use <em>exponential backoff</em> for repeated retries, and to add
 some degree of variability by introducing <em>randomized jitter</em>.</p>
 
-<p>In my experience, jitter is typically computed <a class="external-link"
-href="https://cloud.google.com/iot/docs/how-tos/exponential-backoff"
-target="_blank" rel="noreferrer">as a smallish delta</a> on top of the
-deterministic exponential delay. Reading the source code for botocore, I
-discovered that it instead randomly scales the deterministic exponential delay
-between zero and the full value. I was surprised by that choice. As it turns
-out, <abbr>AWS</abbr> engineers carefully considered the interaction between
-exponential backoff and jitter, simulating several approaches, and found that
-“full jitter” was the most effective choice. Amazon’s Marc Brooker <a
-class="external-link"
-href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
-target="_blank" rel="noreferrer">wrote a great blog post</a> about just
-that.</p>
+<p>In my experience, jitter is typically computed <a
+href="https://cloud.google.com/iot/docs/how-tos/exponential-backoff">as a
+smallish delta</a> on top of the deterministic exponential delay. Reading the
+source code for botocore, I discovered that it instead randomly scales the
+deterministic exponential delay between zero and the full value. I was surprised
+by that choice. As it turns out, <abbr>AWS</abbr> engineers carefully considered
+the interaction between exponential backoff and jitter, simulating several
+approaches, and found that “full jitter” was the most effective choice. Amazon’s
+Marc Brooker <a
+href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/">wrote
+a great blog post</a> about just that.</p>
 
 <p><i>Are we there yet? — No!</i></p>
 </section>
 
-<section>
-<h2>Limiting the Rate of Tries and Retries</h2>
+
+<section aria-labelledby=limiting-the-rate-of-tries>
+<h2 id=limiting-the-rate-of-tries>Limiting the Rate of Tries and Retries</h2>
 
 <p>So far, we only considered retrying individual operations in isolation. In
 such cases, the above three criteria are sufficient for determining when and how
@@ -373,12 +372,10 @@ within some time period.</p>
 
 <h3>The Token Bucket Algorithm</h3>
 
-<p>That time period is
-typically determined by the algorithm used for enforcing rate limits, with the
-default choice being <a class="external-link"
-href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank"
-rel="noreferrer">the token bucket algorithm</a>. It is simple enough to describe
-in a paragraph:</p>
+<p>That time period is typically determined by the algorithm used for enforcing
+rate limits, with the default choice being <a
+href="https://en.wikipedia.org/wiki/Token_bucket">the token bucket
+algorithm</a>. It is simple enough to describe in a paragraph:</p>
 
 <p>The name stems from the main data structure, a bucket holding fungible
 tokens, i.e., a counter. The server maintains a bucket per client and
@@ -398,10 +395,9 @@ violation.</p>
 <p>Now we have enough context to explain the exact circumstances leading to the
 failure of our data processing pipeline. As mentioned in the introduction, the
 pipeline failed during a bulk copy between two S3 volumes. The data being copied
-is a very large dataset in <a class="external-link"
-href="http://www.apache.org/" target="_blank" rel="noreferrer">Parquet’s
-columnar format</a>, which puts (parts of) columns into their own files
-organized by directories to represent tables.</p>
+is a very large dataset in <a href="http://www.apache.org/">Parquet’s columnar
+format</a>, which puts (parts of) columns into their own files organized by
+directories to represent tables.</p>
 
 <p>Many of these directories contain many thousands of files. The particular
 directory that triggered the rate limit failure contained 4,003 files. At the
@@ -523,12 +519,10 @@ limits for the server as well as the client libraries in every language.</p>
 <p>In fact, that’s already happening for <abbr>AWS</abbr>. Several of the client
 libraries for other programming languages as well as the Android and iOS
 <abbr>SDK</abbr>s support automatic retries for authentication errors <a
-class="external-link"
-href="https://altereos.com/how-to-correct-clock-skew-in-aws/" target="_blank"
-rel="noreferrer">caused by clock skew</a>. However, boto3 does not. The <a
-class="external-link" href="https://github.com/boto/boto3/issues/1252"
-target="_blank" rel="noreferrer">corresponding issue</a> has been open for four
-years now.</p>
+href="https://altereos.com/how-to-correct-clock-skew-in-aws/">caused by clock
+skew</a>. However, boto3 does not. The <a
+href="https://github.com/boto/boto3/issues/1252">corresponding issue</a> has
+been open for four years now.</p>
 
 <p>That raises the question if we can do better. My answer is an emphatic
 “possibly maybe.” I base that decisive assessment on the observation that
@@ -542,26 +536,25 @@ configuration and it knows their client-specific state.</p>
 to clients, can we dispense with token buckets? My answer remains an emphatic
 “possibly maybe.” <abbr>HTTP</abbr> already includes the
 <code>Retry-After</code> header to provide a hint for the retry delay and <a
-class="external-link"
-href="https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html"
-target="_blank" rel="noreferrer">an <abbr>IETF</abbr> draft standardizes several
-more headers</a> that expose even more information.&nbsp;</p>
+href="https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html">an
+<abbr>IETF</abbr> draft</a> standardizes several more headers that expose
+even more information.</p>
 
 <p>But the <code>Retry-After</code> header applies only to a single operation
 and thus becomes meaningless under sustained load, much like exponential backoff
-is insufficient under sustained load. <a class="external-link"
-href="https://www.useanvil.com/blog/engineering/throttling-and-consuming-apis-with-429-rate-limits/"
-target="_blank" rel="noreferrer">Ben Ogle wrote a blog post</a> exploring just
-that question and ended up showing that the token bucket algorithm works real
-well. But that outcome also was predictable because he applied the
+is insufficient under sustained load. <a
+href="https://www.useanvil.com/blog/engineering/throttling-and-consuming-apis-with-429-rate-limits/">Ben
+Ogle wrote a blog post</a> exploring just that question and ended up showing
+that the token bucket algorithm works real well. But that outcome also was
+predictable because he applied the
 <code>Retry-After</code> header only to the next retry for that request. In
 short, the question of whether we can design a more general header remains
 open.</p>
 </section>
 
 
-<section>
-<h2>In Conclusion</h2>
+<section aria-labelledby=conclusion>
+<h2 id=conclusion>In Conclusion</h2>
 
 <p>We explored retries as a simple and effective fault tolerance
 mechanism in significant detail. While retries apply to many cases, they aren’t
@@ -576,11 +569,10 @@ isn’t enough. Instead, we may have to throttle the request rate across all
 operations. This blog post used <abbr>AWS</abbr> and its client library for
 Python as running examples. Notably, it included source code for configuring
 throttled operation. But the techniques described in this blog post are general
-and supported <a class="external-link"
-href="https://medium.com/@juliozynger/be-a-good-client-jitter-19714ced379"
-target="_blank" rel="noreferrer">by many other client libraries</a>. Now that
-you understand all the necessary background, it is your turn to try retries — or
-to retry them again!</p>
+and supported <a
+href="https://medium.com/@juliozynger/be-a-good-client-jitter-19714ced379">by
+many other client libraries</a>. Now that you understand all the necessary
+background, it is your turn to try retries — or to retry them again!</p>
 
 <p>At the same time, the single most important take-away from this blog post is
 not the particulars of retries, rate limits, and <abbr>AWS</abbr>’ exemplary
@@ -593,13 +585,15 @@ working is easy. That’s also when the real engineering work starts!</p>
 
 
 <footer class=about-this-page>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> <hr> <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
 <p>This article was originally published on <a
 href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">Enigma’s
-blog</a>. While both versions include the same text, they differ in
-implementation: The original is a fairly heavyweight web application that
-dynamically generates content from embedded <abbr>JSON</abbr>. This version is a
-more lightweight and accessible static webpage featuring semantic
-<abbr>HTML</abbr> and clean typography.</p>
+blog</a>. The original is a fairly heavyweight web application that uses
+JavaScript to generate some semblance of <abbr>HTML</abbr> from embedded
+<abbr>JSON</abbr> data. This version is a more lightweight, static webpage with
+semantic and accessible markup as well as clean typography. It also includes
+minor edits for clarity.</p>
 </footer>
 
 
