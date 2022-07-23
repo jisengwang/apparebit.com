@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mapping the World of Package Management • Apparebit</title>
+<link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async type="module" src="/assets/function.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="/assets/form.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
+<link rel="manifest" href="/assets/apparebit.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
+<meta property="og:title" content="Mapping the World of Package Management">
+<meta name="description" content="A Harsh Terrain, Crawling with Dragons">
+<meta property="og:description" content="A Harsh Terrain, Crawling with Dragons">
+<link rel="canonical" href="https://apparebit.com/blog/2022/mapping-package-management">
+<meta property="og:url" content="https://apparebit.com/blog/2022/mapping-package-management">
+<meta property="og:image" content="https://apparebit.com/assets/images/apparebit-1200x630.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="“apparebit” in high-contrast serif letters">
+<meta name="author" content="Robert Grimm">
+<meta property="article:author" content="https://facebook.com/apparebit">
+<meta property="fb:app_id" content="301854043178629">
+<meta property="og:site_name" content="Apparebit">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apparebit">
+<meta name="twitter:creator" content="@apparebit">
+<meta name="theme-color" content="#f3f4f6" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apparebit.com/blog/2022/mapping-package-management"
+  },
+  "headline": "Mapping the World of Package Management",
+  "image": [
+    "https://apparebit.com/assets/images/apparebit-1200x630.jpg"
+  ],
+  "datePublished": "2022-06-21",
+  "author": {
+    "@type": "Person",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apparebit.com/assets/a-circle.svg"
+    }
+  },
+  "description": "A Harsh Terrain, Crawling with Dragons"
+}
+</script>
+</head>
+<body class=reforma>
+
+<nav class="page-header">
+<ul role=list>
+<li><a rel=home href="/">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
+<span class=invisible>Home</span>
+</a></li>
+<li><a href="/blog">Blog</a></li>
+</ul>
+</nav>
+
+<main class=h-entry>
+<article class=e-content>
+<header>
+<hgroup class=title>
+<h1 class=p-name>Mapping the World of Package Management</h1>
+<h2>A Harsh Terrain, Crawling with Dragons</h2>
+</hgroup>
+<div class=byline>
+  <address>
+    <a class="p-author h-card" rel=author href=https://apparebit.com>Robert Grimm</a>
+  </address>
+  <time class=dt-published datetime=2022-06-21>June 21, 2022</time>
+</div>
+</header>
+
+
+<section aria-labelledby=introduction>
+<h2 id=introduction hidden>Introduction</h2>
+
+<p>In late 2020, we started having difficulties with the installation of Python
+packages.</p>
+
+<p>At times, the default package manager for Python, pip, would take hours for
+what used to take seconds. Worse, it might just refuse to install the packages
+altogether, with an error message indicating a version conflict.</p>
+
+<p>With 15 applications and 19 internal libraries in our small business data
+processing pipeline, all of them written in Python and spread out over as many
+git repositories, humans and machines alike need to install packages with
+reasonable regularity — the humans to develop new versions of the code, and the
+machines to create container images for deployment to production, typically as
+part of continuous integration.</p>
+
+<p>It wasn’t too difficult to identify the proximate cause for this highly
+unusual slowdown. Version 20.3 of pip had been released on <time
+datetime=2020-11-30>November 30, 2020</time> and included a change of package
+resolution algorithm. The previous and fundamentally unsound “pick pretty much
+any version” algorithm was now disabled by default and marked for removal in a
+future version. Its replacement treated version constraints as gospel truth and
+refused to install dependencies when those version constraints were in conflict.
+That there were version conflicts in our codebase wasn’t surprising. After all,
+the version constraints appearing in manifests had never been validated for
+global consistency. Hence it was unavoidable that this transition would be
+somewhat rough.</p>
+
+<p>It didn’t help that the pip team buried the news about switching to the new
+package resolver as default: it is the second-to-last item in the list of
+features updated for the <a
+href="https://pip.pypa.io/en/stable/news/#v20-3b1">preceding beta release
+20.3b1</a>. Furthermore, with a public preview period of only four months, the
+pip team made the switch too early. The resolver was still prone to exhaustively
+exploring versions that would never satisfy the constraints. It also contained
+at least <a href="https://pip.pypa.io/en/stable/news/">19 bugs and
+shortcomings</a> that were then fixed over the following twelve months —
+compared to 14 that were fixed during the preview period.</p>
+
+<p>A further source of confusion was that most engineers use the version of pip
+bundled with Python’s standard library. That makes the version of pip used to
+install packages dependent on the version of Python used to run code, while also
+introducing a significant delay until any given version of pip becomes widely
+used. Notably, if you are using Python 3.7 (as some of us still do) and ignore
+the pip warning exhorting you to upgrade, you are still using the old resolver
+to this day. If you are using Python 3.8 (as some of us also do), then the
+release of Python 3.8.10 on <time datetime=2021-05-03>May 3, 2021</time>
+fundamentally changed how you install Python packages. The apparent disregard in
+all this for established versioning conventions is striking. Making backwards
+incompatible changes in a new minor version (pip 20.3) or in a new patch version
+(Python 3.8.10) is a big no-no under <a href="https://semver.org/">semantic
+versioning</a> and not helpful.</p>
+
+<p>As exasperated tales about pip’s misbehavior multiplied in our daily standup
+meetings, it became clear that we needed to start a concerted effort towards
+cleaning up our package requirements. At the same time, we had little insight
+into the scope of the clean up, i.e., the number of packages with conflicting
+versions as well as the number of conflicting constraints for each conflicted
+package. So I found myself tasked with producing just that survey in <time
+datetime=2021-10>October 2021</time>.</p>
+
+<p>Alas, I couldn’t be bothered with the tedium of manually surveying 34
+repositories for their requirements. So I decided to write a Python script for
+doing the survey and thereby set off on a journey into the wondrous world of
+package management.</p>
+
+<p>The exploration revealed that the world of package management is large,
+covered in harsh terrain, and crawling with dragons.</p>
+
+<p>At the same time, there are few maps of this world and they all suffer from
+significant inaccuracies and omissions. So we decided to follow in the footsteps
+of early map makers for Earth — Anaximander! Hecataeus of Miletus! Isidore of
+Seville! — and map the world of package management more completely and
+accurately, across a series of blog posts:</p>
+
+<ol class="drop-count">
+
+<li>This first post will give you a coarse overview map of package management,
+describing common features found across most terrains and locating the largest
+and most persistent dragon infestation found in this world. It also identifies
+the other ferocious critters haunting Python’s package ecosystem, which goes
+some way towards explaining that ecosystem’s dismal reputation.</li>
+
+<li><a href="/blog/2022/your-own-kind-of-map">The second post</a> will argue for
+maintaining your own custom maps and leveraging them to prevent dragon
+infestations. It will chronicle the transformation of a simple script for
+extracting package requirements from 34 version control repositories into a
+checking tool that is based on the dragon-repellent design of Go’s package
+manager and validates every merge request for those 34 repositories.</li>
+
+<li>In <a href="/blog/2022/new-map-layers">the third post</a>, we’ll discuss two
+additional map layers that are critical to understanding this world: the social
+and economic considerations related to package management, which serve as
+dragonbane and dragonwort, respectively.</li>
+
+</ol>
+
+<p>I hope that our map-making efforts help you to better navigate the world of
+package management and avoid being attacked by dragons along the way. If our
+maps fall short of that lofty goal, then please remember that the likes of
+Anaximander (living in Miletus ca 600 <abbr>BCE</abbr>) and Isidore (living in
+Seville 1,200 years later) got a lot wrong as well.</p>
+
+<p>Such are the risks when mapping previously uncharted lands.</p>
+</section>
+
+<section aria-labelledby=a-simple-survey>
+<h2 i=a-simple-survey>A Simple Survey</h2>
+
+<figure class=narrow-figure>
+<img srcset="/blog/2022/maps/t-o-468x468.jpg 468w,
+             /blog/2022/maps/t-o-864x864.jpg 864w"
+     sizes="468px" width=864 height=864
+     src="/blog/2022/t-o-864x864.jpg"
+     alt="The first printed T-O map">
+<figcaption>Isidore of Seville’s T-O map, 636 <abbr>CE</abbr> (<a
+href="https://commons.wikimedia.org/wiki/File:T_and_O_map_Guntherus_Ziner_1472.jpg">Wikimedia</a>)</figcaption>
+</figure>
+
+<p>Whenever we find ourselves on a journey into new and uncharted lands, it
+helps to draw a map. That way, we won’t get lost later on. For that to be the
+case, the map must be sufficiently detailed as well as accurate. Otherwise, we
+end up with a map like the T-O map by Isidore of Seville from 636
+<abbr>CE</abbr>, shown above in its first printed version from 1472
+<abbr>CE</abbr>. It clearly lacks detail. In fact, there isn’t any.</p>
+
+<div class=with-inset>
+<figure class=inset-right>
+<img srcset="/blog/2022/maps/orthographic-t-o-222x222.png 222w,
+             /blog/2022/maps/orthographic-t-o-444x444.png 444w,
+             /blog/2022/maps/orthographic-t-o-666x666.png 666w"
+     sizes="220.5px" width=666 height=666
+     src="/blog/2022/orthographic-t-o-map-666x666.png"
+     alt="T’s red lines superimposed on O of contemporary map">
+<figcaption>T’s strokes meet in center of O, Jerusalem (<a
+href="https://commons.wikimedia.org/wiki/File:Orthographic_T%26O.png">Wikimedia</a>).</figcaption>
+</figure>
+
+<p>At the same time, it isn’t as outlandishly inaccurate as you might think. If
+you take an orthographic projection of Earth with Jerusalem at the center, draw
+in the western half of the equator and the full meridian, rotate the map by 45º
+counter-clockwise, you end up with the map shown on the right. Et voilà, the T-O
+map is not that different from a modern map anymore.</p>
+
+<p>Let’s return to package management and start by defining our terminology. A
+<em>package</em> is an archive file that contains software that has been prepared
+for distribution. That software may be a complete application or command line
+tool, but quite often it only is a building block or <em>library</em>. Code may be
+in either source or binary form and targets either a particular programming
+language or operating system. Each package has a unique name and each
+<em>release</em> of the package has a hierarchical <em>version number</em>.</p>
+
+<p>As you already saw above on the examples of pip 20.3 and Python 3.8.10, the
+version number typically uses dots to separate the <em>major</em>,
+<em>minor</em>, and <em>patch</em> numbers. In the case of Python 3.8.10 the
+trailing zero is meaningful: this version is the eleventh patch release of
+Python 3.8. Another software artifact <em>depends</em> on that package when it
+may possibly execute some of its code. To do so, the artifact <em>requires</em>
+the package by listing the dependency in its <em>manifest</em>. Each entry in
+that manifest names the dependent package and optionally also includes
+<em>constraints</em> on suitable package versions as well as the runtime
+environment.</p>
+
+<p>The <em>package manager</em> implements the mechanics of a package ecosystem.
+Its primary two functions are to <em>publish</em> packages to some <em>package
+registry</em> and to <em>install</em> the dependencies of a software artifact by
+consulting that registry. Publishing a package requires a deliberate decision by
+the package’s developers or <em>maintainers</em> that the current state of the
+package’s code is worthy of consumption by others. The mechanics of publication
+include creating the required manifest and archives as well as uploading them to
+the registry.</p>
+</div>
+
+<p>Installing a package also requires a deliberate decision by the package’s
+users to build on a package’s contents. However, most package managers support
+the automatic installation of (some) package updates. The mechanics of
+installation include picking satisfactory versions for all dependencies,
+locating and downloading the corresponding archive files, validating their
+cryptographic hashes to establish integrity, and putting their contents into the
+right file system directories.</p>
+
+<p>We can see why package managers have become so popular. They remove a lot of
+friction from the process of publishing and consuming software components, while
+also offering an embarrassment of riches in software packages for all use cases
+and purposes. Gone are the days when, at least on Unix-like operating systems,
+one had to search the internet for suitable code, locate a distribution mirror,
+download the source archive, expand the contents into a working directory, and
+execute the <a
+href="https://www.gnu.org/software/automake/manual/html_node/GNU-Build-System.html"><abbr>GNU</abbr>
+build system</a> incantation:</p>
+
+<pre><code>./configure
+make
+make install
+</code></pre>
+
+<p>Hence it should be no surprise that package managers have become integral to
+contemporary software engineering. However, since most commercial corporations
+prefer not to share (all) their software with the commons, they typically
+prevent direct access to the package registry and instead use a local proxy that
+prevents external publication while also auditing the consumption of external
+packages.</p>
+
+<p>For example, Enigma maintains its own internal Python package registry that
+is not accessible from outside the firm. That registry is used to publish
+internal packages. It also proxies access to the Python Package Index serving as
+public registry, which enables the 15 tasks and 19 internal libraries making up
+our small business data pipeline to depend on 220 external packages, comprising
+60 direct dependencies and the transitive closure of their dependencies.</p>
+</section>
+
+
+<section aria-labelledby=hic-sunt-dragones>
+<h2 id=hic-sunt-dragones><span lang=la>Hic Sunt Dragones</span>: Here Be Dragons</h2>
+
+<figure class=wide-figure>
+<img srcset="/blog/2022/maps/hunt-lenox-630x315.jpg 630w,
+             /blog/2022/maps/hunt-lenox-928x464.jpg 928w,
+             /blog/2022/maps/hunt-lenox-1565x783.jpg 1565w"
+     sizes="928px" width="1565" height="783"
+     src="/blog/2022/maps/hunt-lenox-1565x783.jpg"
+     alt="The copper-toned surface of the Hunt-Lenox globe combines two physical hemispheres, with a clear gap showing along its aquator. WHile land is mostly smooth, the seas are textured with engraved waves">
+<figcaption>The Hunt-Lenox Globe from 1510 <abbr>CE</abbr> warns that <i
+lang=la>H(i)c Sunt Dracones</i>: Here Be Dragons (<a
+href="https://resurrect3d.lib.rochester.edu/models/5c1415db128f7007d4543289">New
+York Public Library / University of Rochester</a>)</figcaption>
+</figure>
+
+<p>All that removal of friction comes at a price. The Hunt-Lenox Globe shown
+above is kind enough to point out where the dragons are hiding. Sam Boyer, who
+implemented most of the (by now deprecated) <code>dep</code> dependency manager
+for Go, created the <a
+href="https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527">equivalent
+blog post for package management</a>. He doesn’t just point to the dragons. He
+warns us to stay away right at the start, titling the first section “Package
+management is awful, you should quit right now.” — Ooh, a challenge? This will
+be interesting and, yes, also fun! But we should still map out where all the
+dragons and other nasty critters are hiding.</p>
+
+
+<h3>The Dragon Boss: Installing Packages</h3>
+
+<p>We’ll spend the rest of this post wrangling the biggest dragon related to
+package management: installing packages. Fundamentally, it requires determining
+the transitive closure of an application’s declared dependencies. That includes
+the packages required by the application, the packages required by the packages
+required by the application, and so on until a fixed point is reached. Doing so
+is necessary just for functional completeness, so that the application has all
+the code it might execute readily and locally available.</p>
+
+<p>The package manager also needs to figure out the correct versions of all
+packages to install. That is because any practical package ecosystem doesn’t
+just distinguish between different packages, which usually have a descriptive
+name, but also distinguishes between different versions of a package.
+Accommodating different versions is necessary to accommodate ever-present
+change. Versions are usually named by a three-part hierarchical number. For
+example, Amazon recently released version 1.23.50 of its botocore Python library
+for accessing <abbr>AWS</abbr>. Remember that the third, least significant
+component of that version number is 50, i.e., the zero is meaningful and the
+preceding version is 1.23.49.</p>
+
+<p>When packages declare a requirement in their manifest, they provide a package
+name, a comparison operator, and a version number. For instance, the requirement
+“ <code>botocore &gt;= 1.19.21</code> ” indicates that the application or library
+requires version 1.19.21 or later of the botocore package. As I described in a
+<a href="/blog/2021/lets-try-again">previous blog post</a>, that is the first
+version to include a fully working implementation of the adaptive retry logic,
+which greatly simplifies the development of robust client code.</p>
+
+<p>Now another library may also depend on botocore but specify “ <code>botocore
+&gt;= 1.15.0</code> ” as a requirement. Now, since both requirements appear in
+the transitive closure of dependencies, our package manager must pick a version
+that meets both constraints — such as the larger of the two minima, which is
+version 1.19.21. Conversely, if the constraints cannot be satisfied by a single
+version, the package manager should report back with an error message that
+clearly states the unsatisfiable constraints, so developers can adjust the
+requirements.</p>
+
+<p>Picking a suitable version is rarely as easy as in the above example. First,
+determining the transitive closure of packages to install and resolving version
+constraints interfere with each other: different versions of a package may
+require different packages. Second, the problem of resolving version constraints
+is <a href="https://hal.inria.fr/hal-00697463"><abbr>NP</abbr></a>-<a
+href="https://research.swtch.com/version-sat">complete</a>. In other words,
+version satisfiability is one of many problems that are equivalent to each other
+and have no known efficient solution.</p>
+
+<p>At the same time, that class of problems has another, more helpful
+characteristic: when given a possible solution, we can efficiently verify
+whether the candidate is in fact a solution. In a pinch, then, we have a general
+but exponential time algorithm for computing a solution: enumerate all possible
+solutions (the expensive part) and verify each one of them (the efficient part).
+If a candidate holds up to scrutiny, we use that as the solution. If we run out
+of candidates, there is no solution. At least, that’s the theory.</p>
+
+<p>In practice, the dependency graphs formed by package requirements and their
+version constraints often aren’t that big, and hence even that exhaustive search
+remains computationally manageable. Also, there is nothing preventing us from
+being clever and using heuristics that tend to produce a result sooner than
+mindless enumeration (but won’t always work). Options include <a
+href="https://github.com/openSUSE/libsolv"><abbr>SAT</abbr> solvers</a>, which
+solve the equivalent problem of boolean satisfiability and have gotten darn good
+at doing so, in part thanks to <a href="http://www.satcompetition.org/">yearly
+competitions</a>, as well as <a
+href="https://pubgrub-rs-guide.netlify.app/internals/intro.html">domain-specific
+algorithms</a>.</p>
+
+<p>Alas, practice cannot escape theory: the cliff of worst-case exponential
+performance remains very real — as our hours-long pip runs illustrate. Worse,
+the <abbr>NP</abbr>-completeness of the problem domain becomes a barrier to
+developing other tools, such as our dependency checker.</p>
+
+<p>During development of some of the gnarlier analysis code in our dependency
+checker, I was seriously exploring the feasibility of extending a symbolic
+reasoning engine with a theory of version numbers. When that seemed a tad
+impractical for a weekend project, I started looking for package management
+algorithms that trade a reasonable loss in constraint expressivity for a gain in
+guaranteed performance. Lo and behold, I found Go’s module system, which
+restricts the expressivity of version constraints to no more than what’s
+required and gains predictable results computed in time linear to problem size
+in return.</p>
+
+<p>But before it gets better, it gets a whole lot worse.</p>
+</section>
+
+
+<section aria-labelledby=python-packaging>
+<h2 id=python-packaging>Python Packaging: From Dragons to Superfund Site</h2>
+
+<figure class=figure>
+<img srcset="/blog/2022/maps/python-environment-583x578.png 583w.
+             /blog/2022/maps/python-environment-983x974.png 983w"
+     sizes="609px" width="983" height="974"
+     src="/blog/2022/maps/python-environment-983x974.png"
+     alt="A surprisingly accessible but nonetheless busy graph illustrating the many ways Python can be installed">
+<figcaption>Python Packaging <time datetime=2018-04-30>April 2018
+<abbr>CE</abbr></time> (<a href="https://xkcd.com/1987/">xkcd.com</a>,<a
+href="https://creativecommons.org/licenses/by-nc/2.5/"><abbr>CC</abbr>
+<abbr>BY</abbr>-<abbr>NC</abbr> 2.5</a>)</figcaption>
+</figure>
+
+<p>The above xkcd comic provides an approximate map of possible Python
+installations for a computer. In doing so, it also provides a first indication
+that Python’s package ecosystem is quite a bit more complicated than others. In
+fact, if anything, the above map is too simplistic. Python has <a
+href="https://docs.python.org/3/library/sysconfig.html#installation-paths">six
+officially supported installation schemes</a>, each of which comprises eight
+different paths. So-called <a href="https://peps.python.org/pep-0405/">virtual
+environments</a> modify those paths even further and cross-compiling between
+environments is possible only <a
+href="https://discuss.python.org/t/towards-standardizing-cross-compiling/10357/23">with
+officially unsupported hacks</a>. The difficulties don’t stop there. Additional
+complicating factors, roughly ordered from less to more severe, include:</p>
+
+<ul>
+
+<li>Version numbers have <a href="https://peps.python.org/pep-0440/">several
+uncommon attributes</a>, notably epochs and post releases, that complicate
+reasoning about versions without providing any additional expressivity.</li>
+
+<li>Version constraints support an uncommon operator, the <a
+href="https://peps.python.org/pep-0440/#arbitrary-equality">arbitrary
+equality</a> operator <code>===</code>, that has Python semantics and thus is
+hard to model outside a Python interpreter.</li>
+
+<li><a href="https://peps.python.org/pep-0508/#environment-markers">Environment
+markers</a> further constrain requirements to, say, specific Python versions,
+Python interpreters, or operating systems. The number of distinct such
+environments deepens the complexity of dependency analysis.</li>
+
+<li>Version numbers have no semantics, <a
+href="https://peps.python.org/pep-0440/#version-scheme">only an ordering</a>.
+While that fulfills the minimum requirements for version satisfiability being
+computable, it also does not help with gauging the impact of any version
+increase. That, in turn, results in highly confusing scenarios — such as the one
+described above, where a patch release of Python (3.8.10) contains a minor
+release of pip (20.3) that includes a groundbreaking, completely
+backwards-incompatible feature.</li>
+
+<li>Packages traditionally do <em>not</em> include <a
+href="https://peps.python.org/pep-0508/">their dependencies</a> with the
+metadata. One must first download and build the package. This considerably slows
+down version selection and wastes tremendous network and package registry
+resources.</li>
+
+<li>Packages traditionally specify their <a
+href="https://setuptools.pypa.io/en/latest/userguide/quickstart.html#transitioning-from-setup-py-to-setup-cfg">metadata
+in code</a>, not in data. That makes it nearly impossible to extract the
+metadata without running arbitrary code, including package-specific
+plugins.</li>
+
+</ul>
+
+<p>What you get is a package ecosystem with a poor developer experience that
+makes tool building much harder than necessary. Worse, the ecosystem saw few
+improvements during Python’s “lost decade” — when most packages supported two
+incompatible versions of the language and which lasted, roughly, from the first
+production release of Python 3 in <time datetime=2008-12-03->December
+2008</time> to the last production release of Python 2 in <time
+datetime=2020-04-20>April 2020</time>.</p>
+
+<p>Thankfully, things are improving as of late and the rate of improvement is
+seemingly accelerating. Notably, support for <a
+href="https://peps.python.org/pep-0518/">pluggable build backends</a> and the
+definition of a more realistic <a
+href="https://peps.python.org/pep-0621/">common metadata standard</a> are
+significant steps towards a simpler Python package ecosystem.</p>
+
+<p>Still, Python could do so much better if it rid itself of much of this cruft
+more aggressively while also rethinking foundational aspects more radically.</p>
+
+<p>The site-specific map-making effort <a
+href="/blog/2022/your-own-kind-of-map">described in part two of this blog
+series</a> will serve as partial proof of concept that doing so is feasible and
+has significant upsides.</p>
+</section>
+
+
+<footer class=about-this-page>
+
+<p>This article was originally published on <a
+href="https://enigma.com/blog/post/mapping-the-world-of-package-management">Enigma’s
+blog</a>. The original is a fairly heavyweight web application that uses
+JavaScript to generate some semblance of <abbr>HTML</abbr> from embedded
+<abbr>JSON</abbr> data. This version is a more lightweight, static webpage with
+semantic and accessible markup as well as clean typography. It also includes
+minor edits for clarity.</p>
+</footer>
+
+
+</article>
+</main>

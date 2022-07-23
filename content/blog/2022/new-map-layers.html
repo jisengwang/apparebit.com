@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exploring New Map Layers • Apparebit</title>
+<link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async type="module" src="/assets/function.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="/assets/form.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
+<link rel="manifest" href="/assets/apparebit.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
+<meta property="og:title" content="Exploring New Map Layers">
+<meta name="description" content="Social and Economic Aspects of Package Management">
+<meta property="og:description" content="Social and Economic Aspects of Package Management">
+<link rel="canonical" href="https://apparebit.com/blog/2022/new-map-layers">
+<meta property="og:url" content="https://apparebit.com/blog/2022/new-map-layers">
+<meta property="og:image" content="https://apparebit.com/assets/images/apparebit-1200x630.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="“apparebit” in high-contrast serif letters">
+<meta name="author" content="Robert Grimm">
+<meta property="article:author" content="https://facebook.com/apparebit">
+<meta property="fb:app_id" content="301854043178629">
+<meta property="og:site_name" content="Apparebit">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apparebit">
+<meta name="twitter:creator" content="@apparebit">
+<meta name="theme-color" content="#f3f4f6" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apparebit.com/blog/2022/new-map-layers"
+  },
+  "headline": "Exploring New Map Layers",
+  "image": [
+    "https://apparebit.com/assets/images/apparebit-1200x630.jpg"
+  ],
+  "datePublished": "2022-06-23",
+  "author": {
+    "@type": "Person",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apparebit.com/assets/a-circle.svg"
+    }
+  },
+  "description": "Social and Economic Aspects of Package Management"
+}
+</script>
+</head>
+<body class=reforma>
+
+<nav class="page-header">
+<ul role=list>
+<li><a rel=home href="/">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
+<span class=invisible>Home</span>
+</a></li>
+<li><a href="/blog">Blog</a></li>
+</ul>
+</nav>
+
+<main class=h-entry>
+<article class=e-content>
+<header>
+<hgroup class=title>
+<h1 class=p-name>Exploring New Map Layers</h1>
+<h2>Social and Economic Aspects of Package Management</h2>
+</hgroup>
+<div class=byline>
+  <address>
+    <a class="p-author h-card" rel=author href=https://apparebit.com>Robert Grimm</a>
+  </address>
+  <time class=dt-published datetime=2022-06-23>June 23, 2022</time>
+</div>
+</header>
+
+<section aria-labelledby=introduction>
+<h2 id=introduction hidden>Introduction</h2>
+
+<p>This is the final post in a three-part series on the wondrous world of
+package management. <a
+href="https://enigma.com/blog/post/package-management-make-your-own-kind-of-map">Catch
+up on post #2 here</a> if you missed it.</p>
+
+<p>So far along our journey through the world of package management, we’ve
+stayed focused mostly on the major technical challenges. For most of us software
+engineers, that falls squarely within our comfort zone and we might be tempted
+to stay put. That would be a major mistake.</p>
+
+<p>If you tried to identify what makes Go’s package ecosystem simpler and more
+usable, you’d probably start by listing some technical achievements: first, Go’s
+package manager has the benefit of hindsight after observing the consequences of
+building on an <abbr>NP</abbr>-complete package resolution algorithm. Second,
+Go’s alternative algorithm is <a
+href="https://research.swtch.com/vgo-mvs#theory">a genuinely clever one</a> that
+maximizes what’s possible with a linear time algorithm.</p>
+
+<p>But neither point comes close to explaining why Go’s approach works in
+practice and has been accepted by its community. To do that, you’d have to look
+at the social practices around maintaining and consuming software packages —
+which inform the design of Go’s package ecosystem throughout.</p>
+
+<p>In this post, we’ll shift away from the mostly technical discussion and
+instead talk about two additional map layers in the world of package management:
+the social and economic considerations. Both layers cover the entire world of
+package management and hence are critical for understanding it. They differ in
+that social aspects serve as dragonbane, whereas economic aspects serve as
+dragonwort.</p>
+</section>
+
+
+<section aria-labelledby=dragonbane>
+<h2 id=dragonbane>Dragonbane: Social Aspects of Package Management</h2>
+
+<div class=with-inset>
+<figure class=inset-right>
+<img src="/blog/2022/maps/anaximander.svg"
+alt="A fairly coarse but recognizable representation of the Mediterranean and Black Seas with surrounding lands">
+<figcaption>Anaximander’s map, 610–546 <abbr></abbr>BCE (<a
+href="https://commons.wikimedia.org/wiki/File:Anaximander_world_map-en.svg">Wikimedia</a>)</figcaption>
+</figure>
+
+<p>In part two, you’ll recall that we built a dependency checker to identify
+version constraints in our repositories, and that we got pushback within the
+team against fixing every single affected repository. That contention deserves
+further exploration because, by focusing on what matters, we hopefully can draw
+a better map of package management. That way, we might just be able to follow
+the footsteps of Anaximander, who over 1,110 years <em>before</em> Isidore of
+Seville drew a map of the world that is significantly more accurate and detailed
+— as you can see in the contemporary reconstruction to the side. The center of that map
+happens to be Miletus, Anaximander’s home.</p>
+</div>
+
+<p>Package management became a thing <a
+href="https://en.wikipedia.org/wiki/Package_manager#History">during the early
+days of open source</a>, between 1993 and 1994 <abbr>CE</abbr>, largely as a
+more humane alternative to building software yourself and for the FreeBSD,
+Linux, and OpenBSD operating systems as well as the Perl programming language —
+all of which are open source. Open source software eliminates some aspects of
+commercial software distribution, such as payment processing or copy protection,
+that significantly complicate the latter. But it also requires significant user
+expertise, involves many more stakeholders across many more organizations, and
+has attendant technical, operational, legal, and economic risks. With this
+understanding, package managers primarily help with coordination and risk
+management. It’s only by doing so that they enable the fine-grained composition
+of software components (“packages”).</p>
+
+<p>In other words: <em>Package managers are tools for addressing social
+problems</em>!</p>
+
+<p>In his <a
+href="https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527">blog
+post on package management</a>, Sam Boyer presents package managers as tools
+that seek to minimize harm in the presence of significant risks and
+uncertainties. He builds on <a
+href="https://jvns.ca/blog/2014/11/18/harm-reduction-for-developers/">a blog
+post</a> by Julia Evans, which probably first applied the concept of
+<em>harm reduction</em> to software development practices. Harm reduction is the
+proven public health practice that seeks to make undesired outcomes from, say,
+recreational drug use, more unlikely instead of rigidly rejecting anything but
+abstinence as acceptable behaviors. Boyer argues that’s also the primary
+function of a package manager.</p>
+
+<p>While I believe that Evans and Boyer make a convincing case, I would like to
+offer a second, complementary perspective: package management is an exercise in
+communicating and managing expectations. When compared to other engineering
+disciplines, software development stands out for its constant and far more rapid
+change. So a primary criterion for development tools is whether they help manage
+that change and isolate humans from negative consequences as much as
+possible.</p>
+
+<p><a href="https://semver.org/">Semantic versioning</a> is a great example of a
+convention that does just that: a patch release implies a bug fix, a minor
+version release implies new features, and a major version release implies
+backwards-incompatible changes. But communicating the latter is not enough:
+backwards-incompatible changes are almost guaranteed to cause significant work
+and disruption. Go’s package manager builds on that insight and shifts some of
+the pain of major version releases back to where it belongs: to the package
+maintainers instead of the package consumers.</p>
+
+<p>The contrast to Python’s package ecosystem is stark. Many of the standards
+for Python’s package ecosystem, including those for version numbers and
+constraints, really are piecemeal green-field exercises in specification writing
+that aren’t anchored in practical requirements but optimize for abstract notions
+such as extensibility and flexibility. That’s bad enough but, worse, the
+maintainers of the primary package manager, pip, do not even use their own
+tool.</p>
+
+<p>The practice of using one’s own tools — so-called <em>dog-fooding</em> — is
+an important systems-building practice because it provides the developers with
+feedback early and often. I have certainly used it while building <a
+href="https://dl.acm.org/doi/10.1145/1133981.1133987">my parser generator
+featuring modular syntax</a>. It is also used by cargo, the package manager for
+Rust; maven, the package manager for Java; as well as npm and yarn, the package
+managers for JavaScript. It is a tremendous missed opportunity for pip’s
+developers and it probably explains many of the peculiarities and pathologies of
+the Python package ecosystem.</p>
+</section>
+
+
+<section aria-labelledby=dragonwort>
+<h2 id=dragonwort>Dragonwort: Economic Considerations</h2>
+
+<figure class=figure>
+<img src="/blog/2022/maps/hecataeus.svg" alt="A far more accurate representation of the Mediterranean and Black Seas with surrounding lands">
+<figcaption>Hecataeus’ map, 550–476 <abbr></abbr>BCE (<a
+href="https://en.wikipedia.org/wiki/File:Hecataeus_world_map-en.svg">Wikimedia</a>)</figcaption>
+</figure>
+
+<p>We are on a roll mapping out the non-technical challenges of package
+management. So in the spirit of Hecataeus — who significantly improved on
+Anaximander’s work in mapping the world around Miletus, again shown in a
+contemporary reconstruction — it’s time to explore economic aspects of package
+management.</p>
+
+<p>Most package ecosystems don’t just trade in open source projects but also do
+so under the permissive <a
+href="https://opensource.org/licenses/MIT"><abbr>MIT</abbr></a> and <a
+href="https://opensource.org/licenses/Apache-2.0">Apache 2.0</a> licenses —
+reaching almost 63% of packages, <a
+href="https://www.whitesourcesoftware.com/resources/blog/open-source-licenses-trends-and-predictions/">according
+to one recent survey</a>. That makes using these same open source packages an
+attractive proposition for corporations as well. As a direct result and not
+surprisingly, package managers have become a standard tool for software
+development in general. To leverage this critical infrastructure for commercial
+software development, enterprises such as Enigma interface with the commons
+through a private proxy that is backed by the public registry. Internal packages
+are published to the proxy only, which ensures that they remain invisible to the
+outside world.</p>
+
+<p>For instance, our small business data processing pipeline integrates 220
+external open source Python packages that way — 63 of which are direct
+dependencies of our internal tasks and libraries. The relatively small number of
+external dependencies probably is a result of our pipeline using a few huge
+packages, including NumPy, Pandas, and PySpark that cover most needs.
+Furthermore, Python developers thankfully don’t tend to follow the micro-package
+dogma of, say, Node.js’ package ecosystem. For comparison, I wrote the custom
+static website generator for my personal website — a much simpler piece of
+software — in Node.js and very much sought to minimize external dependencies,
+preferring to code as much as I could myself. Yet my static website generator
+still requires 375 external packages.</p>
+
+<p>That a gift economy would become foundational to the hyper-capitalist
+technology industry is nothing short of astonishing. It certainly helps that,
+thanks to the unprecedented rate of change in computing technology, source code
+by itself, when not maintained by engineers, rapidly diminishes in economic
+value. At the same time, the contrast between the collaborative open source
+commons and the highly competitive industry it enables has also resulted in <a
+href="https://www.forbes.com/sites/davidjeans/2021/03/01/elastic-war-on-amazon-web-services/?sh=19cd49673dbf">contentious
+and even exploitative practices</a>. One outcome is that relatively simple
+or low-level libraries serving as convenient but nonessential building blocks
+are shared liberally — hence the increasing fraction of packages using
+permissive open source licenses. Yet complete and sophisticated services such as
+databases or search engines are shared only <a
+href="https://techcrunch.com/2018/11/29/the-crusade-against-open-source-abuse/">under
+newly restrictive licenses</a>.</p>
+
+<p>Some developers of open source software <a
+href="https://www.zdnet.com/article/some-developers-are-fouling-up-open-source-software/">are
+increasingly chafing</a> at these economic disparities and have taken to <a
+href="https://web.archive.org/web/20210704022108/https://github.com/Marak/faker.js/issues/1046">sabotaging
+their own packages</a>, for example, by removing all source code from the
+repository or by replacing a package’s functionality by something less useful if
+not outright dangerous. That has resulted in considerable disruption especially
+within the Node.js ecosystem — with much anger directed at responsible
+developers. Personally, I can empathize with the frustration felt by developers
+protesting against such exploitation and also by developers cleaning up the
+resulting messes. But therein lies the rub: the pain of disruption caused by
+developers who protest is largely felt by other package developers—not by the
+company executives and venture capitalists who are empowered to correct the
+disparities.</p>
+
+<p>Thankfully, a well-designed package manager can help you mostly avoid
+confrontation with these particular dragons. However, npm did not. Its
+centralized registry saw <a
+href="https://changelog.com/posts/npm-keep-running-keep-awesome">a tenfold
+increase</a> in load from November 2012 to October 2013. It almost broke the
+ecosystem at that time. The unique solution taken by npm’s primary developer and
+copyright holder of the source code was to create a company backed by venture
+capital. That worked for a while but caused significant strife several years
+later. <a href="https://changelog.com/founderstalk/61">npm Inc’s former
+<abbr>CEO</abbr> tells one story</a> and <a
+href="https://github.com/ceejbot/economics-of-package-management">npm Inc’s
+employee #2 tells quite another</a>. Both are very interesting. In contrast,
+the design of Go’s package ecosystem dispensed with package distribution for its
+registry. That significantly reduces operating costs and eliminates one source
+of contention.</p>
+
+<p>Alas, by now, 2022 <abbr>CE</abbr>, the npm registry and much of the code for
+the Go programming language are at least mirrored by Microsoft’s GitHub, the
+most popular open source commons. Microsoft is also responsible for the
+development of the most popular open source <abbr>IDE</abbr>, Visual Studio
+Code, as well as the most popular cross-platform application runtime, Electron.
+For good measure, it optionally ships the Linux open source operating system as
+a subsystem of Windows. If you knew the Microsoft of the late 1990s and early
+2000s, that’s quite a turnaround. In any case, it means that all software
+development now critically depends on Microsoft.</p>
+
+<p>Then again, when you consider that the Olympic mountains to the west of
+Microsoft’s headquarters in Redmond, <abbr>WA</abbr> and the Cascade mountains
+to the east make for ideal dragon breeding grounds, that development isn’t too
+surprising.</p>
+</section>
+
+
+<section aria-labelledby=conclusion>
+<h2 id=conclusion>Conclusion</h2>
+
+<p>Across a series of <a href="/blog/2022/mapping-package-management">three</a>
+<a href="/blog/2022/your-own-kind-of-map">blog</a> <a
+href="/blog/2022/new-map-layers">posts</a>, I made four major points:</p>
+
+<p>First, it is possible to rein in dependency hell, even in Python, and without
+a monorepo. It took us only a little more than 2,600 lines of code (not counting
+tests).</p>
+
+<p>Second, building a package ecosystem on an <abbr>NP</abbr>-complete version
+satisfiability algorithm is madness, especially now that we know a much better
+alternative. If you are involved in maintaining a package manager, it’s time to
+switch to Go’s much saner design.</p>
+
+<p>Third, while we software engineers love to engineer ourselves out of every
+challenge, we’d be well-advised to be more cognizant of social and economic
+factors first. They make a huge difference.</p>
+
+<p>Finally, we address interesting engineering challenges here at Enigma. You
+might want to consider <a href="https://enigma.com/careers">joining us</a>.</p>
+
+<p>🐲 <em>Disclaimer</em>: No dragons were harmed during the development of our
+dependency checker tool or the writing of this series. Enigma practices a strict
+catch-and-release program under supervision of <a
+href="https://www.youtube.com/watch?v=3jF6CvARwqA">Rubeus Hagrid</a> and
+the <a href="https://www.worldwildlife.org/">World Wildlife Fund</a>.</p>
+</section>
+
+
+<footer class=about-this-page>
+<p>This article was originally published on <a
+href="https://enigma.com/blog/post/package-management-exploring-new-map-layers">Enigma’s
+blog</a>. The original is a fairly heavyweight web application that uses
+JavaScript to generate some semblance of <abbr>HTML</abbr> from embedded
+<abbr>JSON</abbr> data. This version is a more lightweight, static webpage with
+semantic and accessible markup as well as clean typography. It also includes
+minor edits for clarity.</p>
+</footer>
+
+</article>
+</main>

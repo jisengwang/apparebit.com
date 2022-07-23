@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Make Your Own Kind of Map • Apparebit</title>
+<link rel="preload" href="/assets/fonts/bely-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script async type="module" src="/assets/function.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="/assets/form.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/a-circle-32x32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/a-circle-512x512.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="/assets/icons/a-circle-192x192.png">
+<link rel="manifest" href="/assets/apparebit.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/a-circle.svg">
+<meta property="og:title" content="Make Your Own Kind of Map">
+<meta name="description" content="Simple Tooling for Simpler Package Management">
+<meta property="og:description" content="Simple Tooling for Simpler Package Management">
+<link rel="canonical" href="https://apparebit.com/blog/2022/your-own-kind-of-map">
+<meta property="og:url" content="https://apparebit.com/blog/2022/your-own-kind-of-map">
+<meta property="og:image" content="https://apparebit.com/assets/images/apparebit-1200x630.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="“apparebit” in high-contrast serif letters">
+<meta name="author" content="Robert Grimm">
+<meta property="article:author" content="https://facebook.com/apparebit">
+<meta property="fb:app_id" content="301854043178629">
+<meta property="og:site_name" content="Apparebit">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apparebit">
+<meta name="twitter:creator" content="@apparebit">
+<meta name="theme-color" content="#f3f4f6" data-fallback="#e5e6e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apparebit.com/blog/2022/your-own-kind-of-map"
+  },
+  "headline": "Make Your Own Kind of Map",
+  "image": [
+    "https://apparebit.com/assets/images/apparebit-1200x630.jpg"
+  ],
+  "datePublished": "2022-06-22",
+  "author": {
+    "@type": "Person",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Robert Grimm",
+    "url": "https://apparebit.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apparebit.com/assets/a-circle.svg"
+    }
+  },
+  "description": "Simple Tooling for Simpler Package Management"
+}
+</script>
+</head>
+<body class=reforma>
+
+<nav class="page-header">
+<ul role=list>
+<li><a rel=home href="/">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 100 100"><path d="M88.1 93.6V41.8c0-27-12.5-40.5-36-40.5C33.4 1.3 19.5 8.9 6.8 23l1 1A31 31 0 0128.2 17c14.2 0 22.4 10.3 22.4 30.8-31 3.4-49.3 14.8-49.3 32 0 11.8 8.2 18.7 20.4 18.7 10.2 0 20.2-5 29-12.5v10.6h46.7v-3H88zM46.4 84c-7.4 0-11.2-4.7-11.2-13.4 0-10 4.3-17 15.5-20.2v33c-1.6.4-3.1.6-4.3.6z"/></svg>
+<span class=invisible>Home</span>
+</a></li>
+<li><a href="/blog">Blog</a></li>
+</ul>
+</nav>
+
+<main class=h-entry>
+<article class=e-content>
+<header>
+<hgroup class=title>
+<h1 class=p-name>Make Your Own Kind of Map</h1>
+<h2>Simple Tooling for Simpler Package Management</h2>
+</hgroup>
+<div class=byline>
+  <address>
+    <a class="p-author h-card" rel=author href=https://apparebit.com>Robert Grimm</a>
+  </address>
+  <time class=dt-published datetime=2021-10-12>June 22, 2022</time>
+</div>
+</header>
+
+
+<section aria-labelledby=introduction>
+<h2 id=introduction hidden>Introduction</h2>
+
+<p>This is post #2 in a series. If you missed the first, <a
+href="/blog/2022/mapping-package-management">read it here</a>.</p>
+
+<p>Welcome back to the wondrous world of package management.</p>
+
+<p>You’ll recall we started exploring this world after pip, Python’s package
+manager, switched to a new package resolver that strictly adheres to version
+constraints and package installation suddenly might take hours when before it
+took seconds.</p>
+
+<p>Our exploration revealed a big world of harsh terrain that’s infested with
+dragons and all kinds of other ferociously dangerous critters. Yet there are few
+maps of this world and they all suffer from significant inaccuracies and
+omissions. So we channeled our inner Isidore of Seville and set out to more
+completely and accurately map the world of package management.</p>
+
+<p>In this second installment, we’ll talk about why you should maintain your own
+custom maps and leverage them to prevent dragon infestations. And I’ll share
+how, to solve the dilemma that started this quest, we transformed a simple
+script for extracting package requirements from 34 version control repositories
+into a checking tool that is based on the dragon-repellent design of Go’s
+package manager and validates every merge request for those 34
+repositories.</p>
+</section>
+
+
+<section aria-labelledby=the-evolution>
+<h2 id=the-evolution>The Evolution of Enigma’s Package Dependency Checker Tool</h2>
+
+<figure class=figure>
+<img srcset="/blog/2022/maps/dependency-doodle-609x226.png 609w,
+             /blog/2022/maps/dependency-doodle-1218x452.png 1218w,
+             /blog/2022/maps/dependency-doodle-2356x875.png 2356w"
+     sizes="609px" width="1218" height="452"
+     src="/blog/2022/maps/dependency-doodle-1186x440.jpg">
+<figcaption>Part of pipeline’s package dependency graph as visualized by
+Graphviz 2022 <abbr>CE</abbr></figcaption>
+</figure>
+
+<p>I hope that you agree by now that Python package management is like catnip
+for dragons or dragonwort and hence irresistible to those ferocious buggers. But
+that knowledge — by itself — doesn’t really help us.</p>
+
+<p>As we covered in the first post, I set out to locate the specific dragons
+hiding amongst the Python package requirements of the 15 tasks and 19 internal
+libraries in our small business data processing pipeline and wrote a script to
+avoid the tedium of manually inspecting 34 repositories. The first version of
+the script already used the GitLab <abbr>API</abbr> to extract each project’s
+requirements files as well as Artifactory’s <abbr>API</abbr> to extract the list
+of internal distributions. It then parsed the requirements, combined them into a
+global dependency graph, and tried to generate a visual representation with the
+<a href="https://graphviz.org/">Graphviz tool</a>.</p>
+
+<p>Alas, that first version also had three minor shortcomings: The code was
+rough. There were no tests. It didn’t work.</p>
+
+<p><em>Ahem</em>—let’s be more precise: after some initial effort, Graphviz did
+produce a faithful visual representation of the dependency graph. But as you can
+see above, that representation had an uncanny resemblance to an angry toddler’s
+doodle. Reorienting the drawing order from Graphviz’s default top-down to
+left-right, sorting nodes in topological order (graphlib in Python’s standard
+library is truly awesome), and then declaring nodes before edges all improved
+visual clarity. But the resulting graph still wasn’t actually useful: it now
+resembled a high school student’s first technical drawing assignment — after
+that student got so frustrated two-thirds through, they went into
+angry-toddler-doodling mode. It appears that our package dependency graph simply
+is too complicated for visual representation.</p>
+
+<p>Luckily, my tech lead had run the script himself and noticed that it was also
+generating two text files. I had added generation logic for debugging purposes,
+with both files formatted in glorious Markdown. One file listed the dependency
+graph just as in <code>requirements.txt</code> files, that is, all dependents
+organized by dependee or required organized by requirer, and the other file
+listed the graph organized by dependents, listing the dependees or requirers.
+That second file turned out to be the perfect dragonbane by making the
+identification of inconsistent requirements trivial: it listed all version
+constraints for the same package, one under the other.</p>
+
+<p>I created the necessary issues for manually cleaning up the
+<code>requirements.txt</code> files and, over the next few sprints, the entire
+team chipped in to get them done. We even beat our internal deadline, thanks to
+my script and because our dragon infestation was smaller than we feared — as it
+turns out, dragons produce a lot of smoke but not that much fire.</p>
+
+<p>With that infestation handled, Enigma’s <abbr>CTO</abbr> immediately asked
+how we planned to prevent recurrences. Thus the project scope grew to include a
+checking tool that would run as part of every merge request and keep
+requirements consistent. That implied three areas for improvement:</p>
+
+<ul>
+
+<li>First, we needed internal consistency checks, since the dependency checker
+relied on a manually configured list of pipeline repositories and such secondary
+sources of truth have the annoying habit of becoming inconsistent with reality.
+That may still happen with the consistency checks in place, but the tool fails
+with an error message identifying the package missing from the internal package
+list.</li>
+
+<li>Second, we needed a better graph representation with a uniform
+representation for edges to simplify traversal of the dependency graph in both
+directions, i.e., from dependent to dependee and from dependee to
+dependent.</li>
+
+<li>Third, we needed unit tests, ideally lots of them.</li>
+
+</ul>
+
+<p>While we worked on making those changes a reality, I explored what exact
+checks our dependency checker tool should enforce over a weekend. Given that
+Python’s version satisfiability is <abbr>NP</abbr>-complete, I considered
+building a symbolic reasoning engine on top of the <a
+href="https://www.sympy.org/en/index.html">SymPy package</a> but realized
+that option was far too ambitious. Then I recalled seeing <a
+href="https://research.swtch.com/vgo">Russ Cox’s series of blog posts</a>
+on Go’s module system a few months prior and revisited them, poring over the
+gory details.</p>
+
+<p>Go’s package manager makes a novel trade-off between the expressivity of the
+version constraints and computational complexity, while also producing
+predictable results. Its starting point is <a
+href="https://semver.org/">semantic versioning</a>, which provides clear rules
+for version number increases: increment the third, patch number for bug fixes,
+the second, minor number for new features, and the first, major number for
+backwards-incompatible changes. It then imposes four more restrictions:</p>
+
+<ul class=tight>
+
+<li>Version constraints are limited to minimum version constraints, i.e., the
+<code>&gt;=</code> operator in Python.</li>
+
+<li>Major version updates require that the name of the package be changed as
+well. This corresponds to an implied maximum version constraint on the next
+major version.</li>
+
+<li>Applications may additionally pin or exclude specific versions; these extra
+constraints are ignored when the same package is used as a library.</li>
+
+<li>Instead of picking the latest package version, which may change over time,
+Go’s package manager always picks the oldest version fulfilling the version
+constraints.</li>
+
+</ul>
+
+<p>None of these restrictions are onerous. The rules of semantic versioning are
+simple enough. Minimum version constraints are sufficient for capturing the
+features and bug fixes required for a package. Major version upgrades are
+already difficult and always require care, only now package maintainers feel
+more of the pain of backwards-incompatible changes — just as it should be. And
+appending, say, “v2” to the name of your package isn’t too difficult either.</p>
+
+<p>At the same time, the benefits are tremendous: semantic versioning clearly
+communicates the expected impact of a package update. Go’s package manager can
+compute suitable versions in linear time (which is much faster than for
+<abbr>NP</abbr>-complete algorithms). It always arrives at the same solution,
+even if new package versions have been released in the meantime.</p>
+
+<p>Fantastic! I found a realistic blueprint for realistic package management.
+But given the realistic engineering constraints of a startup, I had to make some
+pragmatic choices in realizing this blueprint. So I decided to punt on minimum
+version selection for now. Writing a wrapper script for pip would have to wait
+for another day.</p>
+
+<p>I also decided to limit Python’s environment markers to constraining Python
+versions only and to partitioning the version space into two. A quick glance at
+the output of the dependency checker reassured me that this restriction was
+realistic and wouldn’t break any of our existing uses of environment markers.
+The restriction implies that checking the consistency of version constraints on
+a given package may have to be performed twice, once for each partition.</p>
+
+<p>Finally, I decided to stick to the Go blueprint when it comes to version
+constraints and to allow minimum version constraints on release versions only,
+with an optional maximum version constraint on the next major version and no
+dev, pre, and post versions.</p>
+
+<p>The resulting dependency checker tool comprises a little more than 2,600
+lines of well-documented Python code (not counting tests) and has been running
+in continuous integration for a couple of months now in advisory mode. During
+that time, we fixed at least one bug — our ontology contains data, not code, and
+thus does not require dependency checking — and some but not all of the reported
+errors.</p>
+
+<p>At the time of writing this blog post, 21 out of 34 repositories still
+include some non-compliant version constraints. Because there are so many
+affected repositories and fixing them all would require a clear commitment, some
+engineers have argued to just cut our losses and loosen the restrictions
+enforced by the tool.</p>
+
+<p>The primary cause of contention is Python’s compatible release operator ~=.
+It really is syntactic sugar for a pair of minimum and maximum version
+constraints. That works out well when the operator is applied to a version
+number consisting of major and minor version only, since, say,
+<code>~=3.4</code> translates to <code>&gt;=3.4, &lt;4.0</code> or
+<code>&gt;=3.4.0,</code> <code>&lt;4.0.0</code> and thus is perfectly consistent
+with Go’s restrictions. But when the compatible release operator is applied to a
+version number consisting of a patch version too, it is inconsistent with those
+same restrictions. For instance, <code>~=3.4.5</code> translates to
+<code>&gt;=3.4.5,</code> <code>&lt;3.5.0</code>, i.e., includes a maximum
+version constraint on the minor version. The latter case makes up the vast
+majority of remaining errors reported by our dependency checker tool.</p>
+
+<p>The pushback against fixing every affected repository serves as a useful
+reminder that enabling a new coding tool is only the beginning of the deployment
+process. It also requires generating buy-in from developers. In fact, we might
+just conclude that package management isn’t only a technical challenge but also
+a social one.</p>
+
+<p>That’s just the topic of the <a href="/blog/2022/new-map-layers">third blog
+post in this series</a>.</p>
+</section>
+
+
+<footer class=about-this-page>
+<p>This article was originally published on <a
+href="https://enigma.com/blog/post/package-management-make-your-own-kind-of-map">Enigma’s
+blog</a>. The original is a fairly heavyweight web application that uses
+JavaScript to generate some semblance of <abbr>HTML</abbr> from embedded
+<abbr>JSON</abbr> data. This version is a more lightweight, static webpage with
+semantic and accessible markup as well as clean typography. It also includes
+minor edits for clarity.</p>
+</footer>
+
+
+</article>
+</main>
