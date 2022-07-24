@@ -497,79 +497,85 @@ dfn {
 
 main {
   display: block;
-  margin-bottom: var(--s03);
 }
 
 :where(main) :where(header, section, .section, footer) {
   display: grid;
   grid-template-columns:
     [view-start wide-start figure-start]
-    var(--min-margin)
-    [margin-start text-start]
-    minmax(0, var(--max-measure))
-    [text-end margin-end]
-    var(--min-margin)
+         var(--min-margin)
+    [margin-start text-start narrow-start]
+         minmax(0, var(--max-measure))
+    [narrow-end text-end margin-end]
+         var(--min-margin)
     [figure-end wide-end view-end];
 }
 
-/* calc((var(--max-measure) + 2 * var(--min-margin)) * 131.25%)*/
-@media (min-width: 39.375em) {
+/* calc((var(--max-measure) - 2 * var(--s30)) * 131.25% + 118.75%) */
+@media (min-width: 30.39em) {
   :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
       [view-start wide-start]
-      var(--min-margin)
-      [margin-start]
-      1fr
-      [figure-start text-start]
-      minmax(0, var(--max-measure))
-      [text-end figure-end]
-      1fr
-      [margin-end]
-      var(--min-margin)
+          var(--min-margin)
+      [margin-start figure-start text-start]
+          minmax(0, 1fr)
+      [narrow-start]
+          calc(var(--max-measure) - 2 * var(--s30))
+      [narrow-end]
+          minmax(0, 1fr)
+      [text-end figure-end margin-end]
+          var(--min-margin)
       [wide-end view-end];
   }
 }
 
-/* calc((var(--max-measure) + 2 * var(--s50) + 2 * var(--min-margin)) * 131.25%) */
-@media (min-width: 59.31em) {
+/* calc(var(--max-measure) * 131.25% + 118.75%) */
+@media (min-width: 39.25em) {
   :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
-      [view-start]
-      var(--min-margin)
+      [view-start wide-start]
+          var(--min-margin)
       [margin-start]
-      1fr
-      [wide-start]
-      var(--s50)
+          minmax(0, 1fr)
       [figure-start text-start]
-      minmax(0, var(--max-measure))
+          var(--s30)
+      [narrow-start]
+          calc(var(--max-measure) - 2 * var(--s30))
+      [narrow-end]
+          var(--s30)
       [text-end figure-end]
-      var(--s50)
-      [wide-end]
-      1fr
+          minmax(0, 1fr)
       [margin-end]
-      var(--min-margin)
-      [view-end];
+          var(--min-margin)
+      [wide-end view-end];
   }
 }
 
-/*@media print {
+/* calc((var(--max-measure) + 2 * var(--s50)) * 131.25% + 118.75%) */
+@media (min-width: 59.18em) {
   :where(main) :where(header, section, .section, footer) {
     grid-template-columns:
-    [view-start]
-    var(--min-margin)
-    [margin-start]
-    1fr
-    [wide-start]
-    calc(2 * var(--s50))
-    [figure-start text-start]
-    minmax(0, var(--max-measure))
-    [text-end figure-end]
-    [wide-end]
-    [margin-end]
-    var(--min-margin)
-    [view-end];
+      [view-start]
+          var(--min-margin)
+      [margin-start]
+          minmax(0, 1fr)
+      [wide-start]
+          var(--s50)
+      [figure-start text-start]
+          var(--s30)
+      [narrow-start]
+          calc(var(--max-measure) - 2 * var(--s30))
+      [narrow-end]
+          var(--s30)
+      [text-end figure-end]
+          var(--s50)
+      [wide-end]
+          minmax(0, 1fr)
+      [margin-end]
+          var(--min-margin)
+      [view-end];
   }
-}*/
+}
 
 :where(main) :where(header, section, .section, footer) > * {
   grid-column: text;
@@ -589,7 +595,7 @@ main {
  */
 :where(main)
    :where(blockquote, figure, ol, p, pre, ul, .with-inset)
- + :where(blockquote, figure, ol, p, pre, ul),
+ + :where(blockquote, figure, ol, p, pre, ul, .with-inset),
 main li + li {
   margin-top: var(--margin-text-top);
 }
@@ -710,8 +716,17 @@ a:focus > picture, a:hover > picture {
  * .about-this-page
  * -------------------------------------------------------------------------- */
 
+.about-this-page::before {
+  grid-column: text;
+  content:  '⁂';
+  font-style: normal;
+  font-size: var(--t05);
+  text-align: center;
+  margin-top: var(--s10);
+  margin-bottom: var(--s10);
+}
+
 .about-this-page {
-  margin-top: var(--s20);
   font-style: italic;
 }
 
@@ -798,17 +813,8 @@ b {
   background-size: 100vw;
 }
 
-/*
- * calc(
- *     var(--max-measure) +
- *     2 * var(--s40) +
- *     2 * var(--min-margin)
- * ) = 29em + 2 * 5.0625em + 1em = 40.125em
- *
- * Adjusted for font size:
- * 40.125em * 131.25% = 52.664em
- */
-@media (min-width: 52.664em) {
+/* calc((var(--max-measure) + 2 * var(--s40)) * 131.25% + 118.75%) */
+@media (min-width: 52.54em) {
   .banner {
     background-size: 40.125rem;
   }
@@ -1180,6 +1186,14 @@ main .figure {
   grid-column: figure;
 }
 
+main .narrow-figure {
+  grid-column: narrow;
+}
+
+main .wide-figure {
+  grid-column: wide;
+}
+
 figcaption::before {
   content: '—';
 }
@@ -1198,12 +1212,12 @@ figcaption {
   }
 }
 
-.figure figcaption {
+.figure figcaption, .wide-figure figcaption {
   margin-right: var(--min-margin);
 }
 
 @media (min-width: 39.375em) {
-  .figure figcaption {
+  .figure figcaption, .wide-figure figcaption {
     margin-right: 0;
   }
 }
@@ -1416,6 +1430,8 @@ hr {
 
 hr::after {
   display: inline-block;
+  font-style: normal;
+  font-size: var(--t05);
   content: '⁂';
 }
 
@@ -1448,10 +1464,14 @@ hr.lively::after {
 }
 
 /* -------------------------------------------------------------------------- *
- * .inset-left, .inset-right
+ * .with-inset, .inset-left, .inset-right
+ *
+ * A div.with-inset wraps the figure.inset-left or figure.inset-right and enough
+ * subsequent paragraphs to cover the height of the figure. The div is necessary
+ * because grid cells can't float.
  * -------------------------------------------------------------------------- */
 
-.with-inset p:first-of-type {
+.with-inset > p:first-of-type {
   margin-top: 0;
 }
 
@@ -1471,14 +1491,12 @@ hr.lively::after {
   margin-right: var(--min-margin);
   float: left;
   width: calc(7 * var(--s10));
-  max-height: calc(8 * var(--s10));
 }
 
 .inset-right {
   margin-left: var(--min-margin);
   float: right;
   width: calc(7 * var(--s10));
-  max-height: calc(8 * var(--s10));
 }
 
 @supports not (-moz-appearance: none) {
