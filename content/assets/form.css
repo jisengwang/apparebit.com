@@ -1186,6 +1186,10 @@ main .figure {
   grid-column: figure;
 }
 
+main .figure-with-margin {
+  grid-column: text;
+}
+
 main .narrow-figure {
   grid-column: narrow;
 }
