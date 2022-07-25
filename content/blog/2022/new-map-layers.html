@@ -96,8 +96,8 @@
 
 <p>This is the final post in a three-part series on the wondrous world of
 package management. <a
-href="https://enigma.com/blog/post/package-management-make-your-own-kind-of-map">Catch
-up on post #2 here</a> if you missed it.</p>
+href="https://apparebit.com/blog/2022/your-own-kind-of-map">Catch up on post #2
+here</a> if you missed it.</p>
 
 <p>So far along our journey through the world of package management, we’ve
 stayed focused mostly on the major technical challenges. For most of us software
@@ -200,8 +200,8 @@ for Python’s package ecosystem, including those for version numbers and
 constraints, really are piecemeal green-field exercises in specification writing
 that aren’t anchored in practical requirements but optimize for abstract notions
 such as extensibility and flexibility. That’s bad enough but, worse, the
-maintainers of the primary package manager, pip, do not even use their own
-tool.</p>
+maintainers of the primary package manager, <code>pip</code>, do not even use
+their own tool.</p>
 
 <p>The practice of using one’s own tools — so-called <em>dog-fooding</em> — is
 an important systems-building practice because it provides the developers with
@@ -209,9 +209,9 @@ feedback early and often. I have certainly used it while building <a
 href="https://dl.acm.org/doi/10.1145/1133981.1133987">my parser generator
 featuring modular syntax</a>. It is also used by cargo, the package manager for
 Rust; maven, the package manager for Java; as well as npm and yarn, the package
-managers for JavaScript. It is a tremendous missed opportunity for pip’s
-developers and it probably explains many of the peculiarities and pathologies of
-the Python package ecosystem.</p>
+managers for JavaScript. It is a tremendous missed opportunity for
+<code>pip</code>’s developers and it probably explains many of the peculiarities
+and pathologies of the Python package ecosystem.</p>
 </section>
 
 

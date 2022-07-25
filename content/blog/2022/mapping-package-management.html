@@ -98,9 +98,10 @@
 <p>In late 2020, we started having difficulties with the installation of Python
 packages.</p>
 
-<p>At times, the default package manager for Python, pip, would take hours for
-what used to take seconds. Worse, it might just refuse to install the packages
-altogether, with an error message indicating a version conflict.</p>
+<p>At times, the default package manager for Python, <code>pip</code>, would
+take hours for what used to take seconds. Worse, it might just refuse to install
+the packages altogether, with an error message indicating a version
+conflict.</p>
 
 <p>With 15 applications and 19 internal libraries in our small business data
 processing pipeline, all of them written in Python and spread out over as many
@@ -110,7 +111,7 @@ machines to create container images for deployment to production, typically as
 part of continuous integration.</p>
 
 <p>It wasn’t too difficult to identify the proximate cause for this highly
-unusual slowdown. Version 20.3 of pip had been released on <time
+unusual slowdown. Version 20.3 of <code>pip</code> had been released on <time
 datetime=2020-11-30>November 30, 2020</time> and included a change of package
 resolution algorithm. The previous and fundamentally unsound “pick pretty much
 any version” algorithm was now disabled by default and marked for removal in a
@@ -121,38 +122,39 @@ the version constraints appearing in manifests had never been validated for
 global consistency. Hence it was unavoidable that this transition would be
 somewhat rough.</p>
 
-<p>It didn’t help that the pip team buried the news about switching to the new
-package resolver as default: it is the second-to-last item in the list of
-features updated for the <a
+<p>It didn’t help that the <code>pip</code> team buried the news about switching
+to the new package resolver as default: it is the second-to-last item in the
+list of features updated for the <a
 href="https://pip.pypa.io/en/stable/news/#v20-3b1">preceding beta release
 20.3b1</a>. Furthermore, with a public preview period of only four months, the
-pip team made the switch too early. The resolver was still prone to exhaustively
-exploring versions that would never satisfy the constraints. It also contained
-at least <a href="https://pip.pypa.io/en/stable/news/">19 bugs and
-shortcomings</a> that were then fixed over the following twelve months —
+<code>pip</code> team made the switch too early. The resolver was still prone to
+exhaustively exploring versions that would never satisfy the constraints. It
+also contained at least <a href="https://pip.pypa.io/en/stable/news/">19 bugs
+and shortcomings</a> that were then fixed over the following twelve months —
 compared to 14 that were fixed during the preview period.</p>
 
-<p>A further source of confusion was that most engineers use the version of pip
-bundled with Python’s standard library. That makes the version of pip used to
-install packages dependent on the version of Python used to run code, while also
-introducing a significant delay until any given version of pip becomes widely
-used. Notably, if you are using Python 3.7 (as some of us still do) and ignore
-the pip warning exhorting you to upgrade, you are still using the old resolver
-to this day. If you are using Python 3.8 (as some of us also do), then the
-release of Python 3.8.10 on <time datetime=2021-05-03>May 3, 2021</time>
+<p>A further source of confusion was that most engineers use the version of
+<code>pip</code> bundled with Python’s standard library. That makes the version
+of <code>pip</code> used to install packages dependent on the version of Python
+used to run code, while also introducing a significant delay until any given
+version of <code>pip</code> becomes widely used. Notably, if you are using
+Python 3.7 (as some of us still do) and ignore the <code>pip</code> warning
+exhorting you to upgrade, you are still using the old resolver to this day. If
+you are using Python 3.8 (as some of us also do), then the release of Python
+3.8.10 on <time datetime=2021-05-03>May 3, 2021</time>
 fundamentally changed how you install Python packages. The apparent disregard in
 all this for established versioning conventions is striking. Making backwards
-incompatible changes in a new minor version (pip 20.3) or in a new patch version
-(Python 3.8.10) is a big no-no under <a href="https://semver.org/">semantic
-versioning</a> and not helpful.</p>
+incompatible changes in a new minor version (<code>pip</code> 20.3) or in a new
+patch version (Python 3.8.10) is a big no-no under <a
+href="https://semver.org/">semantic versioning</a> and not helpful.</p>
 
-<p>As exasperated tales about pip’s misbehavior multiplied in our daily standup
-meetings, it became clear that we needed to start a concerted effort towards
-cleaning up our package requirements. At the same time, we had little insight
-into the scope of the clean up, i.e., the number of packages with conflicting
-versions as well as the number of conflicting constraints for each conflicted
-package. So I found myself tasked with producing just that survey in <time
-datetime=2021-10>October 2021</time>.</p>
+<p>As exasperated tales about <code>pip</code>’s misbehavior multiplied in our
+daily standup meetings, it became clear that we needed to start a concerted
+effort towards cleaning up our package requirements. At the same time, we had
+little insight into the scope of the clean up, i.e., the number of packages with
+conflicting versions as well as the number of conflicting constraints for each
+conflicted package. So I found myself tasked with producing just that survey in
+<time datetime=2021-10>October 2021</time>.</p>
 
 <p>Alas, I couldn’t be bothered with the tedium of manually surveying 34
 repositories for their requirements. So I decided to write a Python script for
@@ -246,8 +248,8 @@ language or operating system. Each package has a unique name and each
 <em>release</em> of the package has a hierarchical <em>version number</em>.</p>
 </div>
 
-<p>As you already saw above on the examples of pip 20.3 and Python 3.8.10, the
-version number typically uses dots to separate the <em>major</em>,
+<p>As you already saw above on the examples of <code>pip</code> 20.3 and Python
+3.8.10, the version number typically uses dots to separate the <em>major</em>,
 <em>minor</em>, and <em>patch</em> numbers. In the case of Python 3.8.10 the
 trailing zero is meaningful: this version is the eleventh patch release of
 Python 3.8. Another software artifact <em>depends</em> on that package when it
@@ -401,9 +403,9 @@ href="https://pubgrub-rs-guide.netlify.app/internals/intro.html">domain-specific
 algorithms</a>.</p>
 
 <p>Alas, practice cannot escape theory: the cliff of worst-case exponential
-performance remains very real — as our hours-long pip runs illustrate. Worse,
-the <abbr>NP</abbr>-completeness of the problem domain becomes a barrier to
-developing other tools, such as our dependency checker.</p>
+performance remains very real — as our hours-long <code>pip</code> runs
+illustrate. Worse, the <abbr>NP</abbr>-completeness of the problem domain
+becomes a barrier to developing other tools, such as our dependency checker.</p>
 
 <p>During development of some of the gnarlier analysis code in our dependency
 checker, I was seriously exploring the feasibility of extending a symbolic
@@ -469,7 +471,7 @@ While that fulfills the minimum requirements for version satisfiability being
 computable, it also does not help with gauging the impact of any version
 increase. That, in turn, results in highly confusing scenarios — such as the one
 described above, where a patch release of Python (3.8.10) contains a minor
-release of pip (20.3) that includes a groundbreaking, completely
+release of <code>pip</code> (20.3) that includes a groundbreaking, completely
 backwards-incompatible feature.</li>
 
 <li>Packages traditionally do <em>not</em> include <a
