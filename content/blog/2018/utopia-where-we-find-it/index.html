@@ -89,7 +89,7 @@ nav a, .cover .title {
     --color-bg: #1d1d20b0;
   }
 }
-.cover h1, .cover h2 {
+.cover h1, .cover .h2 {
   color: var(--color-fg);
   background-color: var(--color-bg);
   text-align: center;
@@ -99,7 +99,7 @@ nav a, .cover .title {
   width: fit-content;
 }
 @media screen and (prefers-color-scheme: dark) {
-  .cover h1, .cover h2 {
+  .cover h1, .cover .h2 {
     background-color: #1d1d20b0;
   }
 }
@@ -107,7 +107,7 @@ nav a, .cover .title {
   nav a {
     background-color: Canvas;
   }
-  .cover h1, .cover h2 {
+  .cover h1, .cover .h2 {
     color: CanvasText;
     background-color: Canvas;
   }
@@ -116,7 +116,7 @@ nav a, .cover .title {
   font-size: clamp(var(--s10), 2vw + 2vh + 0.5em, var(--s30));
   line-height: calc(var(--r-minor) * var(--r-minor));
 }
-.cover h2 {
+.cover .h2 {
   font-family: var(--bely-fontstack);
   font-size:  clamp(1em, 1.5vw + 1.5vh, var(--s30) / var(--r-major));
   margin-top: var(--t10);
@@ -141,7 +141,7 @@ nav a, .cover .title {
 <header class=cover>
 <hgroup class=title>
 <h1 class=p-name>Celebrating Utopia<br>Where We Find It</h1>
-<h2>The Wondrous World of the<br>Airline Safety Video</h2>
+<p class=h2>The Wondrous World of the<br>Airline Safety Video</p>
 </hgroup>
 <picture>
 <source

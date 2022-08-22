@@ -438,11 +438,11 @@ sup {
 
 /* -------------------------------------------------------------------------- */
 
-h1, h2, h3 {
+h1, h2, .h2, h3 {
   font-variant: lining-nums common-ligatures;
 }
 
-.belyssimo h1, .belyssimo h2 {
+.belyssimo h1, .belyssimo h2, .belyssimo .h2 {
   font-family: var(--bely-display-fontstack);
 }
 
@@ -451,29 +451,29 @@ h1, h2, h3 {
   font-style: italic;
 }
 
-.bild h1, .bild h2, .bild h3, .bild .pullquote strong {
+.bild h1, .bild h2, .bild .h2, .bild h3, .bild .pullquote strong {
   font-family: var(--bild-fontstack);
 }
 
-.bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
+.bruutal h1, .bruutal h2, .bruutal .h2, .bruutal h3, .bruutal .pullquote {
   font-family: var(--bluu-fontstack);
   font-weight: 500;
 }
 
 @supports not (font-variant-alternates: styleset(bluu)) {
-  .bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
+  .bruutal h1, .bruutal h2, .bruutal .h2, .bruutal h3, .bruutal .pullquote {
     -webkit-font-feature-settings: var(--font-features-bluu);
     font-feature-settings: var(--font-features-bluu);
   }
 }
 
 @supports (font-variant-alternates: styleset(bluu)) {
-  .bruutal h1, .bruutal h2, .bruutal h3, .bruutal .pullquote {
+  .bruutal h1, .bruutal h2, .bruutal .h2, .bruutal h3, .bruutal .pullquote {
     font-variant-alternates: styleset(bluu);
   }
 }
 
-.reforma h1, .reforma h2, .reforma h3 {
+.reforma h1, .reforma h2, .reforma .h2, .reforma h3 {
   font-family: var(--reforma-fontstack);
 }
 
@@ -1344,7 +1344,7 @@ main .gallery {
  * h1, h2, and h3
  * -------------------------------------------------------------------------- */
 
-h1, h2, h3 {
+h1, h2, .h2, h3 {
   font-style: normal;
   font-weight: normal;
   line-height: var(--r-minor);
@@ -1356,7 +1356,7 @@ h1 {
   margin-bottom: calc(var(--r-major) * 1rem);
 }
 
-h2 {
+h2, .h2 {
   font-size: var(--s10);
   margin-top: calc(var(--r-major) * var(--r-minor) * 1rem);
   margin-bottom: calc(var(--r-minor) * 1rem);
@@ -1368,11 +1368,11 @@ h3 {
   margin-bottom: 1rem;
 }
 
-h1 + h2 {
+h1 + h2, h1 + .h2 {
   margin-top: calc(var(--t10) * -1);
 }
 
-.bild h2 {
+.bild h2, .bild .h2 {
   font-size: var(--s15);
   font-stretch: 95%;
   margin-top: calc(var(--r-major) * var(--r-major) * 1rem);
@@ -1386,7 +1386,7 @@ h1 + h2 {
 }
 
 @supports (-moz-appearance: none) {
-  .bild h2 {
+  .bild h2, .bild .h2 {
     font-size: calc(var(--r-minor) * var(--s15));
   }
 
@@ -1819,7 +1819,7 @@ blockquote > :last-child::after   { content: '\275e'; padding-left:  0.024em; }
   counter-reset: h3;
 }
 
-.section-count h2::before {
+.section-count h2::before, .section-count .h2::before {
   content: counter(h2) '\2002';
 }
 
@@ -2036,12 +2036,12 @@ footer.references {
     margin-bottom: var(--s20);
   }
 
-  h1, h2, h3 {
+  hgroup, h1, h2, .h2, h3 {
     page-break-after: avoid;
     break-after: avoid;
   }
 
-  h2 + * {
+  h2 + *, .h2 + * {
     page-break-before: avoid;
     break-before: avoid;
   }

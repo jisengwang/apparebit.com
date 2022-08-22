@@ -132,7 +132,7 @@ main :is(header, section, .section, footer) {
   height: 100%;
 }
 
-.cover .title h1, .cover .title h2 span {
+.cover .title h1, .cover .title .h2 span {
   background-color: var(--color-bg);
 }
 
@@ -146,7 +146,7 @@ main :is(header, section, .section, footer) {
   padding: calc(1rem / var(--r-major) / var(--r-major));
 }
 
-.cover .title h2 {
+.cover .title .h2 {
   margin: auto 2vmin 2vmin 2vmin;
   padding: 2vmin;
   font-size: 1em;
@@ -155,14 +155,14 @@ main :is(header, section, .section, footer) {
   text-align: center;
 }
 
-.cover .title h2 span {
+.cover .title .h2 span {
   padding: 0 var(--t40);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
 
 @media (forced-colors: active) {
-  .cover .title h1, .cover .title h2 span {
+  .cover .title h1, .cover .title .h2 span {
     background-color: Canvas;
   }
 }
@@ -237,7 +237,7 @@ em::before, i::before {
 <header class=cover>
 <hgroup class=title>
 <h1 class=p-name>Hopelessness</h1>
-<h2><span>The nearly all-devouring darkness of Anohni’s Park Avenue Armory show</span></h2>
+<p class=h2><span>The nearly all-devouring darkness of Anohni’s Park Avenue Armory show</span></p>
 </hgroup>
 <picture>
 <source
