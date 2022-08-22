@@ -26,7 +26,7 @@
     "proseWrap": "always"
   },
   "site:forge": {
-    "doNotBuild": ".DS_Store|.git|.htaccess.old|the-meta-menace",
+    "doNotBuild": ".DS_Store|.git|.htaccess.old|the-meta-menace|techno-puritans.html",
     "justCopy": [
       "/aarrh6dhlwkj38ie8h9y1pmlzg3gyz.html",
       "/ag15n4kd5e258tgmr3jocsrmfj06gn.html",
