@@ -388,7 +388,7 @@ abbr,
 .byline,
 .capped span:first-child,
 .roman,
-.datelist time,
+.timeline time,
 .gallery .hint .text {
   font-variant-caps: all-small-caps;
 }
@@ -504,9 +504,9 @@ main {
   grid-template-columns:
     [view-start wide-start figure-start]
          var(--min-margin)
-    [margin-start text-start narrow-start]
+    [margin-start wide-with-margin-start text-start narrow-start]
          minmax(0, var(--max-measure))
-    [narrow-end text-end margin-end]
+    [narrow-end text-end wide-with-margin-end margin-end]
          var(--min-margin)
     [figure-end wide-end view-end];
 }
@@ -517,13 +517,13 @@ main {
     grid-template-columns:
       [view-start wide-start]
           var(--min-margin)
-      [margin-start figure-start text-start]
+      [margin-start wide-with-margin-start figure-start text-start]
           minmax(0, 1fr)
       [narrow-start]
           calc(var(--max-measure) - 2 * var(--s30))
       [narrow-end]
           minmax(0, 1fr)
-      [text-end figure-end margin-end]
+      [text-end figure-end wide-with-margin-end margin-end]
           var(--min-margin)
       [wide-end view-end];
   }
@@ -535,7 +535,7 @@ main {
     grid-template-columns:
       [view-start wide-start]
           var(--min-margin)
-      [margin-start]
+      [margin-start wide-with-margin-start]
           minmax(0, 1fr)
       [figure-start text-start]
           var(--s30)
@@ -545,7 +545,7 @@ main {
           var(--s30)
       [text-end figure-end]
           minmax(0, 1fr)
-      [margin-end]
+      [wide-with-margin-end margin-end]
           var(--min-margin)
       [wide-end view-end];
   }
@@ -559,7 +559,7 @@ main {
           var(--min-margin)
       [margin-start]
           minmax(0, 1fr)
-      [wide-start]
+      [wide-start wide-with-margin-start]
           var(--s50)
       [figure-start text-start]
           var(--s30)
@@ -569,7 +569,7 @@ main {
           var(--s30)
       [text-end figure-end]
           var(--s50)
-      [wide-end]
+      [wide-with-margin-end wide-end]
           minmax(0, 1fr)
       [margin-end]
           var(--min-margin)
@@ -762,25 +762,6 @@ a:focus > picture, a:hover > picture {
 }
 
 /* -------------------------------------------------------------------------- *
- * aside
- * -------------------------------------------------------------------------- */
-
-main aside {
-  background-color: var(--color-bg-sunk);
-  grid-column: figure;
-  padding: var(--min-margin);
-  margin-top: var(--s10);
-}
-
-main aside > :first-child {
-  margin-top: 0;
-}
-
-main aside a {
-  --color-bg: var(--color-bg-sunk);
-}
-
- /* -------------------------------------------------------------------------- *
  * b
  * -------------------------------------------------------------------------- */
 
@@ -796,69 +777,76 @@ b {
  * To create a banner effect, with text typeset against some gradient, the text
  * must be contained in an inline element that is styled as follows:
  *
- * padding: ...;                          Give type breathing room.
+ * padding: ...;                          Give type breathing room at ends.
  * background-image: ...;                 Specify the gradient.
  * -webkit-box-decoration-break: clone;   Make gradient and padding repeat...
  * box-decoration-break: clone;           ...for each line, even on Safari.
  * background-attachment: fixed;          Make gradient consistent across lines.
  *
- * However, that does not correctly render in Chrome, which has a bug handling
- * a fixed background attachment. If the gradient is horizontal, sizing the
- * background to maximum width of inline element is an effective alternative.
+ * The box containing the inline element should have similarly sized padding to
+ * create space for the inline box's padding, which renders outside the content
+ * box. That's hard enough but all three major rendering engines have their own
+ * bugs: Chrome's background-attachment still renders incorrectly by using
+ * background color instead of gradient. Firefox's box-decoration-break used to
+ * push lines apart but is fixed now. Safari's strange line-breaking behavior
+ * continues as well, pushing content too far right. I have no idea why. Banners
+ * are hard.
  */
-.banner {
-  padding: 0 0.2em;
+
+.banner strong {
+  padding: 0 var(--t30);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  /* background-attachment: fixed;  <-- still doesn't work in Chrome */
   background-size: 100vw;
-}
+ }
 
 /* calc((var(--max-measure) + 2 * var(--s40)) * 131.25% + 118.75%) */
-@media (min-width: 52.54em) {
-  .banner {
+/*@media (min-width: 52.54em) {
+  .banner strong {
     background-size: 40.125rem;
   }
+}*/
+
+.banner p {
+  padding: 0 var(--t50);
 }
 
-.background1 {
-  background-color: var(--color-accent1);
+/* Gradients generated with https://davidjohnstone.net/lch-lab-colour-gradient-picker */
+.orange strong {
+  background-color: #fff143;
   background-image: linear-gradient(to right,
-    var(--color-accent1), var(--color-accent2));
-}
-
-.background2 {
-  background-image: linear-gradient(to right,
-    /* #87a1ff,
-    #9b9cff,
-    #ad96ff,
-    #bd90ff,
-    #cd89ff,
-    #dd80ff, */
-    #ed75ff,
-    #ff66ff,
-    #ff6bee,
-    #ff6fdf,
-    #ff72d2,
-    #ff75c6,
-    #ff77ba,
-    #ff79ae,
-    #ff7ba1,
-    #ff7d93,
-    #ff7f83,
-    #ff816f,
-    #ff8352,
-    #ff8500,
-    #f08e00
+    #fff143,
+    #ffe847,
+    #ffdf4a,
+    #ffd64d,
+    #ffcd50,
+    #ffc453,
+    #ffbb55
   );
 }
 
-@media screen and (prefers-color-scheme: dark) {
-  .background1 {
-    background: var(--color-accent1);
-  }
+.purple strong {
+  background-color: var(--color-purple);
+  background-image: linear-gradient(to right,
+    #ffafd4,
+    #fab0dc,
+    #f4b2e3,
+    #edb4ea,
+    #e5b6f1
+    /* #ffb7da, #f9b9e0, #f2bbe6, #ebbdec, #e3bff3, #dbc1f9, #d3c3ff */
+  );
 
-  .background2 {
-    background: var(--color-accent2);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .orange strong {
+    background-color: var(--color-accent2);
+    background-image: none;
+  }
+  .purple strong {
+    background-color: var(--color-accent1);
+    background-image: none;
   }
 }
 
@@ -1395,6 +1383,24 @@ h1 + h2, h1 + .h2 {
   }
 }
 
+.numbered-outline {
+  counter-reset: h2;
+}
+
+.numbered-outline > section {
+  counter-reset: h3;
+}
+
+.numbered-outline h2::before {
+  content: counter(h2) ".\2002";
+  counter-increment: h2;
+}
+
+.numbered-outline h3::before {
+  content: counter(h2) "." counter(h3) "\2002";
+  counter-increment: h3;
+}
+
 /* -------------------------------------------------------------------------- *
  * [hidden], .invisible
  * -------------------------------------------------------------------------- */
@@ -1542,24 +1548,21 @@ hr.lively::after {
  * -------------------------------------------------------------------------- */
 
 .counted {
-  padding-left: var(--s20);
+  padding-left: var(--s10);
 }
 
 .counted ::marker {
-  content: '(' counter(list-item) ') ';
+  content: counter(list-item) '.\2002';
   font-variant: lining-nums;
 }
 
 .references .counted ::marker {
+  padding-left: var(--s20);
   content: '[' counter(list-item) '] ';
 }
 
 .references .counted li {
   overflow-wrap: break-word;
-}
-
-.datelist {
-  list-style: none;
 }
 
 main ul {
@@ -1742,34 +1745,20 @@ main {
  * -------------------------------------------------------------------------- */
 
 .pullquote {
-  grid-column: wide;
+  grid-column: wide-with-margin;
+  margin: 1em 0;
 }
 
-.pullquote strong {
+.pullquote p {
   font-size: var(--s20);
   font-weight: normal;
 }
 
-.bild .pullquote strong {
+.bild .pullquote p {
   font-stretch: 85%;
 }
 
-@supports (-moz-appearance: none) {
-  /*
-   * In Safari, the pullquote's banner style looks perfectly reasonable
-   * with a font size of 2.25em and a line height of 1.5. Notably, it has
-   * the right proportion relative to body text in Bely and the gap between
-   * lines is about right. In Chrome, that also is the case. In Firefox,
-   * however, the font is too small and the gap too large, hence these two
-   * adjustments.
-   */
-  .bild .pullquote strong {
-    font-size: calc(var(--r-minor) * var(--s20));
-    line-height: var(--r-minor);
-  }
-}
-
-.reforma .pullquote strong {
+.reforma .pullquote p {
   font-size: calc(var(--scale-to-reforma) * var(--s20));
 }
 
@@ -1803,39 +1792,59 @@ blockquote > :first-child::before { content: '\275d'; padding-right: 0.024em; }
 blockquote > :last-child::after   { content: '\275e'; padding-left:  0.024em; }
 
 /* -------------------------------------------------------------------------- *
- * .section-count
+ * .sidebar
  * -------------------------------------------------------------------------- */
 
-.section-count.start-at-0 {
-  counter-reset: h2 -1;
+ main .sidebar {
+  background-color: var(--color-bg-sunk);
+  grid-column: figure;
+  padding: var(--min-margin);
+  margin-top: var(--s10);
 }
 
-.section-count.start-at-1 {
-  counter-reset: h2 0;
+main .sidebar > :first-child {
+  margin-top: 0;
 }
 
-.section-count section {
-  counter-increment: h2;
-  counter-reset: h3;
-}
-
-.section-count h2::before, .section-count .h2::before {
-  content: counter(h2) '\2002';
-}
-
-.section-count h3 {
-  counter-increment: h3;
-}
-
-.section-count h3::before {
-  content: counter(h2) '.' counter(h3) '\2002';
-}
-
-footer h2::before, footer h3::before {
-  content: none;
+main .sidebar a {
+  --color-bg: var(--color-bg-sunk);
 }
 
 /* -------------------------------------------------------------------------- *
+ * .timeline
+ * -------------------------------------------------------------------------- */
+
+.timeline h2 {
+  margin-top: var(--s10);
+  margin-bottom: var(--margin-text-top);
+}
+
+.timeline ol {
+  list-style: none;
+}
+
+.timeline li + li {
+  margin-top: var(--s05);
+}
+
+.timeline .title {
+  font-size: var(--s05);
+}
+
+.timeline .title::after, .timeline .description::after {
+  content: '\a';
+  white-space: pre-line;
+}
+
+.timeline time::before {
+  content: '(';
+}
+
+.timeline time::after {
+  content: ')';
+}
+
+ /* -------------------------------------------------------------------------- *
  * PrismJS token
  *
  * Based on "Visual Studio" theme for light mode
