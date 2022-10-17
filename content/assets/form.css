@@ -376,6 +376,15 @@ p {
   hanging-punctuation: first allow-end last;
 }
 
+hgroup p {
+  /*
+   * On 2022-07-01, content model for hgroup changed, now requiring <p> for
+   * subheadings. Since it still uses a 1.5x - 1.8x font size, say, a leading
+   * double quote may extend past viewport on phones. Disable for this case.
+   */
+  hanging-punctuation: none;
+}
+
 /* -------------------------------------------------------------------------- */
 
 body {
@@ -1301,7 +1310,23 @@ main .gallery {
 }
 
 .gallery .images::-webkit-scrollbar-thumb:hover {
-  background: var(--color-sb-thumb-hover);
+  background-color: var(--color-sb-thumb-hover);
+}
+
+@media (forced-colors: active) {
+  .gallery .images::-webkit-scrollbar-track {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border: solid 0.03em GrayText;
+  }
+
+  .gallery .images::-webkit-scrollbar-thumb {
+    background-color: GrayText;
+  }
+
+  .gallery .images::-webkit-scrollbar-thumb:hover {
+    background-color: CanvasText;
+  }
 }
 
 @media print {
@@ -1391,12 +1416,12 @@ h1 + h2, h1 + .h2 {
   counter-reset: h3;
 }
 
-.numbered-outline h2::before {
+.numbered-outline > section > h2::before {
   content: counter(h2) ".\2002";
   counter-increment: h2;
 }
 
-.numbered-outline h3::before {
+.numbered-outline > section > h3::before {
   content: counter(h2) "." counter(h3) "\2002";
   counter-increment: h3;
 }
@@ -1802,12 +1827,20 @@ blockquote > :last-child::after   { content: '\275e'; padding-left:  0.024em; }
   margin-top: var(--s10);
 }
 
+main h2 + .sidebar, main .h2 + .sidebar {
+  margin-top: 0;
+}
+
 main .sidebar > :first-child {
   margin-top: 0;
 }
 
 main .sidebar a {
   --color-bg: var(--color-bg-sunk);
+}
+
+main .sidebar + p {
+  margin-top: var(--s10);
 }
 
 /* -------------------------------------------------------------------------- *
@@ -1819,7 +1852,7 @@ main .sidebar a {
   margin-bottom: var(--margin-text-top);
 }
 
-.timeline ol {
+.timeline, .timeline ol {
   list-style: none;
 }
 
@@ -1831,17 +1864,9 @@ main .sidebar a {
   font-size: var(--s05);
 }
 
-.timeline .title::after, .timeline .description::after {
+.timeline .title::after, .timeline time:first-of-type::before {
   content: '\a';
   white-space: pre-line;
-}
-
-.timeline time::before {
-  content: '(';
-}
-
-.timeline time::after {
-  content: ')';
 }
 
  /* -------------------------------------------------------------------------- *
@@ -2048,11 +2073,6 @@ footer.references {
   hgroup, h1, h2, .h2, h3 {
     page-break-after: avoid;
     break-after: avoid;
-  }
-
-  h2 + *, .h2 + * {
-    page-break-before: avoid;
-    break-before: avoid;
   }
 
   .cover .title {
