@@ -4,4 +4,4 @@ if [ -n "$pid" ]; then
     kill -9 $pid
 fi
 
-"../siteforge/cli/main.js" build develop -vv
+"../siteforge/cli/main.js" build develop
