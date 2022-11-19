@@ -174,10 +174,8 @@ img {
   /* https://www.zachleat.com/web/fluid-images/ */
   max-width: 100%;
 }
-img[width] {
-  width: auto;
-}
-img[width][height] {
+
+img:where([width][height]) {
   height: auto;
 }
 /*img[src$=".svg"] {
@@ -213,6 +211,8 @@ iframe {
   --t40: calc(var(--t30) / var(--r-major));  /*  0.19753 */
   --t50: calc(var(--t40) / var(--r-major));  /*  0.13169 */
   --t60: calc(var(--t50) / var(--r-major));  /*  0.10974 */
+  --t70: calc(var(--t60) / var(--r-major));  /*  0.07316 */
+  --t80: calc(var(--t70) / var(--r-major));  /*  0.04877 */
 
   --s05: calc(var(--r-minor) * 1em);         /*  1.2     */
   --s10: calc(var(--r-major) * 1em);         /*  1.5     */
@@ -637,16 +637,69 @@ main .tight li:nth-of-type(n+2) {
   content: '—';
 }
 
+/* Table Table Table Table Table Table Table Table Table Table Table Table Table */
+
 table {
-  border-collapse: collapse;
-  /* Account for Chrome and Safari bugs
-     (https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css) */
-  text-indent: 0;
-  border-color: inherit;
+  display: block;
+  overflow-x: auto;
+  width: fit-content;
+  max-width: calc(100vw - 2 * var(--min-margin));
+  margin: 0 auto;
+  white-space: nowrap;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+tr :where(th, td) {
+  padding-left: var(--t20);
+  padding-right: var(--t20);
+}
+
+tr th:first-child {
+  position: sticky;
+  left: 0;
+  background-color: var(--color-bg);
+  padding-left: 0;
+}
+
+tr :last-child {
+  padding-right: 0;
+}
+
+tbody tr:first-of-type :where(th, td) {
+  border-top: solid var(--t80) var(--color-fg);
+  padding-top: var(--t20);
+}
+
+tbody tr:last-of-type :where(th, td) {
+  border-bottom: solid var(--t80) var(--color-fg);
+  padding-bottom: var(--t20);
+}
+
+tbody:last-of-type tr:last-of-type :where(th, td) {
+  border-bottom: none;
+}
+
+thead tr:last-of-type :where(th, td) {
+  border-bottom: solid var(--t60) var(--color-fg);
+  padding-bottom: var(--t20);
+}
+
+tbody:first-of-type tr:first-of-type :where(th, td) {
+  border-top: solid var(--t60) var(--color-fg);
+}
+
+table th[scope="row"] {
+  text-align: left;
 }
 
 table td {
   font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+table td.textual {
+  text-align: left;
 }
 
 /* ========================================================================== *
@@ -845,7 +898,14 @@ b {
     #e5b6f1
     /* #ffb7da, #f9b9e0, #f2bbe6, #ebbdec, #e3bff3, #dbc1f9, #d3c3ff */
   );
+}
 
+.green strong {
+  background-color: var(--color-green);
+  background-image: linear-gradient(to right,
+    var(--color-cyan),
+    var(--color-green)
+  );
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -1195,6 +1255,10 @@ main .wide-figure {
   grid-column: wide;
 }
 
+main .wide-figure-with-margin {
+  grid-column: wide-with-margin;
+}
+
 figcaption::before {
   content: '—';
 }
@@ -1215,11 +1279,13 @@ figcaption {
 
 .figure figcaption, .wide-figure figcaption {
   margin-right: var(--min-margin);
+  margin-left: var(--min-margin);
 }
 
 @media (min-width: 39.375em) {
   .figure figcaption, .wide-figure figcaption {
     margin-right: 0;
+    margin-left: 0;
   }
 }
 
@@ -1416,12 +1482,12 @@ h1 + h2, h1 + .h2 {
   counter-reset: h3;
 }
 
-.numbered-outline > section > h2::before {
+.numbered-outline > section:not(.unnumbered) > h2::before {
   content: counter(h2) ".\2002";
   counter-increment: h2;
 }
 
-.numbered-outline > section > h3::before {
+.numbered-outline > section:not(.unnumbered) > h3::before {
   content: counter(h2) "." counter(h3) "\2002";
   counter-increment: h3;
 }
