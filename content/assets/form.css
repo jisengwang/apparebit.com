@@ -650,55 +650,35 @@ table {
   border-spacing: 0;
 }
 
-tr :where(th, td) {
-  padding-left: var(--t20);
-  padding-right: var(--t20);
+th, td {
+  padding: 0 var(--t30);
 }
 
-tr th:first-child {
+:where(thead, tbody) > tr > th:first-child {
   position: sticky;
   left: 0;
   background-color: var(--color-bg);
-  padding-left: 0;
-}
-
-tr :last-child {
-  padding-right: 0;
-}
-
-tbody tr:first-of-type :where(th, td) {
-  border-top: solid var(--t80) var(--color-fg);
-  padding-top: var(--t20);
-}
-
-tbody tr:last-of-type :where(th, td) {
-  border-bottom: solid var(--t80) var(--color-fg);
-  padding-bottom: var(--t20);
-}
-
-tbody:last-of-type tr:last-of-type :where(th, td) {
-  border-bottom: none;
 }
 
 thead tr:last-of-type :where(th, td) {
-  border-bottom: solid var(--t60) var(--color-fg);
-  padding-bottom: var(--t20);
+  padding-bottom: var(--t40);
+  border-bottom: solid var(--t50) var(--color-fg);
 }
 
-tbody:first-of-type tr:first-of-type :where(th, td) {
+tbody:not(:first-of-type) > tr:first-of-type > :where(th, td) {
   border-top: solid var(--t60) var(--color-fg);
 }
 
-table th[scope="row"] {
+th[scope^="row"] {
   text-align: left;
 }
 
-table td {
+td {
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
 
-table td.textual {
+td.textual {
   text-align: left;
 }
 
@@ -1268,6 +1248,10 @@ figcaption {
   text-align: right;
   font-style: italic;
   padding-top: 0.3em;
+}
+
+figcaption > em, figcaption > cite {
+  font-style: normal;
 }
 
 @supports (-moz-appearance: none) {
