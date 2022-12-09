@@ -372,8 +372,12 @@ DirectorySlash Off
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Take care of Ubu Trump.
+    # Take care of Ubu Trump, Candy, and Bust.
     RewriteRule ^Writing/UbuTrump/?$ features/ubu-trump [R=301,NC,L]
+
+    RewriteRule ^AboutCandyOrBust.html$ features/candy-or-bust [R=301,L]
+    RewriteRule ^Bust.html$ features/candy-or-bust [R=301,L]
+    RewriteRule ^Candy.html$ features/candy-or-bust [R=301,L]
 
     # Chop off any trailing slash.
     RewriteRule ^(.*)/$ $1 [R=301,L]
