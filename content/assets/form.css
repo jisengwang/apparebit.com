@@ -639,38 +639,88 @@ main .tight li:nth-of-type(n+2) {
 
 /* Table Table Table Table Table Table Table Table Table Table Table Table Table */
 
-table {
-  display: block;
-  overflow-x: auto;
+/* Container for responsive <table> */
+.pedestal {
+  margin-left: auto;
+  margin-right:auto;
   width: fit-content;
-  max-width: calc(100vw - 2 * var(--min-margin));
-  margin: 0 auto;
-  white-space: nowrap;
+  max-width: 100%;
+}
+
+.pedestal[role="region"][tabindex][aria-labelledby] {
+  overflow-x: auto;
+  /* Use shadows as affordance for scrollability.
+  background-image:
+    linear-gradient(to right, var(--color-bg), var(--color-bg)),
+    linear-gradient(to right, var(--color-bg), var(--color-bg)),
+    linear-gradient(to right, rgb(0,0,0, 0.25), rgb(245,246,248, 0)),
+    linear-gradient(to left,  rgb(0,0,0, 0.25), rgb(245,246,248, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-color: var(--color-bg);
+  background-size: 1em 100%, 1em 100%, 0.5em 100%, 0.5em 100%;
+  background-attachment: local, local, scroll, scroll; */
+}
+
+.pedestal[role="region"][tabindex][aria-labelledby]:focus {
+  outline: solid var(--t20) var(--color-fg);
+}
+
+.pedestal[role="region"][tabindex][aria-labelledby]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+table {
   border-collapse: separate;
   border-spacing: 0;
+}
+
+/* Improve touch target size for table with many links */
+table.touchable { line-height: calc(var(--r-minor) * var(--r-major)); }
+@media (pointer: fine) {
+  table.touchable { line-height: var(--r-major); }
+}
+
+table .sunk {
+  background-color: var(--color-bg-sunk);
+}
+
+table caption {
+  font-size: var(--t05);
+  text-align: left;
+  font-style: italic;
+  padding: var(--t20) 0;
+  position: sticky;
+  left: 0;
+  width: fit-content;
+}
+
+table caption::after {
+  content: ":";
 }
 
 th, td {
   padding: 0 var(--t30);
 }
 
-:where(thead, tbody) > tr > th:first-child {
+/* Markup <th class=first-column> in <thead>! */
+thead > tr > .first-column,
+tbody > tr > th[scope="row"] {
+  text-align: left;
   position: sticky;
   left: 0;
   background-color: var(--color-bg);
+  z-index: 2;
 }
 
-thead tr:last-of-type :where(th, td) {
-  padding-bottom: var(--t40);
-  border-bottom: solid var(--t50) var(--color-fg);
+.lined tbody :where(th, td) {
+  border-top: solid var(--t70) var(--color-separator);
 }
-
-tbody:not(:first-of-type) > tr:first-of-type > :where(th, td) {
+tbody > tr:first-of-type > :where(th, td) {
   border-top: solid var(--t60) var(--color-fg);
 }
-
-th[scope^="row"] {
-  text-align: left;
+tbody:first-of-type > tr:first-of-type > :where(th, td) {
+  border-top: solid var(--t50) var(--color-fg);
 }
 
 td {
@@ -678,8 +728,67 @@ td {
   text-align: right;
 }
 
-td.textual {
+.centered-cells td {
+  text-align: center;
+}
+
+td.text {
   text-align: left;
+}
+
+/* Tooltip for <th abbr="..."> */
+th[abbr] {
+  position: relative;
+  cursor: help;
+}
+
+th[abbr]::before {
+  content: attr(abbr);
+  white-space: pre;
+  font-size: var(--t05);
+  font-weight: normal;
+  background-color: var(--color-bg-lifted);
+  padding:var(--t30) var(--t10) var(--t20);
+  border: solid var(--t50) var(--color-separator);
+  display: block;
+  position: absolute;
+  top: 80%;
+  right: 40%;
+  min-width: min-content;
+  z-index: 665;
+  opacity: 0;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+th[abbr].midanchor::before {
+  right: 50%;
+  transform: translateX(50%);
+}
+
+th[abbr]:hover::before {
+  opacity: 100%;
+}
+
+/* Dashed line to mark a qualitative change in data */
+td.data-changed {
+  position: relative;
+}
+
+td.data-changed::before {
+  content: '';
+  display: block;
+  height: var(--t50);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-fg) 0,
+    var(--color-fg) var(--t40),
+    transparent var(--t40),
+    transparent calc(var(--t40) + var(--t40))
+  );
 }
 
 /* ========================================================================== *
@@ -758,21 +867,11 @@ a:focus > picture, a:hover > picture {
  * .about-this-page
  * -------------------------------------------------------------------------- */
 
-.about-this-page::before {
-  grid-column: text;
-  content:  '⁂';
-  font-style: normal;
-  font-size: var(--t05);
-  text-align: center;
-  margin-top: var(--s10);
-  margin-bottom: var(--s10);
-}
-
-.about-this-page {
+ .about-this-page {
   font-style: italic;
 }
 
-.about-this-page em {
+.about-this-page :where(cite, dfn, em, i) {
   font-style: normal;
 }
 
@@ -1466,12 +1565,21 @@ h1 + h2, h1 + .h2 {
   counter-reset: h3;
 }
 
-.numbered-outline > section:not(.unnumbered) > h2::before {
+.numbered-outline > section:not(.nocount) > h2::before {
   content: counter(h2) ".\2002";
   counter-increment: h2;
 }
 
-.numbered-outline > section:not(.unnumbered) > h3::before {
+.numbered-outline > section.appendix {
+  counter-reset: h2;
+}
+
+.numbered-outline > section.appendix > h2::before,
+.numbered-outline > section.appendix ~ section > h2::before {
+  content: counter(h2, upper-latin) ".\2002";
+}
+
+.numbered-outline > section:not(.nocount) > h3:not(.nocount)::before {
   content: counter(h2) "." counter(h3) "\2002";
   counter-increment: h3;
 }
@@ -1509,8 +1617,7 @@ hr {
   color: var(--color-fg);
   border: 0;
   text-align: center;
-  margin-top: var(--s10);
-  margin-bottom: var(--s05);
+  margin: var(--s10) 0;
 }
 
 hr::after {
@@ -1622,13 +1729,27 @@ hr.lively::after {
  * ol, ul
  * -------------------------------------------------------------------------- */
 
-.counted {
+main ul {
   padding-left: var(--s10);
+}
+
+.counted {
+  padding-left: var(--s20);
 }
 
 .counted ::marker {
   content: counter(list-item) '.\2002';
   font-variant: lining-nums;
+}
+
+/* Safari */
+.counted :where(.appendix, .appendix ~ *) {
+  list-style-type: upper-latin;
+}
+
+/* Firefox and Chrome */
+.counted :where(.appendix, .appendix ~ *)::marker {
+  content: counter(list-item, upper-latin) '.\2002';
 }
 
 .references .counted ::marker {
@@ -1638,10 +1759,6 @@ hr.lively::after {
 
 .references .counted li {
   overflow-wrap: break-word;
-}
-
-main ul {
-  padding-left: var(--s10);
 }
 
 /* -------------------------------------------------------------------------- *
