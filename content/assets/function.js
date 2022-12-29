@@ -1,16 +1,20 @@
 /* (C) Copyright 2019-2022 Robert Grimm
    Licensed under the MIT License (https://opensource.org/licenses/MIT) */
 
-let DEBUG = false;
+const DEBUG = Boolean(
+  document.documentElement.classList.contains('debug')
+  || document.body.classList.contains('debug')
+);
+if (DEBUG) console.log(`☑️ Preparing dynamic page enhancements.`);
+
+// -----------------------------------------------------------------------------
 
 function createFooterWithReferences() {
   // >>> (1) Read from DOM: Check footer, determine options, extract links.
   const article = document.querySelector('main > article');
 
   if (!article || article.querySelector('footer.references')) {
-    if (DEBUG) {
-      console.log(`ℹ️ Page did not request print footer with references.`);
-    }
+    if (DEBUG) console.log(`☑️ No need for (re)creating printed references.`);
     return;
   }
 
@@ -68,56 +72,64 @@ function createFooterWithReferences() {
 // -----------------------------------------------------------------------------
 
 function updateThemeColor() {
-  // Pick <meta name="theme-color"> with data-fallback attribute.
-  // There may be two, one for light mode and one for dark mode.
+  // Extract <meta name="theme-color"> elements with data-fallback attribute.
+  // There might be two, one for light mode and one for dark mode.
   const themes = []
   for (const element of document.querySelectorAll('meta[name=theme-color]')) {
     if (element.dataset.fallback) {
-      themes.push({
-        element,
-        visible: element.content,
-        invisible: element.dataset.fallback,
-      });
+      const visible = element.content;
+      const invisible = element.dataset.fallback;
+      themes.push({ element, visible, invisible })
     }
   }
   if (themes.length === 0) {
-    if (DEBUG) console.log(`ℹ️ No <meta name=theme-color> with fallback.`);
+    if (DEBUG) console.log(`☑️ No <meta name=theme-color> with fallback.`);
     return;
   }
 
-  // Pick top-of-page element whose visibility controls color.
+  // Extract element whose visibility will control theme color.
   let header = document.querySelector('.cover img');
   if (!header) header = document.querySelector('.page-header');
   if (!header) {
-    if (DEBUG) console.error(`❌ Page does not have .page-header!`);
+    if (DEBUG) console.error(`❌ No header element to control theme color switching!`);
     return;
   }
 
-  // Set up intersection observer that updates content attribute of all <meta>
-  // elements, independent of light or dark mode, in case that mode flips.
+  // Set up intersection observer to update <meta content> attribute. Update
+  // *all*, so that we don't need to monitor light/dark mode changes, too.
+  const updateThemes = isVisible => {
+    if (DEBUG) {
+      console.log(`❇️ Activating ${isVisible ? 'above' : 'below'} fold theme colors.`);
+    }
+    for (const theme of themes) {
+      theme.element.content = isVisible ? theme.visible : theme.invisible;
+    }
+  };
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      const { isIntersecting } = entry;
-      for (const theme of themes) {
-        theme.element.content =
-          isIntersecting ? theme.visible : theme.invisible;
-      }
+      updateThemes(entry.isIntersecting);
     }
   });
   observer.observe(header);
 
+  // Et voila!
   if (DEBUG) {
-    const { length } = themes;
-    console.log(`✅ Enabled color switching for ${length} theme-colors.`);
+    const elements = `${themes.length} theme${themes.length === 1 ? '' : 's'}`;
+    console.log(`✅ Enabled color switching for ${elements}.`);
   }
 }
 
 // -----------------------------------------------------------------------------
 
 function setup() {
+  if (DEBUG) {
+    console.log(`☑️ Configuring dynamic page enhancements after content loaded.`);
+  }
+
   // Safari doesn't support beforeprint event, so media query serves as fallback.
   // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeprint
   if (document.body.classList.contains('print-references')) {
+    if (DEBUG) console.log(`☑️ Page requests printed references.`);
     window.addEventListener('beforeprint', createFooterWithReferences);
     window.matchMedia('print').addListener(event => {
       if (event.matches) {
