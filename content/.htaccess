@@ -190,6 +190,7 @@ Options -MultiViews
   # Other
 
     AddType application/octet-stream                    safariextz
+    AddType application/pdf                             pdf
     AddType application/x-bb-appworld                   bbaw
     AddType application/x-chrome-extension              crx
     AddType application/x-opera-extension               oex
@@ -1017,9 +1018,10 @@ FileETag None
     ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
 
-  # Markdown
+  # Other document formats
 
     ExpiresByType text/markdown                         "access plus 0 seconds"
+    ExpiresByType application/pdf                       "access plus 1 year"
 
 
   # Media files
