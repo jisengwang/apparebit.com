@@ -25,7 +25,7 @@
 
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
-        <FilesMatch "1200x630.(jpg|png)$">
+        <FilesMatch "1200x630\.(jpg|png)$">
             SetEnvIf Origin ":" IS_CORS
             Header set Access-Control-Allow-Origin "*" env=IS_CORS
         </FilesMatch>
@@ -154,8 +154,7 @@ Options -MultiViews
 
     AddType audio/mp4                                   f4a f4b m4a
     AddType audio/ogg                                   oga ogg opus
-    AddType image/avif                                  avif
-    AddType image/avif-sequence                         avifs
+    AddType image/avif                                  avif avifs
     AddType image/bmp                                   bmp
     AddType image/jxl                                   jxl
     AddType image/svg+xml                               svg svgz
@@ -529,8 +528,7 @@ DirectorySlash Off
 # https://content-security-policy.com/
 
 <IfModule mod_headers.c>
-    Header always set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'self'; frame-ancestors 'none'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)#i"
-    Header always set Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; font-src 'self'; manifest-src 'self'; script-src 'self'; img-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#application\/pdf|xml#i"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; style-src 'self' 'unsafe-inline'; report-uri https://apparebit.report-uri.com/r/d/csp/enforce" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -629,7 +627,7 @@ DirectorySlash Off
 # https://hstspreload.org/
 
 <IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=16070400; includeSubDomains" "expr=%{HTTPS} == 'on'"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
     # (1) Enable your site for HSTS preload inclusion.
     # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
 </IfModule>
@@ -785,6 +783,32 @@ DirectorySlash Off
 # </IfModule>
 
 # ----------------------------------------------------------------------
+# | Permissions Policy                                                 |
+# ----------------------------------------------------------------------
+
+# Set a strict Permissions Policy to mitigate access to browser features.
+#
+# The header uses a structured syntax, and allows sites to more tightly
+# restrict which origins can be granted access to features.
+# The list of available features: https://github.com/w3c/webappsec-permissions-policy/blob/main/features.md
+#
+# The example policy below aims to disable all features expect synchronous
+# `XMLHttpRequest` requests on the same origin.
+#
+# To check your Permissions Policy, you can use an online service, such as:
+# https://securityheaders.com/
+# https://observatory.mozilla.org/
+#
+# https://www.w3.org/TR/permissions-policy-1/
+# https://owasp.org/www-project-secure-headers/#permissions-policy
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
+# https://scotthelme.co.uk/a-new-security-header-feature-policy/
+
+<IfModule mod_headers.c>
+    Header always set Permissions-Policy "accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),bluetooth=(),camera=(),display-capture=(),encrypted-media=(),execution-while-not-rendered=(),execution-while-out-of-viewport=(),fullscreen=(),geolocation=(),gyroscope=(),hid=(),idle-detection=(),keyboard-map=(),magnetometer=(),microphone=(),midi=(),payment=(),picture-in-picture=(),publickey-credentials-get=(),screen-wake-lock=(),sync-xhr=(self),usb=(),web-share=(),xr-spatial-tracking=()" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+</IfModule>
+
+# ----------------------------------------------------------------------
 # | Disable TRACE HTTP Method                                          |
 # ----------------------------------------------------------------------
 
@@ -831,6 +855,7 @@ DirectorySlash Off
 # https://php.net/manual/en/ini.core.php#ini.expose-php
 
 <IfModule mod_headers.c>
+    Header unset X-Powered-By
     Header always set X-Powered-By "George Soros"
 </IfModule>
 
@@ -974,109 +999,51 @@ FileETag None
     ExpiresActive on
     ExpiresDefault                                      "access plus 1 month"
 
-  # CSS
+    # Specific: Assets
+    ExpiresByType image/vnd.microsoft.icon              "access plus 1 week"
+    ExpiresByType image/x-icon                          "access plus 1 week"
 
-    ExpiresByType text/css                              "access plus 1 day"
+    # Specific: Manifests
+    ExpiresByType application/manifest+json             "access plus 1 week"
+    ExpiresByType application/x-web-app-manifest+json   "access"
+    ExpiresByType text/cache-manifest                   "access"
 
-
-  # Data interchange
-
+    # Specific: Data interchange
     ExpiresByType application/atom+xml                  "access plus 1 hour"
     ExpiresByType application/rdf+xml                   "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
-    ExpiresByType application/json                      "access plus 0 seconds"
-    ExpiresByType application/ld+json                   "access plus 0 seconds"
-    ExpiresByType application/schema+json               "access plus 0 seconds"
-    ExpiresByType application/geo+json                  "access plus 0 seconds"
-    ExpiresByType application/xml                       "access plus 0 seconds"
-    ExpiresByType text/calendar                         "access plus 0 seconds"
-    ExpiresByType text/xml                              "access plus 0 seconds"
+    # Specific: Documents
+    ExpiresByType text/html                             "access"
+    ExpiresByType text/markdown                         "access"
+    ExpiresByType text/calendar                         "access"
 
+    # Specific: Other
+    ExpiresByType text/x-cross-domain-policy            "access plus 1 week"
 
-  # Favicon (cannot be renamed!) and cursor images
+    # Generic: Data
+    ExpiresByType application/json                      "access"
+    ExpiresByType application/ld+json                   "access"
+    ExpiresByType application/schema+json               "access"
+    ExpiresByType application/geo+json                  "access"
+    ExpiresByType application/xml                       "access"
+    ExpiresByType text/xml                              "access"
 
-    ExpiresByType image/vnd.microsoft.icon              "access plus 1 week"
-    ExpiresByType image/x-icon                          "access plus 1 week"
+    # CSS
+    ExpiresByType text/css                              "access plus 1 day"
 
-  # HTML
-
-    ExpiresByType text/html                             "access plus 0 seconds"
-
-
-  # JavaScript
-
+    # JavaScript and WebAssembly
     ExpiresByType application/javascript                "access plus 1 day"
     ExpiresByType application/x-javascript              "access plus 1 day"
     ExpiresByType text/javascript                       "access plus 1 day"
+    ExpiresByType application/wasm                      "access plus 1 day"
 
-
-  # Manifest files
-
-    ExpiresByType application/manifest+json             "access plus 1 week"
-    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
-    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
-
-
-  # Other document formats
-
-    ExpiresByType text/markdown                         "access plus 0 seconds"
+    # Media
     ExpiresByType application/pdf                       "access plus 1 year"
-
-
-  # Media files
-
-    ExpiresByType audio/ogg                             "access plus 1 month"
-    ExpiresByType image/apng                            "access plus 1 month"
-    ExpiresByType image/avif                            "access plus 1 month"
-    ExpiresByType image/avif-sequence                   "access plus 1 month"
-    ExpiresByType image/bmp                             "access plus 1 month"
-    ExpiresByType image/gif                             "access plus 1 month"
-    ExpiresByType image/jpeg                            "access plus 1 month"
-    ExpiresByType image/jxl                             "access plus 1 month"
-    ExpiresByType image/png                             "access plus 1 month"
-    ExpiresByType image/svg+xml                         "access plus 1 month"
-    ExpiresByType image/webp                            "access plus 1 month"
-    ExpiresByType video/mp4                             "access plus 1 month"
-    ExpiresByType video/ogg                             "access plus 1 month"
-    ExpiresByType video/webm                            "access plus 1 month"
-
-
-  # WebAssembly
-
-    ExpiresByType application/wasm                      "access plus 1 year"
-
-
-  # Web fonts
-
-    # Collection
-    ExpiresByType font/collection                       "access plus 1 year"
-
-    # Embedded OpenType (EOT)
-    ExpiresByType application/vnd.ms-fontobject         "access plus 1 year"
-    ExpiresByType font/eot                              "access plus 1 year"
-
-    # OpenType
-    ExpiresByType font/opentype                         "access plus 1 year"
-    ExpiresByType font/otf                              "access plus 1 year"
-
-    # TrueType
-    ExpiresByType application/x-font-ttf                "access plus 1 year"
-    ExpiresByType font/ttf                              "access plus 1 year"
-
-    # Web Open Font Format (WOFF) 1.0
-    ExpiresByType application/font-woff                 "access plus 1 year"
-    ExpiresByType application/x-font-woff               "access plus 1 year"
-    ExpiresByType font/woff                             "access plus 1 year"
-
-    # Web Open Font Format (WOFF) 2.0
-    ExpiresByType application/font-woff2                "access plus 1 year"
-    ExpiresByType font/woff2                            "access plus 1 year"
-
-
-  # Other
-
-    ExpiresByType text/x-cross-domain-policy            "access plus 1 week"
+    ExpiresByType audio/*                               "access plus 1 year"
+    ExpiresByType font/*                                "access plus 1 year"
+    ExpiresByType image/*                               "access plus 1 year"
+    ExpiresByType video/*                               "access plus 1 year"
 
 </IfModule>
 
