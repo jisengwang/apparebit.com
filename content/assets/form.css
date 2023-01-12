@@ -20,8 +20,8 @@
 
 @font-face {
   font-family: 'Bely';
-  src: url(fonts/bely-regular.woff2),
-    url(fonts/bely-regular.woff);
+  src: url(/assets/fonts/bely-regular.woff2),
+    url(/assets/fonts/bely-regular.woff);
   font-style: normal;
   font-weight: normal;
   font-display: swap;
@@ -29,8 +29,8 @@
 
 @font-face {
   font-family: 'Bely';
-  src: url(fonts/bely-italic.woff2),
-    url(fonts/bely-italic.woff);
+  src: url(/assets/fonts/bely-italic.woff2),
+    url(/assets/fonts/bely-italic.woff);
   font-style: italic;
   font-weight: normal;
   font-display: swap;
@@ -38,8 +38,8 @@
 
 @font-face {
   font-family: 'Bely';
-  src: url(fonts/bely-bold.woff2),
-    url(fonts/bely-bold.woff);
+  src: url(/assets/fonts/bely-bold.woff2),
+    url(/assets/fonts/bely-bold.woff);
   font-style: normal;
   font-weight: bold;
   font-display: swap;
@@ -47,8 +47,8 @@
 
 /*@font-face {
   font-family: 'Bely';
-  src: url(fonts/bely-bold-italic.woff2),
-    url(fonts/bely-bold-italic.woff);
+  src: url(/assets/fonts/bely-bold-italic.woff2),
+    url(/assets/fonts/bely-bold-italic.woff);
   font-style: italic;
   font-weight: bold;
   font-display: swap;
@@ -56,8 +56,8 @@
 
 @font-face {
   font-family: 'Bely Display';
-  src: url(fonts/bely-display.woff2),
-    url(fonts/bely-display.woff);
+  src: url(/assets/fonts/bely-display.woff2),
+    url(/assets/fonts/bely-display.woff);
   font-style: normal;
   font-weight: bold;
   font-display: fallback;
@@ -65,8 +65,8 @@
 
 @font-face {
   font-family: 'Bild';
-  src: url(fonts/bild-variable.woff2),
-    url(fonts/bild-variable.woff);
+  src: url(/assets/fonts/bild-variable.woff2),
+    url(/assets/fonts/bild-variable.woff);
   font-style: normal;
   font-weight: bold;
   font-stretch: 60% 100%;
@@ -75,8 +75,8 @@
 
 @font-face {
   font-family: 'Bluu Suuperstar';
-  src: url(fonts/bluu-suuperstar-medium.woff2),
-    url(fonts/bluu-suuperstar-medium.woff);
+  src: url(/assets/fonts/bluu-suuperstar-medium.woff2),
+    url(/assets/fonts/bluu-suuperstar-medium.woff);
   font-style: normal;
   font-weight: 500;
   font-display: fallback;
@@ -85,8 +85,8 @@
 /*
 @font-face {
   font-family: 'Bluu Suuperstar';
-  src: url(fonts/bluu-suuperstar-bold.woff2),
-    url(fonts/bluu-suuperstar-bold.woff);
+  src: url(/assets/fonts/bluu-suuperstar-bold.woff2),
+    url(/assets/fonts/bluu-suuperstar-bold.woff);
   font-style: normal;
   font-weight: 700;
   font-display: fallback;
@@ -100,8 +100,8 @@
 
 @font-face {
   font-family: 'Reforma 2018';
-  src: url(fonts/reforma-2018-gris.woff2),
-    url(fonts/reforma-2018-gris.woff);
+  src: url(/assets/fonts/reforma-2018-gris.woff2),
+    url(/assets/fonts/reforma-2018-gris.woff);
   font-style: normal;
   font-weight: normal;
   font-display: fallback;
@@ -110,8 +110,8 @@
 /*
 @font-face {
   font-family: 'Reforma 2018';
-  src: url(fonts/reforma-2018-gris-italica.woff2),
-    url(fonts/reforma-2018-gris-italica.woff);
+  src: url(/assets/fonts/reforma-2018-gris-italica.woff2),
+    url(/assets/fonts/reforma-2018-gris-italica.woff);
   font-style: italic;
   font-weight: normal;
   font-display: fallback;
@@ -119,8 +119,8 @@
 
 @font-face {
   font-family: 'Reforma 2018';
-  src: url(fonts/reforma-2018-negra.woff2),
-    url(fonts/reforma-2018-negra.woff);
+  src: url(/assets/fonts/reforma-2018-negra.woff2),
+    url(/assets/fonts/reforma-2018-negra.woff);
   font-style: normal;
   font-weight: 700;
   font-display: fallback;
@@ -129,8 +129,8 @@
 
 @font-face {
   font-family: 'DejaVu';
-  src: url(fonts/dejavu-sans-mono-book.woff2),
-    url(fonts/dejavu-sans-mono-book.woff);
+  src: url(/assets/fonts/dejavu-sans-mono-book.woff2),
+    url(/assets/fonts/dejavu-sans-mono-book.woff);
   font-style: normal;
   font-weight: normal;
   font-display: swap;
@@ -138,8 +138,8 @@
 
 @font-face {
   font-family: 'DejaVu';
-  src: url(fonts/dejavu-sans-mono-oblique.woff2),
-    url(fonts/dejavu-sans-mono-oblique.woff);
+  src: url(/assets/fonts/dejavu-sans-mono-oblique.woff2),
+    url(/assets/fonts/dejavu-sans-mono-oblique.woff);
   font-style: italic;
   font-weight: normal;
   font-display: swap;
@@ -147,8 +147,8 @@
 
 @font-face {
   font-family: 'DejaVu';
-  src: url(fonts/dejavu-sans-mono-bold.woff2),
-    url(fonts/dejavu-sans-mono-bold.woff);
+  src: url(/assets/fonts/dejavu-sans-mono-bold.woff2),
+    url(/assets/fonts/dejavu-sans-mono-bold.woff);
   font-style: normal;
   font-weight: bold;
   font-display: swap;
