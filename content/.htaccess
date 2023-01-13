@@ -44,16 +44,16 @@
 # same-origin requests do not use CORS. The exception is front preloading,
 # which must be crossorigin even for fonts hosted at the same origin.
 
-<IfModule mod_setenvif.c>
-    <IfModule mod_headers.c>
-        <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
-            SetEnvIf Origin ":" IS_CORS
-            Header set Access-Control-Allow-Origin "https://apparebit.com" env=IS_CORS
-            # Response differs by Origin header:
-            Header append Vary Origin
-        </FilesMatch>
-    </IfModule>
-</IfModule>
+# <IfModule mod_setenvif.c>
+#     <IfModule mod_headers.c>
+#         <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+#             SetEnvIf Origin ":" IS_CORS
+#             Header set Access-Control-Allow-Origin "https://apparebit.com" env=IS_CORS
+#             # Response differs by Origin header:
+#             Header append Vary Origin
+#         </FilesMatch>
+#     </IfModule>
+# </IfModule>
 
 # ######################################################################
 # # ERRORS                                                             #
@@ -772,16 +772,16 @@ DirectorySlash Off
 # https://web.dev/cross-origin-isolation-guide/
 # https://scotthelme.co.uk/coop-and-coep/
 
-# <IfModule mod_headers.c>
-#     # (1)
-#     Header always set Cross-Origin-Embedder-Policy "require-corp" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+<IfModule mod_headers.c>
+    # (1)
+    Header always set Cross-Origin-Embedder-Policy "require-corp" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 
-#     # (2)
-#     Header always set Cross-Origin-Opener-Policy "same-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+    # (2)
+    Header always set Cross-Origin-Opener-Policy "same-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 
-#     # (3)
-#     Header always set Cross-Origin-Resource-Policy "same-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
-# </IfModule>
+    # (3)
+    Header always set Cross-Origin-Resource-Policy "same-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | Permissions Policy                                                 |
