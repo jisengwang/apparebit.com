@@ -13,9 +13,13 @@
  * --------
  *
  * -webkit-filter
+ * -moz-fit-content
  * -ms-hyphens, -webkit-hyphens
  * -o-object-fit
+ * -webkit-print-color-adjust
+ * -webkit-sticky
  * -webkit-text-decoration-color
+ * -ms-text-size-adjust, -webkit-text-size-adjust
  */
 
 @font-face {
@@ -341,7 +345,6 @@ iframe {
   font-kerning: auto;
 
   font-size: 118.75%;
-  -moz-text-size-adjust: none;
   -ms-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
@@ -381,6 +384,7 @@ hgroup p, .pullquote, .banner {
    * On 2022-07-01, content model for hgroup changed, now requiring <p> for
    * subheadings. Since it still uses a 1.5x - 1.8x font size, say, a leading
    * double quote may extend past viewport on phones. Disable for this case.
+   * Similarly, don't try this with bannered backgrounds.
    */
   hanging-punctuation: none;
 }
@@ -482,7 +486,8 @@ h1, h2, .h2, h3 {
   }
 }
 
-.reforma h1, .reforma h2, .reforma .h2, .reforma h3 {
+.reforma h1, .reforma h2, .reforma .h2, .reforma h3,
+.reforma .pullquote, .reforma.pullquote {
   font-family: var(--reforma-fontstack);
 }
 
@@ -643,6 +648,7 @@ main .tight li:nth-of-type(n+2) {
 .pedestal {
   margin-left: auto;
   margin-right:auto;
+  width: -moz-fit-content;
   width: fit-content;
   max-width: 100%;
 }
@@ -690,8 +696,10 @@ table caption {
   text-align: left;
   font-style: italic;
   padding: var(--t20) 0;
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
+  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -707,6 +715,7 @@ th, td {
 thead > tr > .first-column,
 tbody > tr > th[scope="row"] {
   text-align: left;
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
   background-color: var(--color-bg);
@@ -1019,6 +1028,12 @@ address {
  * .capped, .drop-count
  * -------------------------------------------------------------------------- */
 
+/*
+ * With some release before and including 16.5.2, Safari's implementation of
+ * -webkit-initial-letter ceased to work with list numbers injected via ::before
+ * content. So for now, all browsers use simulated drop caps. Boo!
+ */
+
 .drop-count {
   list-style: none;
 }
@@ -1028,26 +1043,28 @@ address {
   font-variant: lining-nums;
 }
 
-@supports not (initial-letter: 2) {
-  .capped::first-letter, .drop-count li::before {
-    float: left;
-    font-size: 3.3em;
-    padding-right: 0.06em;
-    line-height: 0.8;
-  }
-
-  /* ---------- Chrome ---------- */
-  .capped::first-letter {
-    margin-top: 0.006em;
-  }
-
-  .drop-count li::before {
-    margin-top: 0.008em;
-  }
+/*@supports (not (initial-letter: 2)) and (not (-webkit-initial-letter: 2)) {*/
+.capped::first-letter, .drop-count li::before {
+  float: left;
+  font-size: 3.3em;
+  padding-right: 0.06em;
+  line-height: 0.8;
 }
 
+/* ---------- Chrome ---------- */
+.capped::first-letter {
+  margin-top: 0.006em;
+}
+
+.drop-count li::before {
+  margin-top: 0.008em;
+}
+
+
 /* ---------- Firefox ---------- */
-@supports (not (initial-letter: 2)) and (-moz-appearance: none) {
+@supports (not (initial-letter: 2)) and
+          (not (-webkit-initial-letter: 2)) and
+          (-moz-appearance: none) {
   .capped::first-letter {
     margin-top: 0.15em;
   }
@@ -1058,11 +1075,13 @@ address {
 }
 
 /* ---------- Safari ---------- */
-@supports (initial-letter: 2) {
-  .capped::first-letter, .drop-count li::before {
+/*
+@supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+  .capped::first-letter, .drop-count li {
+    -webkit-initial-letter: 2;
     initial-letter: 2;
   }
-}
+}*/
 
 /* -------------------------------------------------------------------------- *
  * .card, .carddeck
@@ -1368,7 +1387,14 @@ figcaption > em, figcaption > cite {
 }
 
 @media (min-width: 39.375em) {
-  .figure figcaption, .wide-figure figcaption {
+  .figure figcaption {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 59.18em) {
+  .wide-figure figcaption {
     margin-right: 0;
     margin-left: 0;
   }
@@ -1939,7 +1965,7 @@ main {
   font-stretch: 85%;
 }
 
-.reforma .pullquote p {
+.reforma .pullquote p, .reforma.pullquote p {
   font-size: calc(var(--scale-to-reforma) * var(--s20));
 }
 
