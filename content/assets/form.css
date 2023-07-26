@@ -376,7 +376,7 @@ p {
   hanging-punctuation: first allow-end last;
 }
 
-hgroup p {
+hgroup p, .pullquote, .banner {
   /*
    * On 2022-07-01, content model for hgroup changed, now requiring <p> for
    * subheadings. Since it still uses a 1.5x - 1.8x font size, say, a leading
@@ -451,7 +451,7 @@ h1, h2, .h2, h3 {
   font-variant: lining-nums common-ligatures;
 }
 
-.belyssimo h1, .belyssimo h2, .belyssimo .h2 {
+.belyssimo h1, .belyssimo h2, .belyssimo .h2, .belyssimo .pullquote {
   font-family: var(--bely-display-fontstack);
 }
 
@@ -915,46 +915,52 @@ b {
  * -------------------------------------------------------------------------- */
 
 /*
- * To create a banner effect, with text typeset against some gradient, the text
- * must be contained in an inline element that is styled as follows:
+ * To create a banner effect, with text typeset against some background color,
+ * the background color is set on an inline element. In theory, padding plus
+ * box-decoration-break ensures that the padding appears on every line. In
+ * practice, Safari doesn't handle it correctly. However, box-shadow works
+ * across all major browsers. Alas, that also limits us to colors, not
+ * gradients, unless the text color is the same color as the background color,
+ * in which case we can use blend modes.
  *
- * padding: ...;                          Give type breathing room at ends.
- * background-image: ...;                 Specify the gradient.
+ * padding: ...;                          Option 1: Leave some space
+ * box-shadow: ...;                       Option 2: Leave some space
+ * background-image: ...;                 Specify the gradient, maybe
  * -webkit-box-decoration-break: clone;   Make gradient and padding repeat...
  * box-decoration-break: clone;           ...for each line, even on Safari.
  * background-attachment: fixed;          Make gradient consistent across lines.
  *
- * The box containing the inline element should have similarly sized padding to
- * create space for the inline box's padding, which renders outside the content
- * box. That's hard enough but all three major rendering engines have their own
- * bugs: Chrome's background-attachment still renders incorrectly by using
- * background color instead of gradient. Firefox's box-decoration-break used to
- * push lines apart but is fixed now. Safari's strange line-breaking behavior
- * continues as well, pushing content too far right. I have no idea why. Banners
- * are hard.
+ * All three browsers had bugs with the above. Right now, Safari is the most
+ * problematic. Banners are hard.
+ *
+ * To also control line-breaking behavior, use spans of spans, with inner
+ * spans the fragments that should not line break.
  */
 
-.banner strong {
-  padding: 0 var(--t30);
+.banner {
+  line-height: calc(var(--r-major) * var(--r-minor));
+  text-align: center;
+  margin-left: var(--t30);
+  margin-right: var(--t30);
+}
+
+.banner > span, .banner > strong {
+  padding-bottom: var(--t50);
+  box-shadow:
+    calc(-1 * var(--t30)) 0 0 0 var(--color-banner, transparent),
+    var(--t30) 0 0 0 var(--color-banner, transparent);
+  background-color: var(--color-banner, transparent);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   /* background-attachment: fixed;  <-- still doesn't work in Chrome */
-  background-size: 100vw;
- }
-
-/* calc((var(--max-measure) + 2 * var(--s40)) * 131.25% + 118.75%) */
-/*@media (min-width: 52.54em) {
-  .banner strong {
-    background-size: 40.125rem;
-  }
-}*/
-
-.banner p {
-  padding: 0 var(--t50);
+  background-size: 100%;
+}
+.banner > span > span, .banner > strong > span {
+  display: inline-block;
 }
 
 /* Gradients generated with https://davidjohnstone.net/lch-lab-colour-gradient-picker */
-.orange strong {
+.orange > span, .orange > strong {
   background-color: #fff143;
   background-image: linear-gradient(to right,
     #fff143,
@@ -967,7 +973,7 @@ b {
   );
 }
 
-.purple strong {
+.purple > span, .purple > strong {
   background-color: var(--color-purple);
   background-image: linear-gradient(to right,
     #ffafd4,
@@ -979,20 +985,16 @@ b {
   );
 }
 
-.green strong {
+.green > span, .green > strong {
   background-color: var(--color-green);
-  background-image: linear-gradient(to right,
-    var(--color-cyan),
-    var(--color-green)
-  );
+/*background-image: linear-gradient(to right, var(--color-cyan), var(--color-green));*/
 }
-
 @media screen and (prefers-color-scheme: dark) {
-  .orange strong {
+  .orange > span, .orange > strong {
     background-color: var(--color-accent2);
     background-image: none;
   }
-  .purple strong {
+  .purple > span, .purple > strong {
     background-color: var(--color-accent1);
     background-image: none;
   }
@@ -1925,7 +1927,7 @@ main {
 
 .pullquote {
   grid-column: wide-with-margin;
-  margin: 1em 0;
+  margin: 1em 0 var(--s05) 0;
 }
 
 .pullquote p {
