@@ -1346,7 +1346,7 @@ figcaption {
   font-size: var(--t05);
   text-align: right;
   font-style: italic;
-  padding-top: 0.3em;
+  padding-top: 0.4em;
 }
 
 figcaption > em, figcaption > cite {
@@ -1679,49 +1679,36 @@ hr.lively::after {
  * set by the container.
  */
 
-.inset-left {
-  margin-right: var(--min-margin);
-  float: left;
+.inset-right, .inset-left {
+  margin-top: var(--t30);
   width: calc(7 * var(--s10));
 }
-
-.inset-right {
-  margin-left: var(--min-margin);
-  float: right;
-  width: calc(7 * var(--s10));
-}
-
-@supports not (-moz-appearance: none) {
-   /* Counteract rounding errors in Safari and Chrome. */
-  .inset-left, .inset-right {
-    width: calc(7 * var(--s10) - 5px);
-  }
-}
+.inset-right { margin-left: var(--min-margin);  float: right; }
+.inset-left  { margin-right: var(--min-margin); float: left; }
 
 /* As viewport gets bigger, inset images gradually slide out of the text. */
 
 /* calc((var(--max-measure) + 2 * 1em * 131.25%) */
 @media (min-width: 40.6875em) {
-  .inset-left {
-    margin-left: calc((-100vw + var(--max-measure) + 2em) / 2);
-  }
-
   .inset-right {
     margin-right: calc((-100vw + var(--max-measure) + 3em) / 2);
+  }
+  .inset-left {
+    margin-left: calc((-100vw + var(--max-measure) + 2em) / 2);
   }
 }
 
 /* calc((var(--max-measure) + 2 * 10.5em + 4 * 1em) * 131.25%) */
 @media (min-width: 70.875em) {
-  .inset-left {
-    /* Not strictly necessary but eliminates weird dev tools appearance. */
-    margin-right: 0;
-    /* Consider reducing to -7 * s10 - 1em, requires change to .byline. */
-    margin-left: calc(-7 * var(--s10) - 1em);
-  }
   .inset-right {
+    /* Not strictly necessary but eliminates weird dev tools appearance. */
     margin-left: 0;
+    /* Consider reducing to -7 * s10 - 1em, requires change to .byline. */
     margin-right: calc(-7 * var(--s10) - 1em);
+  }
+  .inset-left {
+    margin-right: 0;
+    margin-left: calc(-7 * var(--s10) - 1em);
   }
 }
 
