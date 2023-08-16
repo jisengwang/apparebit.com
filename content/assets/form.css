@@ -171,7 +171,7 @@ picture {
   display: block;
 }
 
-img {
+img, .image {
   display: block;
   border: 0;
 
@@ -179,7 +179,7 @@ img {
   max-width: 100%;
 }
 
-img:where([width][height]) {
+img:where([width][height]), .image:where([width][height]) {
   height: auto;
 }
 /*img[src$=".svg"] {
@@ -998,6 +998,11 @@ b {
   background-color: var(--color-green);
 /*background-image: linear-gradient(to right, var(--color-cyan), var(--color-green));*/
 }
+
+.cyan-green {
+  background-image: linear-gradient(to right, var(--color-cyan), var(--color-green));
+}
+
 @media screen and (prefers-color-scheme: dark) {
   .orange > span, .orange > strong {
     background-color: var(--color-accent2);
@@ -1292,16 +1297,17 @@ pre {
  * .cover
  * -------------------------------------------------------------------------- */
 
-.cover img, .cover hero {
+.cover img, .cover .hero {
   width: 100vw;
-  height: 100vh;
+   /* The dynamic version */
+  height: 100svh;
 }
 
-@supports (-webkit-touch-callout: none) {
+/*@supports (-webkit-touch-callout: none) {
   .cover img, .cover .hero {
     height: -webkit-fill-available;
   }
-}
+}*/
 
 .cover img {
   -o-object-fit: cover;
@@ -1682,6 +1688,15 @@ hr.lively::after {
     transform: none;
   }
 }
+
+/* -------------------------------------------------------------------------- *
+ * i
+ * -------------------------------------------------------------------------- */
+
+i[lang=he] {
+  font-style: normal
+}
+
 
 /* -------------------------------------------------------------------------- *
  * .with-inset, .inset-left, .inset-right
