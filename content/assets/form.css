@@ -1693,10 +1693,10 @@ hr.lively::after {
  * i
  * -------------------------------------------------------------------------- */
 
+/* Using italics for Adonai looks awkward. Besides, They surpass all emphasis. */
 i[lang=he] {
   font-style: normal
 }
-
 
 /* -------------------------------------------------------------------------- *
  * .with-inset, .inset-left, .inset-right
