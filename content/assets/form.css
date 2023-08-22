@@ -2041,6 +2041,28 @@ main .sidebar + p {
 }
 
 /* -------------------------------------------------------------------------- *
+ * .strike
+ *
+ * A somewhat lower positioned, somewhat longer line-through effect
+ * that just looks better!
+ * -------------------------------------------------------------------------- */
+
+.strike {
+  text-decoration-line: none;
+  position: relative;
+}
+
+.strike::after {
+  content: '';
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  height: var(--t60);
+  top: 60%;
+  background-color: var(--color-fg);
+}
+
+/* -------------------------------------------------------------------------- *
  * .timeline
  * -------------------------------------------------------------------------- */
 
