@@ -22,7 +22,6 @@ export default function Footer(file, context) {
   <li><a rel="${me}author noreferrer" href="https://www.instagram.com/apparebit/">Instagram</a></li>
   <li><a rel="${me}author noreferrer" href="https://www.linkedin.com/in/apparebit/">LinkedIn</a></li>
   <li><a rel="${me}author noreferrer" href="https://mastodon.social/@apparebit">Mastodon</a></li>
-  <li><a rel="${me}author noreferrer" href="https://twitter.com/apparebit/">Twitter</a></li>
 </ul>
 </div>
 
