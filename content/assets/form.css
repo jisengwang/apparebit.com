@@ -182,6 +182,12 @@ img, .image {
 img:where([width][height]), .image:where([width][height]) {
   height: auto;
 }
+
+img.inline {
+  display: inline-block;
+  height: 1em;
+}
+
 /*img[src$=".svg"] {
   width: 100%;
   height: auto;
@@ -402,6 +408,7 @@ abbr,
 .capped span:first-child,
 .roman,
 .timeline time,
+.unicode-name,
 .gallery .hint .text {
   font-variant-caps: all-small-caps;
 }
@@ -413,7 +420,7 @@ abbr,
 /* -------------------------------------------------------------------------- */
 
 /* 13<sup>th</sup> if font supports superscript */
-sup {
+sup, sub {
   font-size: 100%;
   vertical-align: baseline;
 }
@@ -428,6 +435,19 @@ sup {
 @supports (font-variant-position: super) {
   sup {
     font-variant-position: super;
+  }
+}
+
+@supports not (font-variant-position: sub) {
+  sub {
+    -webkit-font-feature-settings: 'subs', var(--font-features-text);
+    font-feature-settings: 'subs', var(--font-features-text);
+  }
+}
+
+@supports (font-variant-position: sub) {
+  sub {
+    font-variant-position: sub;
   }
 }
 
@@ -447,6 +467,15 @@ sup {
     font-variant-position: normal;
     font-variant-numeric: ordinal;
   }
+}
+
+/* -------------------------------------------------------------------------- */
+
+u {
+  text-decoration: none;
+  font-variant: lining-nums;
+  font-family: var(--dejavu-fontstack);
+  font-size: calc(var(--scale-to-dejavu) * 1em);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1345,6 +1374,14 @@ pre {
  * .figure, figcaption
  * -------------------------------------------------------------------------- */
 
+main :where(.figure, .figure-with-margin,
+            .narrow-figure,
+            .wide-figure, .wide-figure-with-margin)
+     img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 main .figure {
   grid-column: figure;
 }
@@ -1365,24 +1402,24 @@ main .wide-figure-with-margin {
   grid-column: wide-with-margin;
 }
 
-figcaption::before {
+:not(.textual) > figcaption::before {
   content: '—';
 }
 
-figcaption {
+:not(.textual) > figcaption {
   font-size: var(--t05);
   text-align: right;
   font-style: italic;
   padding-top: 0.4em;
 }
 
-figcaption > em, figcaption > cite {
+:not(.textual) > figcaption > em, :not(.textual) > figcaption > cite {
   font-style: normal;
 }
 
 @supports (-moz-appearance: none) {
   /* Firefox is more precise than Chrome/Safari, needs different constant. */
-  figcaption {
+  :not(.textual) > figcaption {
     padding-top: 0.25em;
   }
 }
@@ -1405,6 +1442,28 @@ figcaption > em, figcaption > cite {
     margin-left: 0;
   }
 }
+
+/*
+
+A textual figure needn't be a thesis,
+it could be corollary, it could be something else
+
+main {
+  counter-reset: thesis
+}
+
+figure.textual > * {
+  display: inline;
+}
+
+figure.textual figcaption {
+  font-weight: bold;
+}
+
+figure.textual figcaption::after {
+  content: ' #' counter(thesis) ': ';
+  counter-increment: thesis;
+}*/
 
 /* -------------------------------------------------------------------------- *
  * .gallery
