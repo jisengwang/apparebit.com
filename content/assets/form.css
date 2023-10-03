@@ -370,7 +370,7 @@ iframe {
   }
 }
 
-li, :not(.pullquote) > p {
+li, :not(hgroup, .pullquote) > p {
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
@@ -385,7 +385,7 @@ p {
   hanging-punctuation: first allow-end last;
 }
 
-hgroup p, .pullquote, .banner {
+hgroup p, .pullquote p, p.banner {
   /*
    * On 2022-07-01, content model for hgroup changed, now requiring <p> for
    * subheadings. Since it still uses a 1.5x - 1.8x font size, say, a leading
@@ -471,6 +471,12 @@ sup, sub {
 
 /* -------------------------------------------------------------------------- */
 
+.score {
+  font-variant: lining-nums;
+}
+
+/* -------------------------------------------------------------------------- */
+
 u {
   text-decoration: none;
   font-variant: lining-nums;
@@ -493,7 +499,7 @@ h1, h2, .h2, h3 {
   font-style: italic;
 }
 
-.bild h1, .bild h2, .bild .h2, .bild h3, .bild .pullquote strong {
+.bild h1, .bild h2, .bild .h2, .bild h3, .bild .pullquote {
   font-family: var(--bild-fontstack);
 }
 
@@ -649,7 +655,7 @@ main p + .signature {
 }
 
 /* Outright remove the top margin from .tight list items again. */
-main .tight li:nth-of-type(n+2) {
+main .tight :nth-of-type(n+2) {
   margin-top: 0;
 }
 
@@ -1059,7 +1065,7 @@ address {
 }
 
 /* -------------------------------------------------------------------------- *
- * .capped, .drop-count
+ * .capped, .drop-count, .drop-heading
  * -------------------------------------------------------------------------- */
 
 /*
@@ -1072,13 +1078,24 @@ address {
   list-style: none;
 }
 
-.drop-count li::before {
+.drop-heading {
+  counter-reset: list-item;
+}
+
+/* See .invisible */
+
+.drop-heading h3 + p {
+  margin-top: var(--margin-text-top);
+  counter-increment: list-item;
+}
+
+.drop-count li::before, .drop-heading h3 + p::before {
   content: counter(list-item);
   font-variant: lining-nums;
 }
 
 /*@supports (not (initial-letter: 2)) and (not (-webkit-initial-letter: 2)) {*/
-.capped::first-letter, .drop-count li::before {
+.capped::first-letter, .drop-count li::before, .drop-heading h3 + p::before {
   float: left;
   font-size: 3.3em;
   padding-right: 0.06em;
@@ -1090,7 +1107,7 @@ address {
   margin-top: 0.006em;
 }
 
-.drop-count li::before {
+.drop-count li::before, .drop-heading h3 + p::before {
   margin-top: 0.008em;
 }
 
@@ -1103,7 +1120,7 @@ address {
     margin-top: 0.15em;
   }
 
-  .drop-count li::before {
+  .drop-count li::before, .drop-heading h3 + p::before {
     margin-top: 0.016em;
   }
 }
@@ -1111,7 +1128,7 @@ address {
 /* ---------- Safari ---------- */
 /*
 @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
-  .capped::first-letter, .drop-count li {
+  .capped::first-letter, .drop-count li, .drop-heading h3 + p {
     -webkit-initial-letter: 2;
     initial-letter: 2;
   }
@@ -1689,7 +1706,7 @@ h1 + h2, h1 + .h2 {
  * See https://zellwk.com/blog/hide-content-accessibly/ and
  * https://github.com/h5bp/main.css/issues/12
  */
-.invisible {
+.invisible, .drop-heading > h3 {
   white-space: nowrap;
   height: auto;
   width: 1px;
@@ -2027,12 +2044,15 @@ main {
 
 .pullquote {
   grid-column: wide-with-margin;
-  margin: 1em 0 var(--s05) 0;
+  margin: var(--s05) 0 var(--s10) 0;
 }
 
 .pullquote p {
   font-size: var(--s20);
   font-weight: normal;
+  line-height: var(--r-minor);
+  text-align: center;
+  text-wrap: balance;
 }
 
 .bild .pullquote p {
