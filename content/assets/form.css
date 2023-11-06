@@ -679,51 +679,10 @@ main .tight :nth-of-type(n+2) {
 
 /* Table Table Table Table Table Table Table Table Table Table Table Table Table */
 
-/* Container for responsive <table> */
-.pedestal {
-  margin-left: auto;
-  margin-right:auto;
-  width: -moz-fit-content;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.pedestal[role="region"][tabindex][aria-labelledby] {
-  overflow-x: auto;
-  /* Use shadows as affordance for scrollability.
-  background-image:
-    linear-gradient(to right, var(--color-bg), var(--color-bg)),
-    linear-gradient(to right, var(--color-bg), var(--color-bg)),
-    linear-gradient(to right, rgb(0,0,0, 0.25), rgb(245,246,248, 0)),
-    linear-gradient(to left,  rgb(0,0,0, 0.25), rgb(245,246,248, 0));
-  background-position: left center, right center, left center, right center;
-  background-repeat: no-repeat;
-  background-color: var(--color-bg);
-  background-size: 1em 100%, 1em 100%, 0.5em 100%, 0.5em 100%;
-  background-attachment: local, local, scroll, scroll; */
-}
-
-.pedestal[role="region"][tabindex][aria-labelledby]:focus {
-  outline: solid var(--t20) var(--color-fg);
-}
-
-.pedestal[role="region"][tabindex][aria-labelledby]:focus:not(:focus-visible) {
-  outline: none;
-}
-
 table {
   border-collapse: separate;
   border-spacing: 0;
-}
-
-/* Improve touch target size for table with many links */
-table.touchable { line-height: calc(var(--r-minor) * var(--r-major)); }
-@media (pointer: fine) {
-  table.touchable { line-height: var(--r-major); }
-}
-
-table .sunk {
-  background-color: var(--color-bg-sunk);
+  line-height: var(--r-minor);
 }
 
 table caption {
@@ -731,108 +690,37 @@ table caption {
   text-align: left;
   font-style: italic;
   padding: var(--t20) 0;
-  position: -webkit-sticky;
-  position: sticky;
-  left: 0;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
-table caption::after {
-  content: ":";
+tr > th:first-child {
+  text-align: left;
+}
+
+th {
+  font-weight: normal;
+}
+
+thead th {
+  font-weight: bold;
 }
 
 th, td {
-  padding: 0 var(--t30);
+  padding: var(--t40);
 }
 
-/* Markup <th class=first-column> in <thead>! */
-thead > tr > .first-column,
-tbody > tr > th[scope="row"] {
-  text-align: left;
-  position: -webkit-sticky;
-  position: sticky;
-  left: 0;
-  background-color: var(--color-bg);
-  z-index: 2;
+thead > tr:last-of-type > :where(th, td) {
+  padding-bottom: var(--t30);
 }
 
-.lined tbody :where(th, td) {
-  border-top: solid var(--t70) var(--color-separator);
-}
 tbody > tr:first-of-type > :where(th, td) {
   border-top: solid var(--t60) var(--color-fg);
-}
-tbody:first-of-type > tr:first-of-type > :where(th, td) {
-  border-top: solid var(--t50) var(--color-fg);
+  padding-top: var(--t30);
 }
 
 td {
   font-variant-numeric: tabular-nums;
   text-align: right;
-}
-
-.centered-cells td {
-  text-align: center;
-}
-
-td.text {
-  text-align: left;
-}
-
-/* Tooltip for <th abbr="..."> */
-th[abbr] {
-  position: relative;
-  cursor: help;
-}
-
-th[abbr]::before {
-  content: attr(abbr);
-  white-space: pre;
-  font-size: var(--t05);
-  font-weight: normal;
-  background-color: var(--color-bg-lifted);
-  padding:var(--t30) var(--t10) var(--t20);
-  border: solid var(--t50) var(--color-separator);
-  display: block;
-  position: absolute;
-  top: 80%;
-  right: 40%;
-  min-width: min-content;
-  z-index: 665;
-  opacity: 0;
-  will-change: opacity;
-  pointer-events: none;
-}
-
-th[abbr].midanchor::before {
-  right: 50%;
-  transform: translateX(50%);
-}
-
-th[abbr]:hover::before {
-  opacity: 100%;
-}
-
-/* Dashed line to mark a qualitative change in data */
-td.data-changed {
-  position: relative;
-}
-
-td.data-changed::before {
-  content: '';
-  display: block;
-  height: var(--t50);
-  width: 100%;
-  position: absolute;
-  left: 0;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--color-fg) 0,
-    var(--color-fg) var(--t40),
-    transparent var(--t40),
-    transparent calc(var(--t40) + var(--t40))
-  );
+  margin: 1em;
 }
 
 /* ========================================================================== *
@@ -1314,7 +1202,7 @@ main .carddeck {
 }
 
 /* -------------------------------------------------------------------------- *
- * code, pre, samp
+ * code, pre, samp, var
  * -------------------------------------------------------------------------- */
 
 code, samp {
@@ -1337,6 +1225,13 @@ pre {
   -ms-hyphens: none;
   -webkit-hyphens: none;
   hyphens: none;
+}
+
+var.env {
+  font-family: var(--dejavu-fontstack);
+  font-size: calc(var(--scale-to-dejavu) * 1em);
+  font-style: normal;
+  font-variant-caps: all-small-caps;
 }
 
 /* -------------------------------------------------------------------------- *
