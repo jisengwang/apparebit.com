@@ -8,6 +8,7 @@
 <description>A Grimm chronology</description>
 <language>en</language>
 <managingEditor>apparebit@gmail.com (Robert Grimm)</managingEditor>
+<webMaster>apparebit@gmail.com (Robert Grimm)</webMaster>
 <image>
     <url>https://apparebit.com/assets/icons/a-circle-144x144.png</url>
     <title>Apparebit</title>
@@ -16,6 +17,14 @@
 <atom:link href="https://apparebit.com/feed.rss" rel="self" type="application/rss+xml" />
 <sy:updatePeriod>daily</sy:updatePeriod>
 <sy:updateFrequency>1</sy:updateFrequency>
+
+<item>
+<title>Netanyahu Plays Goebbels</title>
+<description>His language betrays his genocidal intent</description>
+<pubDate>Tue, 20 Feb 2024 00:00:00 GMT</pubDate>
+<link>https://apparebit.com/blog/2024/netanyahu-plays-goebbels</link>
+<guid isPermaLink="true">https://apparebit.com/blog/2024/netanyahu-plays-goebbels</guid>
+</item>
 
 <item>
 <title>Great Men</title>
