@@ -1,4 +1,4 @@
-/* (C) Copyright 2019-2022 Robert Grimm
+/* (C) Copyright 2019-2024 Robert Grimm
    Licensed under the MIT License (https://opensource.org/licenses/MIT) */
 
 const DEBUG = Boolean(

@@ -1,4 +1,4 @@
-/* © 2020-2023 Robert Grimm */
+/* © 2020-2024 Robert Grimm */
 
 export default function Footer(file, context) {
   const me = file.coolPath === '' ? 'me ' : '';
