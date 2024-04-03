@@ -191,7 +191,7 @@ on the same global system state</em>.</p>
 <p>Conveniently, the protocol enabling the web, <abbr>HTTP</abbr>, was
 explicitly designed with retries in mind. They are part of the representational
 state transfer or <a
-href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"><abbr>REST</abbr>
+href="https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"><abbr>REST</abbr>
 model</a> underlying the web. In particular, <code>DELETE</code>, <code>GET</code>,
 <code>HEAD</code>, and <code>PUT</code> are idempotent. <code>GET</code> and
 <code>HEAD</code> also are read-only. Only <code>POST</code> is not idempotent
@@ -397,7 +397,7 @@ violation.</p>
 <p>Now we have enough context to explain the exact circumstances leading to the
 failure of our data processing pipeline. As mentioned in the introduction, the
 pipeline failed during a bulk copy between two S3 volumes. The data being copied
-is a very large dataset in <a href="http://www.apache.org/">Parquet’s columnar
+is a very large dataset in <a href="https://www.apache.org/">Parquet’s columnar
 format</a>, which puts (parts of) columns into their own files organized by
 directories to represent tables.</p>
 
@@ -589,7 +589,7 @@ working is easy. That’s also when the real engineering work starts!</p>
 
 <footer class=about-this-page>
 <p>This article was originally published on <a
-href="https://enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">Enigma’s
+href="https://www.enigma.com/blog/post/lets-try-again-making-retries-work-with-cloud-services">Enigma’s
 blog</a>. The original is a fairly heavyweight web application that uses
 JavaScript to generate some semblance of <abbr>HTML</abbr> from embedded
 <abbr>JSON</abbr> data. This version is a more lightweight, static webpage with
