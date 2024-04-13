@@ -282,8 +282,8 @@ href="https://www.theverge.com/2020/11/25/21719396/amazon-web-services-aws-outag
 do happen</a>).</p>
 
 
-<aside class=sidebar>
-<h3>Systems Archeology I</h3>
+<aside class=sidebar aria-labelledby=systems-archeology-1>
+<h3 id=systems-archeology-1>Systems Archeology I</h3>
 
 <p>I suspect that <abbr>AWS</abbr> engineers started out with retry logic even
 simpler than what is offered by the legacy mode. When a client exceeds rate
@@ -425,8 +425,8 @@ may happen five times in a row. At that point, boto3’s legacy retry mode stops
 retrying and fails the copy operation. That in turn fails our pipeline.</p>
 
 
-<aside class=sidebar>
-<h3>Systems Archeology II</h3>
+<aside class=sidebar aria-labelledby=systems-archeology-2>
+<h3 id=systems-archeology-2>Systems Archeology II</h3>
 
 <p>In the first systems archeology above, I took note of an unusual choice of
 <abbr>HTTP</abbr> status code to speculate about earlier retry logic and an
@@ -480,7 +480,7 @@ configuration object to boto3’s <code>client()</code> or <code>resource()</cod
 function via the <code>config</code> named argument. The only slightly tricky
 part is that you need to use botocore’s configuration object.</p>
 
-<figure>
+<figure role=group aria-labelledby=configuring-boto3>
 <pre><code class=language-python>import boto3
 from botocore.config import Config
 
@@ -504,8 +504,8 @@ for index in range(0, 10000):
     )
 </code></pre>
 
-<figcaption>Code example for configuring boto3 to use adaptive retry
-mode</figcaption>
+<figcaption id=configuring-boto3>Code example for configuring boto3 to use
+adaptive retry mode</figcaption>
 </figure>
 
 
