@@ -692,6 +692,10 @@ table caption {
   padding: var(--t20) 0;
 }
 
+table caption > :where(cite, dfn, em, i) {
+  font-style: normal;
+}
+
 tr > th:first-child {
   text-align: left;
 }
@@ -799,7 +803,7 @@ a:focus > picture, a:hover > picture {
  * .about-this-page
  * -------------------------------------------------------------------------- */
 
- .about-this-page {
+.about-this-page {
   font-style: italic;
 }
 
@@ -1325,7 +1329,7 @@ main .wide-figure-with-margin {
   padding-top: 0.4em;
 }
 
-:not(.textual) > figcaption > em, :not(.textual) > figcaption > cite {
+:not(.textual) > figcaption :where(cite, dfn, em, i) {
   font-style: normal;
 }
 
