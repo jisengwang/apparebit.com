@@ -851,29 +851,23 @@ b {
  * -------------------------------------------------------------------------- */
 
 /*
- * To create a banner effect, with text typeset against some background color,
- * the background color is set on an inline element. In theory, padding plus
- * box-decoration-break ensures that the padding appears on every line. In
- * practice, Safari doesn't handle it correctly. However, box-shadow works
- * across all major browsers. Alas, that also limits us to colors, not
- * gradients, unless the text color is the same color as the background color,
- * in which case we can use blend modes.
+ * April 2024: Banners finally, finally appear to work across Chorme, Firefox,
+ * and Safari.
  *
- * padding: ...;                          Option 1: Leave some space
- * box-shadow: ...;                       Option 2: Leave some space
- * background-image: ...;                 Specify the gradient, maybe
- * -webkit-box-decoration-break: clone;   Make gradient and padding repeat...
- * box-decoration-break: clone;           ...for each line, even on Safari.
- * background-attachment: fixed;          Make gradient consistent across lines.
+ * We need an inline element inside a block element. The block element controls
+ * spacing, including line-height and margins, whereas the inline element
+ * provides the colorful background:
  *
- * All three browsers had bugs with the above. Right now, Safari is the most
- * problematic. Banners are hard.
+ *   padding-inline: <length>;      -- extend banner to past text
+ *   box-decoration-break: clone;   -- repeat background & padding each line
+ *   background-attachment: fixed;  -- make background consistent across lines
+ *   background-size: 100%;         -- make background take up entire width
  *
- * To also control line-breaking behavior, use spans of spans, with inner
- * spans the fragments that should not line break.
+ * To control line-breaking behavior, use spans within span, with inner spans
+ * denoting fragments that must not line-break.
  */
 
-.banner {
+.pullquote .banner {
   line-height: calc(var(--r-major) * var(--r-minor));
   text-align: center;
   margin-left: var(--t30);
@@ -882,63 +876,204 @@ b {
 
 .banner > span, .banner > strong {
   padding-bottom: var(--t50);
-  box-shadow:
-    calc(-1 * var(--t30)) 0 0 0 var(--color-banner, transparent),
-    var(--t30) 0 0 0 var(--color-banner, transparent);
-  background-color: var(--color-banner, transparent);
+  padding-inline: var(--t40);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  /* background-attachment: fixed;  <-- still doesn't work in Chrome */
+  background-attachment: fixed;
   background-size: 100%;
 }
+
 .banner > span > span, .banner > strong > span {
   display: inline-block;
 }
 
-/* Gradients generated with https://davidjohnstone.net/lch-lab-colour-gradient-picker */
-.orange > span, .orange > strong {
-  background-color: #fff143;
+/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+/*
+ * https://davidjohnstone.net/lch-lab-colour-gradient-picker
+ * https://oklch.com/
+ */
+
+.blue-purple > span, .blue-purple > strong {
+  background-color: #a9beff;
   background-image: linear-gradient(to right,
-    #fff143,
-    #ffe847,
-    #ffdf4a,
-    #ffd64d,
-    #ffcd50,
-    #ffc453,
-    #ffbb55
+    #70d0ee,
+    #78cdf5,
+    #83cafb,
+    #8fc6ff,
+    #9dc2ff,
+    #a9beff,
+    #b4baff,
+    #c0b6fe,
+    #cbb2f8,
+    #d5aff2,
+    #deace9
+  );
+  background-image: linear-gradient(to right in oklch,
+    oklch(81% 0.1 220),
+    oklch(81% 0.1 230),
+    oklch(81% 0.1 240),
+    oklch(81% 0.1 250),
+    oklch(81% 0.1 260),
+    oklch(81% 0.1 270),
+    oklch(81% 0.1 280),
+    oklch(81% 0.1 290),
+    oklch(81% 0.1 300),
+    oklch(81% 0.1 310),
+    oklch(81% 0.1 320)
   );
 }
 
-.purple > span, .purple > strong {
-  background-color: var(--color-purple);
+@media screen and (prefers-color-scheme: dark) {
+  .blue-purple > span, .blue-purple > strong {
+    background-color: #4d5f9c;
+    background-image: linear-gradient(to right,
+      #006f87,
+      #006d91,
+      #1f6a96,
+      #32669a,
+      #40639c,
+      #4d5f9c,
+      #595c9b,
+      #635898,
+      #6c5594,
+      #75528e,
+      #7c4f86
+    );
+    background-image: linear-gradient(to right in oklch,
+      oklch(50% 0.1 220),
+      oklch(50% 0.1 230),
+      oklch(50% 0.1 240),
+      oklch(50% 0.1 250),
+      oklch(50% 0.1 260),
+      oklch(50% 0.1 270),
+      oklch(50% 0.1 280),
+      oklch(50% 0.1 290),
+      oklch(50% 0.1 300),
+      oklch(50% 0.1 310),
+      oklch(50% 0.1 320)
+    );
+  }
+}
+
+/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.yellow-green > span, .yellow-green > strong {
+  background-color: #ffe47d;
   background-image: linear-gradient(to right,
-    #ffafd4,
-    #fab0dc,
-    #f4b2e3,
-    #edb4ea,
-    #e5b6f1
-    /* #ffb7da, #f9b9e0, #f2bbe6, #ebbdec, #e3bff3, #dbc1f9, #d3c3ff */
+    #ffe47d,
+    #f4ea68,
+    #e2f074,
+    #cef682,
+    #b9fb93,
+    #a2ffa5,
+    #9dffb2
+  );
+  background-image: linear-gradient(to right in oklch,
+    oklch(92% 0.15 95),
+    oklch(92% 0.15 105),
+    oklch(92% 0.15 115),
+    oklch(92% 0.15 125),
+    oklch(92% 0.15 135),
+    oklch(92% 0.15 145),
+    oklch(92% 0.15 150)
   );
 }
 
-.green > span, .green > strong {
-  background-color: var(--color-green);
-/*background-image: linear-gradient(to right, var(--color-cyan), var(--color-green));*/
+@media screen and (prefers-color-scheme: dark) {
+  .yellow-green > span, .yellow-green > strong {
+    background-color: #626a09;
+    background-image: linear-gradient(to right,
+      #865900,
+      #7e5e00,
+      #766200,
+      #6d6600,
+      #626a09,
+      #556e1c,
+      #46712b,
+      #357339,
+    );
+    background-image: linear-gradient(to right in oklch,
+      oklch(50% 0.11 75),
+      oklch(50% 0.11 85),
+      oklch(50% 0.11 95),
+      oklch(50% 0.11 105),
+      oklch(50% 0.11 115),
+      oklch(50% 0.11 125),
+      oklch(50% 0.11 135),
+      oklch(50% 0.11 145)
+    );
+  }
+}
+
+/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.purple-orange > span, .purple-orange > strong {
+  background-color: #ffabb7;
+  background-image: linear-gradient(to right,
+    #ddb0ff,
+    #e8acf6,
+    #f2a9eb,
+    #faa7de,
+    #ffa6d0,
+    #ffa9c3,
+    #ffabb7,
+    #ffacab,
+    #ffaea0,
+    #ffaf94,
+    #ffb185,
+    #ffb373,
+    #f8b86a
+  );
+  background-image: linear-gradient(to right in oklch,
+    oklch(82.5% 0.12 310),
+    oklch(82.5% 0.12 320),
+    oklch(82.5% 0.12 330),
+    oklch(82.5% 0.12 340),
+    oklch(82.5% 0.12 350),
+    oklch(82.5% 0.12 0),
+    oklch(82.5% 0.12 10),
+    oklch(82.5% 0.12 20),
+    oklch(82.5% 0.12 30),
+    oklch(82.5% 0.12 40),
+    oklch(82.5% 0.12 50),
+    oklch(82.5% 0.12 60),
+    oklch(82.5% 0.12 70),
+    oklch(82.5% 0.12 80)
+  );
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .purple-orange > span, .purple-orange > strong {
+    background-color: #94436d;
+    background-image: linear-gradient(to right,
+      #6e519d,
+      #784d96,
+      #814a8d,
+      #884783,
+      #8f4478,
+      #94436d,
+      #984260,
+      #9b4153,
+      #9c4246,
+      #9c4438
+    );
+    background-image: linear-gradient(to right in oklch,
+      oklch(50% 0.12 310),
+      oklch(50% 0.12 320),
+      oklch(50% 0.12 330),
+      oklch(50% 0.12 340),
+      oklch(50% 0.12 350),
+      oklch(50% 0.12 0),
+      oklch(50% 0.12 10),
+      oklch(50% 0.12 20),
+      oklch(50% 0.12 30)
+    );
+  }
 }
 
 .cyan-green {
   background-image: linear-gradient(to right, var(--color-cyan), var(--color-green));
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .orange > span, .orange > strong {
-    background-color: var(--color-accent2);
-    background-image: none;
-  }
-  .purple > span, .purple > strong {
-    background-color: var(--color-accent1);
-    background-image: none;
-  }
 }
 
 /* -------------------------------------------------------------------------- *
