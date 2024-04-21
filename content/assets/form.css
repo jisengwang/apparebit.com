@@ -892,7 +892,50 @@ b {
 /*
  * https://davidjohnstone.net/lch-lab-colour-gradient-picker
  * https://oklch.com/
+ * https://colors-gen.vercel.app/
  */
+ .mostly-orange > span, .mostly-orange > strong {
+  background-color: #ffd3c2;
+  background-image: linear-gradient(to right in oklch,
+    oklch(0.9 0.15 10),
+    oklch(0.9 0.15 18),
+    oklch(0.9 0.15 26),
+    oklch(0.9 0.15 34),
+    oklch(0.9 0.15 42),
+    oklch(0.9 0.15 50),
+    oklch(0.9 0.15 60),
+    oklch(0.9 0.15 74),
+    oklch(0.9 0.15 82)
+  );
+}
+
+.mostly-green > span, .mostly-green > strong {
+  background-color: #86fbb0;
+  background-image: linear-gradient(to right in oklch,
+    oklch(0.9 0.15 128),
+    oklch(0.9 0.15 132),
+    oklch(0.9 0.15 142),
+    oklch(0.9 0.15 154),
+    oklch(0.9 0.15 166),
+    oklch(0.9 0.15 176),
+    oklch(0.9 0.15 186),
+    oklch(0.9 0.15 196)
+  );
+}
+
+.mostly-blue > span, .mostly-blue > strong {
+  background-color: #c9e0ff;
+  background-image: linear-gradient(to right in oklch,
+    oklch(0.9 0.15 228),
+    oklch(0.9 0.15 244),
+    oklch(0.9 0.15 256),
+    oklch(0.9 0.15 264),
+    oklch(0.9 0.15 272),
+    oklch(0.9 0.15 278),
+    oklch(0.9 0.15 286),
+    oklch(0.9 0.15 296)
+  );
+}
 
 .blue-purple > span, .blue-purple > strong {
   background-color: #a9beff;
