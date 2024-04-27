@@ -868,10 +868,8 @@ b {
  */
 
 .pullquote .banner {
+  /* Make space for banner and gap between lines: */
   line-height: calc(var(--r-major) * var(--r-minor));
-  text-align: center;
-  margin-left: var(--t30);
-  margin-right: var(--t30);
 }
 
 .banner > span, .banner > strong {
@@ -894,7 +892,7 @@ b {
  * https://oklch.com/
  * https://colors-gen.vercel.app/
  */
- .mostly-orange > span, .mostly-orange > strong {
+.mostly-orange > span, .mostly-orange > strong {
   background-color: #f6bb6a;
   background-image: linear-gradient(to right in oklch,
     oklch(0.83 0.12 10),
@@ -909,18 +907,37 @@ b {
   );
 }
 
-.mostly-green > span, .mostly-green > strong {
-  background-color: #85e7a7;
-  background-image: linear-gradient(to right in oklch,
-    oklch(0.85 0.13 128),
-    oklch(0.85 0.13 132),
-    oklch(0.85 0.13 142),
-    oklch(0.85 0.13 154),
-    oklch(0.85 0.13 166),
-    oklch(0.85 0.13 176),
-    oklch(0.85 0.13 186),
-    oklch(0.85 0.13 196)
-  );
+@media screen and (prefers-color-scheme: dark) {
+  .mostly-orange > span, .mostly-orange > strong {
+    background-color: #8c482d;
+    background-image: linear-gradient(to right in oklch,
+      oklch(0.48 0.1 10),
+      oklch(0.48 0.1 18),
+      oklch(0.48 0.1 26),
+      oklch(0.48 0.1 34),
+      oklch(0.48 0.1 42),
+      oklch(0.48 0.1 50),
+      oklch(0.48 0.1 60),
+      oklch(0.48 0.1 74),
+      oklch(0.48 0.1 82)
+    );
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .mostly-green > span, .mostly-green > strong {
+    background-color: #85e7a7;
+    background-image: linear-gradient(to right in oklch,
+      oklch(0.5 0.1 128),
+      oklch(0.5 0.1 132),
+      oklch(0.5 0.1 142),
+      oklch(0.5 0.1 154),
+      oklch(0.5 0.1 166),
+      oklch(0.5 0.1 176),
+      oklch(0.5 0.1 186),
+      oklch(0.5 0.1 196)
+    );
+  }
 }
 
 .mostly-blue > span, .mostly-blue > strong {
@@ -937,180 +954,18 @@ b {
   );
 }
 
-.blue-purple > span, .blue-purple > strong {
-  background-color: #a9beff;
-  background-image: linear-gradient(to right,
-    #70d0ee,
-    #78cdf5,
-    #83cafb,
-    #8fc6ff,
-    #9dc2ff,
-    #a9beff,
-    #b4baff,
-    #c0b6fe,
-    #cbb2f8,
-    #d5aff2,
-    #deace9
-  );
-  background-image: linear-gradient(to right in oklch,
-    oklch(81% 0.1 220),
-    oklch(81% 0.1 230),
-    oklch(81% 0.1 240),
-    oklch(81% 0.1 250),
-    oklch(81% 0.1 260),
-    oklch(81% 0.1 270),
-    oklch(81% 0.1 280),
-    oklch(81% 0.1 290),
-    oklch(81% 0.1 300),
-    oklch(81% 0.1 310),
-    oklch(81% 0.1 320)
-  );
-}
-
 @media screen and (prefers-color-scheme: dark) {
-  .blue-purple > span, .blue-purple > strong {
-    background-color: #4d5f9c;
-    background-image: linear-gradient(to right,
-      #006f87,
-      #006d91,
-      #1f6a96,
-      #32669a,
-      #40639c,
-      #4d5f9c,
-      #595c9b,
-      #635898,
-      #6c5594,
-      #75528e,
-      #7c4f86
-    );
+  .mostly-blue > span, .mostly-blue > strong {
+    background-color: #a7baff;
     background-image: linear-gradient(to right in oklch,
-      oklch(50% 0.1 220),
-      oklch(50% 0.1 230),
-      oklch(50% 0.1 240),
-      oklch(50% 0.1 250),
-      oklch(50% 0.1 260),
-      oklch(50% 0.1 270),
-      oklch(50% 0.1 280),
-      oklch(50% 0.1 290),
-      oklch(50% 0.1 300),
-      oklch(50% 0.1 310),
-      oklch(50% 0.1 320)
-    );
-  }
-}
-
-/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
-
-.yellow-green > span, .yellow-green > strong {
-  background-color: #ffe47d;
-  background-image: linear-gradient(to right,
-    #ffe47d,
-    #f4ea68,
-    #e2f074,
-    #cef682,
-    #b9fb93,
-    #a2ffa5,
-    #9dffb2
-  );
-  background-image: linear-gradient(to right in oklch,
-    oklch(92% 0.15 95),
-    oklch(92% 0.15 105),
-    oklch(92% 0.15 115),
-    oklch(92% 0.15 125),
-    oklch(92% 0.15 135),
-    oklch(92% 0.15 145),
-    oklch(92% 0.15 150)
-  );
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .yellow-green > span, .yellow-green > strong {
-    background-color: #626a09;
-    background-image: linear-gradient(to right,
-      #865900,
-      #7e5e00,
-      #766200,
-      #6d6600,
-      #626a09,
-      #556e1c,
-      #46712b,
-      #357339,
-    );
-    background-image: linear-gradient(to right in oklch,
-      oklch(50% 0.11 75),
-      oklch(50% 0.11 85),
-      oklch(50% 0.11 95),
-      oklch(50% 0.11 105),
-      oklch(50% 0.11 115),
-      oklch(50% 0.11 125),
-      oklch(50% 0.11 135),
-      oklch(50% 0.11 145)
-    );
-  }
-}
-
-/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
-
-.purple-orange > span, .purple-orange > strong {
-  background-color: #ffabb7;
-  background-image: linear-gradient(to right,
-    #ddb0ff,
-    #e8acf6,
-    #f2a9eb,
-    #faa7de,
-    #ffa6d0,
-    #ffa9c3,
-    #ffabb7,
-    #ffacab,
-    #ffaea0,
-    #ffaf94,
-    #ffb185,
-    #ffb373,
-    #f8b86a
-  );
-  background-image: linear-gradient(to right in oklch,
-    oklch(82.5% 0.12 310),
-    oklch(82.5% 0.12 320),
-    oklch(82.5% 0.12 330),
-    oklch(82.5% 0.12 340),
-    oklch(82.5% 0.12 350),
-    oklch(82.5% 0.12 0),
-    oklch(82.5% 0.12 10),
-    oklch(82.5% 0.12 20),
-    oklch(82.5% 0.12 30),
-    oklch(82.5% 0.12 40),
-    oklch(82.5% 0.12 50),
-    oklch(82.5% 0.12 60),
-    oklch(82.5% 0.12 70),
-    oklch(82.5% 0.12 80)
-  );
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .purple-orange > span, .purple-orange > strong {
-    background-color: #94436d;
-    background-image: linear-gradient(to right,
-      #6e519d,
-      #784d96,
-      #814a8d,
-      #884783,
-      #8f4478,
-      #94436d,
-      #984260,
-      #9b4153,
-      #9c4246,
-      #9c4438
-    );
-    background-image: linear-gradient(to right in oklch,
-      oklch(50% 0.12 310),
-      oklch(50% 0.12 320),
-      oklch(50% 0.12 330),
-      oklch(50% 0.12 340),
-      oklch(50% 0.12 350),
-      oklch(50% 0.12 0),
-      oklch(50% 0.12 10),
-      oklch(50% 0.12 20),
-      oklch(50% 0.12 30)
+      oklch(0.5 0.1 228),
+      oklch(0.5 0.1 244),
+      oklch(0.5 0.1 256),
+      oklch(0.5 0.1 264),
+      oklch(0.5 0.1 272),
+      oklch(0.5 0.1 278),
+      oklch(0.5 0.1 286),
+      oklch(0.5 0.1 296)
     );
   }
 }
@@ -2126,7 +1981,6 @@ main {
 
 .pullquote p {
   font-size: var(--s20);
-  font-weight: normal;
   line-height: var(--r-minor);
   text-align: center;
   text-wrap: balance;
