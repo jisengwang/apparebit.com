@@ -895,45 +895,45 @@ b {
  * https://colors-gen.vercel.app/
  */
  .mostly-orange > span, .mostly-orange > strong {
-  background-color: #ffd3c2;
+  background-color: #f6bb6a;
   background-image: linear-gradient(to right in oklch,
-    oklch(0.9 0.15 10),
-    oklch(0.9 0.15 18),
-    oklch(0.9 0.15 26),
-    oklch(0.9 0.15 34),
-    oklch(0.9 0.15 42),
-    oklch(0.9 0.15 50),
-    oklch(0.9 0.15 60),
-    oklch(0.9 0.15 74),
-    oklch(0.9 0.15 82)
+    oklch(0.83 0.12 10),
+    oklch(0.83 0.12 18),
+    oklch(0.83 0.12 26),
+    oklch(0.83 0.12 34),
+    oklch(0.83 0.12 42),
+    oklch(0.83 0.12 50),
+    oklch(0.83 0.12 60),
+    oklch(0.83 0.12 74),
+    oklch(0.83 0.12 82)
   );
 }
 
 .mostly-green > span, .mostly-green > strong {
-  background-color: #86fbb0;
+  background-color: #85e7a7;
   background-image: linear-gradient(to right in oklch,
-    oklch(0.9 0.15 128),
-    oklch(0.9 0.15 132),
-    oklch(0.9 0.15 142),
-    oklch(0.9 0.15 154),
-    oklch(0.9 0.15 166),
-    oklch(0.9 0.15 176),
-    oklch(0.9 0.15 186),
-    oklch(0.9 0.15 196)
+    oklch(0.85 0.13 128),
+    oklch(0.85 0.13 132),
+    oklch(0.85 0.13 142),
+    oklch(0.85 0.13 154),
+    oklch(0.85 0.13 166),
+    oklch(0.85 0.13 176),
+    oklch(0.85 0.13 186),
+    oklch(0.85 0.13 196)
   );
 }
 
 .mostly-blue > span, .mostly-blue > strong {
-  background-color: #c9e0ff;
+  background-color: #a7baff;
   background-image: linear-gradient(to right in oklch,
-    oklch(0.9 0.15 228),
-    oklch(0.9 0.15 244),
-    oklch(0.9 0.15 256),
-    oklch(0.9 0.15 264),
-    oklch(0.9 0.15 272),
-    oklch(0.9 0.15 278),
-    oklch(0.9 0.15 286),
-    oklch(0.9 0.15 296)
+    oklch(0.8 0.1 228),
+    oklch(0.8 0.1 244),
+    oklch(0.8 0.1 256),
+    oklch(0.8 0.1 264),
+    oklch(0.8 0.1 272),
+    oklch(0.8 0.1 278),
+    oklch(0.8 0.1 286),
+    oklch(0.8 0.1 296)
   );
 }
 
